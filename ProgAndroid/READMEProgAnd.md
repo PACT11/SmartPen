@@ -1,5 +1,5 @@
 Programmation Android
 ========
 Guillaume GRELET
-Quentin Chabert
+Quentin CHABERT
 Fatimata FALL
