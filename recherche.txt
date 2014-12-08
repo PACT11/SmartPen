@@ -1,0 +1,32 @@
+Utilisation de la camera d'un smartphone sous android:
+http://developer.android.com/guide/topics/media/camera.html
+
+Classe Surface view:
+http://developer.android.com/reference/android/view/SurfaceView.html
+
+Classe surface holder:
+http://developer.android.com/reference/android/view/SurfaceHolder.html
+
+Format d'image: 
+http://developer.android.com/reference/android/graphics/ImageFormat.html
+
+Livre: Android de F.GARIN  éditeur: DUNOD
+
+Les liens ci dessus sont des liens qui nous ont permis de mieux comprendre comment utiliser une caméra d'un smartphone Android.
+L'outil camera preview est un outil java qui comprend les classes SurfceView et SurfaceHolder qui permmettent de visualiser les images de la caméra et de les récupérer.
+Si nous voulons faire des captures d'images en continue, il faut utiliser les méthodes startPreview et stpPreview afin de débuter et de finir la capture en continu.La méthode setPreviewDisplay, elle, permet de définir où nous voulons récupérer les images.
+Ces trois méthodes appartiennent à la classe SurfaceHolder.
+Sous java, nous pouvons récupérer les images sous la forme de matrice de pixels dans divers formats tels que le format jpep.
+
+
+La luminance:
+http://fr.wikipedia.org/wiki/Luminance
+La luminance est la partie commune entre une image en noire et blanc et une image en couleur. Elle nous donne une information sur l'intensité lumineuse en chacun des points de l'espace visionné. 
+Les couleurs sont ensuite ajoutées par combinaison des trois couleurs de bases que sont le rouge, le vert et le bleu. 
+La couleur sert ainsi à obtenir une image que l'on peut regarder et c'est donc ce que l'on veut afficher, la luminance étant inutile d'un point de physique (pour regarder).
+En revanche c'est cette partie qui nous permet de reconnaitre un tracé puisque la luminance permet de voir les différence d'intensité entre les différentes zones et donc permet d'obtenir un tracé.
+
+
+Remarque: Pour la résolution de l'image, des tests menés par le module reconnaissance d'écriture sont en cours afin de déterminer si une résolution donnée (référence) est suffisante afin d'obtenir une reconnaissance d'écriture correcte.
+Si nous voulons utiliser une résolution différente (inférieure) il faudra envoyer des échantillons à ce module pour nous dire cela convient ou non. 
+Dans le cas où une résolution de smartphone android ne serait pas suffisante il faudrait alors passer avec une caméra externe.
