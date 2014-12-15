@@ -30,3 +30,14 @@ En revanche c'est cette partie qui nous permet de reconnaitre un tracé puisque l
 Remarque: Pour la résolution de l'image, des tests menés par le module reconnaissance d'écriture sont en cours afin de déterminer si une résolution donnée (référence) est suffisante afin d'obtenir une reconnaissance d'écriture correcte.
 Si nous voulons utiliser une résolution différente (inférieure) il faudra envoyer des échantillons à ce module pour nous dire cela convient ou non. 
 Dans le cas où une résolution de smartphone android ne serait pas suffisante il faudrait alors passer avec une caméra externe.
+
+SurfaceTexture 
+coder une appli test 
+liste des pixel 
+format couleur rgb comment passer en luminense yuv.
+
+texture réafficher.
+
+Réfléchir ou se situe le décalage.
+
+biblio sur les format d'image.
