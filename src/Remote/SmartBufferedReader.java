@@ -22,7 +22,22 @@ public class SmartBufferedReader extends BufferedReader {
         super(in);
     }
     public void addDataListener(DataListener listener) {
-        caller = new IncomingDataCaller(this, listener);
+        if(caller!=null) {
+            caller.addDataListener(listener);
+        } else {
+            caller = new IncomingDataCaller(this, listener);
+            caller.start();
+        }
+    }
+    public void addCloseListener(Runnable listener) {
+        if(caller!=null) {
+            caller.addCloseListener(listener);
+        } else {
+            caller = new IncomingDataCaller(this, null);
+            caller.addCloseListener(listener);
+            caller.start();
+        }
+            
     }
     @Override
     public void close() {

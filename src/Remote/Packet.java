@@ -33,7 +33,26 @@ sinon
 a l'envoi :
 on programme le header et le message dans un nouveau paquet
 on envoie le tableau de char obtenu en appelant paquet.getCharArray()
- */
+ 
+####### contenu des packets ########
+* connectionRequest :
+send : contains target UID
+receive : contains source UID
+* connectionAnswer :
+send : char 'o' for request accepted
+       char 'd' for request denied
+       char 'u' for non-existing UID
+receive : same
+* connectionClosure :
+void
+* UID :
+send : the local UID
+* userList :
+send : void
+receive : each name separated by '\n'
+/!\ last name is followed by '\n'
+
+*/
 
 public class Packet {
     public static final long timeOutDelay = 10000; //  en ms
@@ -48,7 +67,7 @@ public class Packet {
         au début de la reception d'un nouveau paquet, on cree un nouvel objet 
         Packet et on passe le premier char recu au constructeur.
     */
-    public Packet(char firstChar) {
+    public Packet(int firstChar) {
         header = Header.fromChar(firstChar);
         timeOut = new Timer();
         timeOut.schedule(new TimerTask() {
@@ -61,12 +80,14 @@ public class Packet {
         if(!isSane()) {
             System.err.println("wrong header !");
         }
+        message = new ArrayList<>();
     }
     /* Constructeur : pour la création d'un paquet à l'ENVOI
         on spécifie le type de paquet dans le constructeur
     */
     public Packet(Header header) {
         this.header = header;
+        message = new ArrayList<>();
     }
     
     // renvoi vrai si le message a été intégralement recu ou si le header est invalide
@@ -81,26 +102,28 @@ public class Packet {
         return header != Header.error;
     }
     // lit un caractere et l'ajoute au paquet
-    public void readChar(char c) {
+    public void readChar(int c) {
         if(lengthCharCounter < 2) {
             lengthCharCounter++;
             if(lengthCharCounter==1) {
-                length += (int) (c)*2^16;
+                length = (c<<16) + 1;
             } else {
-                length += (int) (c) - 1;
+                length += c - 1;
             }
         } else {
-            message.add(c);
+            message.add((char) c);
         }
+        if(isComplete())
+            timeOut.cancel();
     }
     
     // renvoi un tableau de char pret a etre envoye tel quel
     public char[] getCharArray() {
-        length = message.size()+3;
-        char array[] = new char[length];
-        array[0] = Header.toChar(header);
-        array[1] = (char) (short) (length/2^16);
-        array[2] =  (char) (length&0xFFFF);
+        length = message.size();
+        char array[] = new char[length+3];
+        array[0] = (char) Header.toChar(header);
+        array[1] = (char) (length>>>16);
+        array[2] = (char) (length&0xFFFF);
         for(int i=0;i<message.size();i++)
             array[i+3] = message.get(i);
         return array;
@@ -117,7 +140,20 @@ public class Packet {
     public ArrayList<Character> getMessage() {
         return message;
     }
+    public String getStringMessage() {
+        String msg = "";
+        for(Character c : message)
+            msg += c.toString();
+        return msg;
+    }
     public void setMessage(ArrayList<Character> message) {
         this.message = message;
+    }
+    public void setMessage(String message) {
+        char[] array = message.toCharArray();
+        this.message.clear();
+        for(int i=0;i<array.length;i++) {
+            this.message.add(array[i]);
+        }
     }
 }

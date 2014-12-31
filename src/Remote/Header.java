@@ -15,9 +15,8 @@ public enum Header {
     userList,           // contient une demande d'obtention de la liste des utilisateur (client), ou la liste elle-meme (serveur) 
     UID,                // contient l'UID d'un utilisateur qui se connecte au serveur
     error;              // header non reconnu ou probleme de reception
-    
     // converti un char recu en Header 
-    public static Header fromChar(char header) {
+    public static Header fromChar(int header) {
         switch(header) {
             case 'c':
                 return command;
@@ -38,7 +37,7 @@ public enum Header {
         }
     }
     // converti un Header en char qui peut alors être envoyé
-    public static char toChar(Header header) {
+    public static int toChar(Header header) {
         switch(header) {
             case command:
                 return 'c';

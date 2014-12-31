@@ -9,6 +9,6 @@ package Remote;
  *
  * @author arnaud
  */
-public interface DataListener {
-    public void dataReceived(int data);
+public interface ClientListener {
+    public void newClient(Client client);
 }

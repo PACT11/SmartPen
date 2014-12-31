@@ -8,8 +8,6 @@ package Remote;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -18,6 +16,8 @@ import java.util.logging.Logger;
 public class ConnectionMaker extends Thread {
     private ServerSocket connectionSocket;
     private boolean running;
+    private ClientListener clientListener;
+    
     public ConnectionMaker(ServerSocket socket) {
         connectionSocket = socket;
     }
@@ -27,7 +27,8 @@ public class ConnectionMaker extends Thread {
         while(running) {
             try {
                 Socket newSocket = connectionSocket.accept();
-                Client.add(newSocket);
+                if(clientListener != null)
+                    clientListener.newClient(Client.add(newSocket));
             } catch (IOException ex) {
                 if(connectionSocket.isClosed()) {
                     System.out.println("Server : stop connection making");
@@ -39,5 +40,8 @@ public class ConnectionMaker extends Thread {
     }
     public void close() {
         running = false;
+    }
+    public void addNewClientListener(ClientListener listener) {
+        clientListener = listener;
     }
 }
