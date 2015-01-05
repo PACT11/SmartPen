@@ -40,4 +40,4 @@ texture réafficher.
 
 Réfléchir ou se situe le décalage.
 
-biblio sur les format d'image.
+biblio sur les formats d'images.
