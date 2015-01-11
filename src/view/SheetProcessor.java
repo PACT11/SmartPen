@@ -16,7 +16,7 @@ public class SheetProcessor {
     }
     // compute the transformation to apply to get a image of the sheet ready to be displayed from a Straight image
     static Transformation getSheetTransformation(Bitmap sheetImage) {
-        System.out.println("SheetProcessor : compute a to transform a straight image to match the sheet when projected");
+        System.out.println("SheetProcessor : compute how to transform the sheet picture to get an image that match the sheet when projected");
         return null;
     }
     // apply the specified transformation

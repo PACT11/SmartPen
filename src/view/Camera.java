@@ -22,4 +22,8 @@ public class Camera {
         System.out.println("Camera : taking a picture");
         return null;
     }
+    // debug
+    public void simulateNewImage(Bitmap image) {
+        imageListener.newImage(image);
+    }
 }

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.*;
 
 public class Server {
-    public final static int port = 2323;
+    public final static int port = 2324;
     public static boolean closeRequest = false;
     
     @SuppressWarnings("empty-statement")

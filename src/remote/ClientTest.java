@@ -11,8 +11,8 @@ import java.util.logging.Logger;
 /*Fichier de test du serveur. Simule un client qui se connecte au serveur 
  */
 public class ClientTest {
-    public static final byte serverIP[] = {(byte)137,(byte)194,(byte)22,(byte)101};
-    public static final int port = 2323;
+    public static final byte serverIP[] = {(byte)10,(byte)0,(byte)1,(byte)4};
+    public static final int port = 2324;
     
     public static void main(String args[]) {
         Client client;

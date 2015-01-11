@@ -15,10 +15,24 @@ public class OS extends Application {
         loadMenu();
         for(Application app : applications)
             menu.addItem(app.getClass().getSimpleName());
+        System.out.println("OS : Simulate a click on TestApp");
+        menu.debugClick("TestApp");
     } 
+    @Override
+    protected void onMenuClick(String menu) {
+        super.onMenuClick(menu);
+        for(Application app : applications) {
+            if(app.getClass().getSimpleName().equals(menu)) 
+                app.run();
+        }
+    }
     @Override
     protected void onClose() {
         System.out.println("OS closed");
     }
-    
+    protected void resume() {
+        loadMenu();
+        System.out.println("OS : Simulate a click on close");
+        menu.debugClick("close");
+    }
 }

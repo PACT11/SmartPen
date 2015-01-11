@@ -23,15 +23,18 @@ public abstract class Application {
         System.out.println("App : the menu " + menu + " has been clicked");
     }
     // if the app wishes to receive sheet images, it should override this method
-    protected void onNewImage(view.Bitmap image) {
+    protected void onNewImage(Bitmap image) {
         System.out.println("App : a new image has been received");
     }
     private void onCloseMenuClick() {
         System.out.println("App : the close menu has been clicked");
         onClose();
+        if(!(this instanceof OS))
+            os.resume();
     }
     public final void run() {
         // TODO : prepare the system for app launch
+        System.out.println("App : Preparing the system to launch " + this.getClass().getName());
         if(outputScreen != null)
             loadMenu();               // load a new menu bar for the app
         if(inputScreen != null) {
@@ -42,18 +45,21 @@ public abstract class Application {
                 }
             });
         }
-        System.out.println("App : Preparing the system to launch " + this.getClass().getName());
+        
         onLaunch();
     }
     protected final void loadMenu() {
         menu = new MenuBar();
         outputScreen.setMenuBar(menu);
-        menu.addCloseListener(new Runnable(){
+        menu.addMenuListener(new MenuBar.MenuListener(){
             @Override
-            public void run() {
-                onClose();
+            public void menuClicked(String menuName) {
+                onMenuClick(menuName);
             }
-            
+            @Override
+            public void closeClicked() {
+                onCloseMenuClick();
+            }
         });
     }
     

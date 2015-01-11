@@ -9,18 +9,15 @@ public class MenuBar {
     // interface for a listener called when a menu is clicked
     public interface MenuListener {
         public void menuClicked(String menuName);
+        public void closeClicked();
     }
     
-    private Runnable closeListener;
     private MenuListener menuListener;
     private Runnable updateCaller;    // a listener used to provide a link to the inputScreen update method if the menu bar is currently displayed
     private ArrayList<String> items = new ArrayList<>();
     
     public void addMenuListener(MenuListener listener) {
         menuListener = listener;
-    }
-    public void addCloseListener(Runnable listener) {
-        closeListener = listener;
     }
     public void addUpdateRequestListener(Runnable listener) {
         updateCaller = listener;
@@ -38,7 +35,7 @@ public class MenuBar {
     // debug
     public void debugClick(String menu) {
         if(menu.equals("close"))
-            closeListener.run();
+            menuListener.closeClicked();
         else
             menuListener.menuClicked(menu);
     }

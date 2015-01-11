@@ -24,6 +24,7 @@ public class InputScreen {
     }
     private void onNewImage(Bitmap image) {
         if(!SheetProcessor.hasHand(image)) { // if the user's hand is not over the sheet
+            System.out.println("InputScreen : no hand over the sheet");
             outputScreen.blackOut();         // shut down projector shortly
             Bitmap newImage = camera.takePicture();
             outputScreen.updateTransformation(SheetProcessor.getSheetTransformation(newImage)); // compute the new transformation to match th sheet
@@ -42,5 +43,10 @@ public class InputScreen {
     }
     public void setOutputScreen(OutputScreen screen) {
         outputScreen = screen;
+    }
+    
+    //debug
+    public void simulateNewImage(Bitmap image) {
+        camera.simulateNewImage(image);
     }
 }
