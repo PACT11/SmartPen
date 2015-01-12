@@ -30,7 +30,9 @@ public class OS extends Application {
     protected void onClose() {
         System.out.println("OS closed");
     }
+    
     protected void resume() {
+        System.out.println("OS : resumed OS !");
         loadMenu();
         System.out.println("OS : Simulate a click on close");
         menu.debugClick("close");

@@ -1,6 +1,7 @@
 
 package remote;
 import java.util.ArrayList;
+import shape.ShapeProcessor;
 
 /*
 Cette classe permet le passage automatique d'information d'un client à un autre.

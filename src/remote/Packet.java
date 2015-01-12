@@ -159,8 +159,7 @@ public class Packet {
     public void setByteArray(byte[] array) {
         message.clear();
         if(array.length%2 == 1) {
-            message.add((char) (array[length-1]*256 + 1));
-            System.out.println(array.length%2);
+            message.add((char) (((int) (array[array.length-1])*256) + 1));
         } else {
             message.add((char)0);
         }
@@ -174,12 +173,12 @@ public class Packet {
         if((message.get(0)&0xFF) > 0) {
             size++;
             array = new byte[size];
-            array[size-1]= (byte) ((byte) (message.get(0) << 8)&0xFF);
+            array[size-1]= (byte) ((byte) (message.get(0)/256)&0xFF);
         } else {
             array = new byte[size];
         }
         for(int i=1;i<message.size();i++) {
-            array[(i-1)*2] = (byte) ((byte) (message.get(i) << 8)&0xFF);
+            array[(i-1)*2] = (byte) ((byte) (message.get(i)/256)&0xFF);
             array[(i-1)*2+1] = (byte) ((byte) (message.get(i)&0xFF));
         }
         return array;

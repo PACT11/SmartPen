@@ -18,16 +18,6 @@ public class ClientTest {
         Client client;
         Socket clientSocket;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
-        Packet tst = new Packet(Header.command);
-        byte[] array = {1,2,3,4,5,6,7,8,9,10,11};
-        tst.setByteArray(array);
-        byte[] result = tst.getByteArray();
-        for(int i=0; i<result.length;i++) {
-            System.out.println(result[i]);
-        }
-        for(int i=0; i<tst.getMessage().size();i++) {
-            System.out.println((int)tst.getMessage().get(i));
-        }
         
         try {
             clientSocket = new Socket(InetAddress.getByAddress(serverIP),port);
@@ -36,7 +26,7 @@ public class ClientTest {
                 @Override
                 public void dataReceived(int data) {
                     onReceive(data);
-                }                   
+                }
             });
             client.manual();
             

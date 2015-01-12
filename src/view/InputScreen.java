@@ -1,6 +1,8 @@
 
 package view;
 
+import shape.ShapeProcessor;
+
 /*
  *
  */
@@ -35,7 +37,7 @@ public class InputScreen {
             }
         } else { // check if user is clicking the menu bar
             Transformation t = SheetProcessor.getStraightTransformation(image);    
-            menu.click(SheetProcessor.findCap(image));
+            menu.click(ShapeProcessor.findCap(image));
         }
     }
     public void addNewImageListener(ImageListener listener) {
