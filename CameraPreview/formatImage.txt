@@ -1,8 +1,23 @@
 Format d'image YUV :
-Contrairement au format RGB o˘ une image est dÈcomposÈe selon ses composantes de rouge, de vert et de bleu, le format YUV dÈcompose une image selon sa luminance Y et sa chrominance (U,V).
-La luminance a dÈj‡ ÈtÈ expliquÈe dans la recherche prÈcÈdente (http:// ...). Elle est obtenue ‡ partir des composantes RGB classiques par une formule pondÈrÈe par certains coefficients variables.
-La chrominance est la partie composÈe des couleurs dans un signal vidÈo. Il y a la diffÈrence bleue (U = B - Y) et la diffÈrence rouge (V = R - Y).
-Il existe alors une Èquivalence entre RGB et YUV c'est ‡ dire que l'on peut passer de l'un ‡ l'autre.
-Ce format est trËs utilisÈ car il permet de compresser les images par compression de la chrominance tout en laissant inchangÈe la luminance.
-En effet, notre oeil est plus sensible ‡ la luminance qu'‡ la chrominance c'est ‡ dire ‡ la luminositÈ qu'‡ la couleur. 
-Il existe alors plusieurs sous-Èchantillonnages de la chrominance possibles :
+Contrairement au format RGB o√π une image est d√©compos√©e selon ses composantes de rouge, de vert et de bleu, le format YUV d√©compose une image selon sa luminance Y et sa chrominance (U,V).
+La luminance a d√©j√† √©t√© expliqu√©e dans la recherche pr√©c√©dente (http:// ...). Elle est obtenue √† partir des composantes RGB classiques par une formule pond√©r√©e par certains coefficients variables.
+La chrominance est la partie compos√©e des couleurs dans un signal vid√©o. Il y a la diff√©rence bleue (U = B - Y) et la diff√©rence rouge (V = R - Y).
+Il existe alors une √©quivalence entre RGB et YUV c'est √† dire que l'on peut passer de l'un √† l'autre.
+Ce format est tr√®s utilis√© car il permet de compresser les images par compression de la chrominance tout en laissant inchang√©e la luminance.
+En effet, notre oeil est plus sensible √† la luminance qu'√† la chrominance c'est √† dire √† la luminosit√© qu'√† la couleur. 
+Il existe alors plusieurs sous-√©chantillonnages de la chrominance possibles.
+Le sous-√©chantillonage s'exprime sous la forme J:a:b (par exemple 4:4:4) en se pla√ßant dans une r√©gion de J pixels de large et 2 de haut
+J est la r√©f√©rence et vaut presque tout le temps 4
+a est le nombre d'√©chantillons de chrominance dans la premi√®re rang√©e
+b est le nombre d'√©chantillons de chrominance dans la deuxi√®me rang√©e
+
+a et b sont donc inf√©rieurs √† J et plus ils sont faibles plus on compresse.
+a et b n'ont pas forc√©ment la m√™me valeur 
+
+On peut alors calculer la diff√©rence d'utilisation de la bande passante par rapport √† 4:4:4 (correspondant au passage normal : aucune compression, utilis√© en cin√©ma par exemple) en faisant : (J+a+b)/12 (car 12=4+4+4)
+Ainsi un sous-√©chantillonage 4:2:0 utilisera la moiti√© du d√©bit d'un sous-√©chantillonage 4:4:4
+
+Format YUV :
+http://fr.wikipedia.org/wiki/Chrominance
+Echantillonage :
+http://fr.wikipedia.org/wiki/Sous-%C3%A9chantillonnage_de_la_chrominance
