@@ -1,0 +1,35 @@
+Application de l’Homographie :
+
+
+Nous avons besoin des coordonnees initiales pour estimer les coordonnees finales
+
+
+Soient (x,y) les coordonnees initiales d’un pixel, et phi(x,y)=(x’,y’) les coordonnees finales de ce pixel
+
+On note donc phi^(-1)(x’,y’)=(x,y) que l’on decompose en deux fonctions composantes 
+	x1=phix^(-1)(x’,y’)
+	y1=phiy^(-1)(x’,y’)
+
+Cela se trouve à l’aide de la matrice du systeme d’equation
+
+
+On peut ensuite interpoler grace a la methode de la partie entiere. Cette methode est la plus simple et il en existe d’autres plus compliquees que nous appliquerons en cas de resultat pas satisfaisant.
+
+
+Pseudo-code :
+
+
+
+pour x variant de 1 a ymax
+
+	pour y variant de 1 a ymax
+
+		x1 = partieentiere(phix(x,y))
+		y1 = partieentiere(phiy(x,y))
+
+		si (x1 >= 1 et y1 >= 1 et x1 < xmax et y1 < ymax)
+
+			resultat(x,y) = source(x1,y1)
+		fin
+	fin
+fin
