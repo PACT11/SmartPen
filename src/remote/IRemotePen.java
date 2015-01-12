@@ -2,6 +2,7 @@
 package remote;
 
 import java.awt.Image;
+import view.Bitmap;
 
 /* cet interface détaille les méthodes que doit contenir la classe RemotePen
 RemotePen fourni le code pour mettre en place et faire fonctionner une socket 
@@ -44,17 +45,17 @@ public interface IRemotePen {
     l'utilisateur visé, et met en mémoire le listener. La méthode NE DOIT PAS 
     bloquer le programme en attendant la réponse. Quand on recoit en réponse un 
     paquet connectionAnswer, on appelle listener.connectionAnswer(contenu du
-    paquet converti en String) */
+    paquet converti en String) 
     public void connectToUser(String UID, UserAnswerListener listener);
     
     /* ajouter un listener, qui devra être stocké en attribut, qui sera appelé 
     si on recoit une demande de connection. Le contenu du paquet (l'UID de 
     l'utilisateur qui fait la demande) devra etre converti en string puis passé 
-    en argument du listener*/
+    en argument du listener
     public void addConnectionRequestListener(ConnectionRequestListener listener);
     
     /* ajoute un listener qui sera executé quand l'utilisateur distant se 
-    déconnecte. Fonctionnement semblable à addConnectionRequestListener*/
+    déconnecte. Fonctionnement semblable à addConnectionRequestListener
     public void addConnectionClosureListener(ConnectionClosureListener listener);
     
     /* ajoute un listener qui sera executé quand l'utilisateur distant a envoyé 
@@ -80,7 +81,7 @@ public interface IRemotePen {
     faut trouver l'equivalent, c'est à dire un objet capable de représenter une
     image et remplacer. 
     */
-    public void sendImage(Image image);
+    public void sendImage(Bitmap image);
     
     /*envoie un paquet connnectionClosure à l'utilisateur distant contenant 
     l'UID local pour se déconnecter*/
@@ -89,7 +90,7 @@ public interface IRemotePen {
     /* cette méthode doit être appelé quand on recoit des données via la socket 
     TCP. Elle crée le paquet et quand il est terminé, elle appelle le listener
     associé et/ou réalise l'action néccessaire*/
-    void OnReceive();
+    void onReceive(int data);
     
     /* se déconnecte du serveur et ferme la socket*/
     public void close();

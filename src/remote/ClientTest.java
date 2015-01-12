@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  */
 public class ClientTest {
     public static final byte serverIP[] = {(byte)10,(byte)0,(byte)1,(byte)4};
-    public static final int port = 2324;
+    public static final int port = 2323;
     
     public static void main(String args[]) {
         Client client;

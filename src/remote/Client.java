@@ -58,16 +58,15 @@ public class Client {
         this.socket = socket;
         // creation des flux d'entree/sortie
         try {
-            in = new SmartBufferedReader(new
-                    InputStreamReader(socket.getInputStream()));
+            in = new SmartBufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException ex) {
-            System.err.println("Server : unable to create client input stream");
+            System.err.println("RemotePen : unable to create client input stream");
             System.err.println(ex);
         }
         try {
             out = new PrintWriter(socket.getOutputStream(), true);
         } catch (IOException ex) {
-            System.err.println("Server : unable to create client output stream");
+            System.err.println("RemotePen : unable to create client output stream");
             System.err.println(ex);
         }
         
