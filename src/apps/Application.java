@@ -3,6 +3,7 @@ package apps;
 
 import view.*;
 import java.util.ArrayList;
+import remote.*;
 
 /*
  * A general class for all applications. 
@@ -62,5 +63,38 @@ public abstract class Application {
             }
         });
     }
-    
+    protected final void configureRemoteListeners(RemotePen pen) {
+        pen.addConnectionListener(new ConnectionListener() {
+            @Override
+            public void connectionRequest(String distantUID){
+                onConnectionRequest(distantUID);
+            }
+            @Override
+            public void connectionClosed(String distantUID){
+                onConnectionClosure(distantUID);
+            }
+            @Override
+            public void connectionAnswer(boolean accepted){
+                onConnectionAnswer(accepted);
+            }
+        });
+        pen.addCommandListener(new CommandReceiveListener() {
+            @Override
+            public void commandReceived(String command) {
+                onCommandReceived(command);
+            }  
+        });
+        pen.addImageListener(new ImageReceiveListener() {
+            @Override
+            public void imageReceived(Bitmap image) {
+                onImageReceived(image);
+            }
+        });
+    }
+    // methods called when a remotePen event occurs
+    protected void onConnectionRequest(String distantUID){}
+    protected void onConnectionAnswer(boolean isAccepted){}
+    protected void onConnectionClosure(String distantUID){}
+    protected void onCommandReceived(String command){}
+    protected void onImageReceived(Bitmap image){}
 }
