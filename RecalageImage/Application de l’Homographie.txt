@@ -13,8 +13,10 @@ On note donc phi^(-1)(x’,y’)=(x,y) que l’on decompose en deux fonctions co
 Cela se trouve à l’aide de la matrice du systeme d’equation
 
 
-On peut ensuite interpoler grace a la methode de la partie entiere. Cette methode est la plus simple et il en existe d’autres plus compliquees que nous appliquerons en cas de resultat pas satisfaisant.
+Interpolation :
 
+
+************ Methode de la partie entiere ***************
 
 Pseudo-code :
 
@@ -24,12 +26,42 @@ pour x variant de 1 a ymax
 
 	pour y variant de 1 a ymax
 
-		x1 = partieentiere(phix(x,y))
-		y1 = partieentiere(phiy(x,y))
+		x1 = partieentiere(phix^(-1)(x’,y’) + 0,5)
+		y1 = partieentiere(phiy^(-1)(x’,y’) + 0,5)
 
 		si (x1 >= 1 et y1 >= 1 et x1 < xmax et y1 < ymax)
 
-			resultat(x,y) = source(x1,y1)
+			(x’,y’) = phi(x1,y1)
 		fin
 	fin
 fin
+
+
+
+************ Methode de pondération ***************
+
+Lorsque on applique phi^(-1) au point de la base d’arrivee, on regarde les 4 pixels les 4 points les plus proches dans la base initiale (on appelle ces points P00, P10, P01, P11) on peut ainsi ponderer le point obtenu par les 4 points autour 
+
+Notation 
+
+P(x’,y’) le point de la base d’arrivee
+P1=P(x1, y1) le point de la base de depart
+
+
+Pseudo-code :
+
+
+
+pour x variant de 1 a ymax
+
+	pour y variant de 1 a ymax
+		
+		P1=(1-x1)*(1-y1)*P00 + x1*(1-y1)*P10 + y1*(1-x1)*P01 + x1*y1*P11 		
+
+		si (x1 >= 1 et y1 >= 1 et x1 < xmax et y1 < ymax)
+
+			(x’,y’) = phi(x1,y1)
+		fin
+	fin
+fin
+
