@@ -28,6 +28,7 @@ Rapport d'utilisation = (J+a+b)/12 (car 12=4+4+4)
 Ainsi un sous-échantillonage 4:2:0 utilisera la moitié du débit d'un sous-échantillonage 4:4:4
 
 Format YUV :
+http://fr.wikipedia.org/wiki/YUV
 http://fr.wikipedia.org/wiki/Chrominance
 Echantillonnage :
 http://fr.wikipedia.org/wiki/Sous-%C3%A9chantillonnage_de_la_chrominance
