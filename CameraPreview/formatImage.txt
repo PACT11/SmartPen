@@ -1,28 +1,31 @@
-﻿Format d'image YUV :
+Format d'image YUV :
+
 Contrairement au format RGB où une image est décomposée selon ses composantes de rouge, de vert et de bleu, le format YUV décompose une image selon sa luminance Y et sa chrominance (U,V).
-La luminance a déjà été expliquée dans la recherche précédente (http:// ...). Elle est obtenue à partir des composantes RGB classiques par une formule pondérée par certains coefficients variables.
-La chrominance est la partie composée des couleurs dans un signal vidéo. Il y a la différence bleue (U = B - Y) et la différence rouge (V = R - Y).
+La luminance a déjà été expliquée dans la recherche précédente (http:// ...). Elle est obtenue à partir des composantes RGB classiques par une formule pondérée par certains coefficients.
+On peut exprimer Y sous la forme : Y = 0.3*R + 0.59*G + 0.11*B
+
+La chrominance est la partie composée des couleurs dans un signal vidéo. 
+Il y a la différence bleue (U = B - Y) et la différence rouge (V = R - Y).
+
 Il existe alors une équivalence entre RGB et YUV c'est à dire que l'on peut passer de l'un à l'autre.
+
 Ce format est très utilisé car il permet de compresser les images par compression de la chrominance tout en laissant inchangée la luminance.
 En effet, notre oeil est plus sensible à la luminance qu'à la chrominance c'est à dire à la luminosité qu'à la couleur. 
+Si on échantillonnait directement en RGB, on perdrait de la luminance et on verrait tout de suite la différence.
+
 Il existe alors plusieurs sous-échantillonnages de la chrominance possibles.
 Le sous-échantillonage s'exprime sous la forme J:a:b (par exemple 4:4:4) en se plaçant dans une région de J pixels de large et 2 de haut
 J est la référence et vaut presque tout le temps 4
 a est le nombre d'échantillons de chrominance dans la première rangée
 b est le nombre d'échantillons de chrominance dans la deuxième rangée
-
 a et b sont donc inférieurs à J et plus ils sont faibles plus on compresse.
-a et b n'ont pas forcément la même valeur 
 
-On peut alors calculer la différence d'utilisation de la bande passante par rapport à 4:4:4 (correspondant au passage normal : aucune compression, utilisé en cinéma par exemple) en faisant : (J+a+b)/12 (car 12=4+4+4)
+On peut alors calculer la différence d'utilisation de la bande passante par rapport à 4:4:4 (correspondant au passage normal : aucune compression, utilisé en cinéma par exemple) en faisant : 
+Rapport d'utilisation = (J+a+b)/12 (car 12=4+4+4)
 Ainsi un sous-échantillonage 4:2:0 utilisera la moitié du débit d'un sous-échantillonage 4:4:4
 
 Format YUV :
 http://fr.wikipedia.org/wiki/Chrominance
 Echantillonnage :
 http://fr.wikipedia.org/wiki/Sous-%C3%A9chantillonnage_de_la_chrominance
-
 http://pagesperso.lina.univ-nantes.fr/~martin-p/Page_perso_de_la_Fac/Informatique_de_la_Video_files/4-Algorithmes%20des%20codecs.pdf
-
-
-liste des differents sous ensemble de rgb et yuv
