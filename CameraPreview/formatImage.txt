@@ -2,12 +2,15 @@ Format d'image YUV :
 
 Contrairement au format RGB où une image est décomposée selon ses composantes de rouge, de vert et de bleu, le format YUV décompose une image selon sa luminance Y et sa chrominance (U,V).
 La luminance a déjà été expliquée dans la recherche précédente (http:// ...). Elle est obtenue à partir des composantes RGB classiques par une formule pondérée par certains coefficients.
-On peut exprimer Y sous la forme : Y = 0.3*R + 0.59*G + 0.11*B
+On peut exprimer Y sous la forme : Y = 0.299*R + 0.587*G + 0.114*B
 
 La chrominance est la partie composée des couleurs dans un signal vidéo. 
-Il y a la différence bleue (U = B - Y) et la différence rouge (V = R - Y).
+Il y a la différence bleue U = 0.492*(B - Y) et la différence rouge V = 0.877*(R - Y).
 
-Il existe alors une équivalence entre RGB et YUV c'est à dire que l'on peut passer de l'un à l'autre.
+Il existe alors une équivalence entre RGB et YUV c'est à dire que l'on peut passer de l'un à l'autre :
+R = Y + 1,13983*V                      Y = 0,299*R + 0,587*G + 0,114*B
+G = Y − 0,39465*U − 0,58060*V          U = −0,14713*R − 0,28886*G + 0,436*B
+B = Y + 2,03211*U                      V = 0,615*R − 0,51498*G- 0,10001*B
 
 Ce format est très utilisé car il permet de compresser les images par compression de la chrominance tout en laissant inchangée la luminance.
 En effet, notre oeil est plus sensible à la luminance qu'à la chrominance c'est à dire à la luminosité qu'à la couleur. 
