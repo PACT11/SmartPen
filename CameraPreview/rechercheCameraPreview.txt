@@ -7,6 +7,9 @@ http://developer.android.com/reference/android/view/SurfaceView.html
 Classe surface holder:
 http://developer.android.com/reference/android/view/SurfaceHolder.html
 
+Classe surface Texture:
+http://developer.android.com/reference/android/graphics/SurfaceTexture.html
+
 Format d'image: 
 http://developer.android.com/reference/android/graphics/ImageFormat.html
 
@@ -17,6 +20,9 @@ L'outil camera preview est un outil java qui comprend les classes SurfceView et 
 Si nous voulons faire des captures d'images en continue, il faut utiliser les méthodes startPreview et stpPreview afin de débuter et de finir la capture en continu.La méthode setPreviewDisplay, elle, permet de définir où nous voulons récupérer les images.
 Ces trois méthodes appartiennent à la classe SurfaceHolder.
 Sous java, nous pouvons récupérer les images sous la forme de matrice de pixels dans divers formats tels que le format jpep.
+
+Un SurfaceTexture peut également être utilisé à la place d'un SurfaceHolder lorsque vous spécifiez la destination de sortie de l'API de l'appareil photo plus. 
+Cela pourrait causer toutes les images du flux d'image doivent être envoyés à l'objet de SurfaceTexture plutôt que de l'écran de l' appareil.
 
 
 La luminance:
@@ -33,7 +39,8 @@ Dans le cas où une résolution de smartphone android ne serait pas suffisante il 
 
 SurfaceTexture 
 coder une appli test 
-liste des pixel 
+liste des pixel:
+ 
 format couleur rgb comment passer en luminense yuv.
 
 texture réafficher.
