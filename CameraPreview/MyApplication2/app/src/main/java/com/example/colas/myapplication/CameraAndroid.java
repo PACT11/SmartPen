@@ -57,7 +57,7 @@ public class CameraAndroid extends ActionBarActivity {
         }
     };
 
-    public void snapIt(View view){
+    public void takePicture(View view){
         cameraObject.takePicture(null, null, capturedIt);
     }
 

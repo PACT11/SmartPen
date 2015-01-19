@@ -45,6 +45,6 @@ format couleur rgb comment passer en luminense yuv.
 
 texture réafficher.
 
-Réfléchir ou se situe le décalage.
+Réfléchir ou se situe le recalage.
 
 biblio sur les formats d'images.
