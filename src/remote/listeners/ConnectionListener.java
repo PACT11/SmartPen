@@ -1,5 +1,5 @@
 
-package remote;
+package remote.listeners;
 
 // un listener contenant les methodes appelés pour la gestion de connection/deconnection avec un SmartPen distant
 public abstract class ConnectionListener {

@@ -10,7 +10,7 @@ public class TestApp extends Application {
     @Override
     protected void onLaunch() {
         pen = new RemotePen("john appleseed");
-        pen.connectToServerFromFile(getClass().getResource("/serverAddress").getFile());
+        pen.connectToServerFromFile("/serverAddress");
         configureRemoteListeners(pen);
         
         String[] users = pen.getConnectedUsers();

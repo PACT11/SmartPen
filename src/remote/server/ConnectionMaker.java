@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package remote;
+package remote.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -16,7 +16,6 @@ import java.net.Socket;
 public class ConnectionMaker extends Thread {
     private ServerSocket connectionSocket;
     private boolean running;
-    private ClientListener clientListener;
     
     public ConnectionMaker(ServerSocket socket) {
         connectionSocket = socket;
@@ -27,8 +26,8 @@ public class ConnectionMaker extends Thread {
         while(running) {
             try {
                 Socket newSocket = connectionSocket.accept();
-                if(clientListener != null)
-                    clientListener.newClient(Client.add(newSocket));
+                Client.add(newSocket);
+                System.out.println("Server : new client connected !");
             } catch (IOException ex) {
                 if(connectionSocket.isClosed()) {
                     System.out.println("Server : stop connection making");
@@ -40,8 +39,5 @@ public class ConnectionMaker extends Thread {
     }
     public void close() {
         running = false;
-    }
-    public void addNewClientListener(ClientListener listener) {
-        clientListener = listener;
     }
 }

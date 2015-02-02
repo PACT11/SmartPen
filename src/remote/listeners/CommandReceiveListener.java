@@ -1,5 +1,5 @@
 
-package remote;
+package remote.listeners;
 
 /* Listener de reception de commande :
 Cet objet permet a l'application de réagir en cas de reception d'une commande. 

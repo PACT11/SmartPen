@@ -1,5 +1,9 @@
 package remote;
 
+import remote.listeners.ConnectionListener;
+import remote.listeners.CommandReceiveListener;
+import remote.listeners.ImageReceiveListener;
+import remote.listeners.MessageListener;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -14,13 +18,12 @@ public class RemotePen {
     
     private Socket socket;
     private PrintWriter out;
-    private SmartBufferedReader in;
+    private SmartInputStream in;
     private String UID;                     // l'identifiant unique du client
-    private Packet currentPacket;           // la paquet en cours de reception
     private String distantUID;              // identifiant unique du client a qui on est connecté (if any)
     private boolean userListReceived;       // un flag pour débloquer getUserList quand la liste est recu
     
-// le constructeur doit avoir la forme public RemotePen(String UID); 
+    // le constructeur doit avoir la forme public RemotePen(String UID); 
     public RemotePen(String localUID){
         this.UID=localUID;
     }
@@ -40,7 +43,7 @@ public class RemotePen {
         }
         // open input stream
         try {
-            in = new SmartBufferedReader(new InputStreamReader(socket.getInputStream()));
+            in = new SmartInputStream(socket.getInputStream());
         } catch (IOException ex) {
             System.err.println("RemotePen : unable to create client input stream");
             System.err.println(ex);
@@ -53,7 +56,7 @@ public class RemotePen {
             System.err.println(ex);
         }
         
-        in.addDataListener(new DataListener() { // appelé quand in recoit un caractere
+        in.addDataListener(new MessageListener() { // appelé quand in recoit un caractere
             @Override
             public void dataReceived(int data) {
                 onReceive(data);
@@ -78,9 +81,10 @@ public class RemotePen {
         byte[] serverIp = {10,0,1,4};
         int port= 2323;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(filename)); // open the file
-            String line;
+            BufferedReader reader = new BufferedReader(
+                    new FileReader(getClass().getResource(filename).getFile())); // open the file
             
+            String line;
             while((line = reader.readLine()) != null) {
                 line = line.trim().toLowerCase();
                 if(line.startsWith("port:")) {
@@ -105,7 +109,7 @@ public class RemotePen {
     /* cette methode doit etre appele quand on recoit des donnees via la socket 
     TCP. Elle cree le paquet et quand il est termine, elle appelle le listener
     associe et/ou realise l'action neccessaire*/
-    public void onReceive(int data) {
+    private void onReceive(int data) {
         if(currentPacket==null || currentPacket.isComplete()) {
             currentPacket = new Packet(data);
         } else {
@@ -114,6 +118,7 @@ public class RemotePen {
                 onPacketReceive();
         }
     }
+    
     /* appelee quand on a recu un paquet complet et valide*/
     private synchronized void onPacketReceive() {
         switch(currentPacket.getHeader()) {

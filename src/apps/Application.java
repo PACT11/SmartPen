@@ -1,6 +1,9 @@
 
 package apps;
 
+import remote.listeners.ConnectionListener;
+import remote.listeners.CommandReceiveListener;
+import remote.listeners.ImageReceiveListener;
 import view.*;
 import java.util.ArrayList;
 import remote.*;
