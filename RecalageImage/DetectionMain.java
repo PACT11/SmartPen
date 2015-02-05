@@ -19,11 +19,92 @@ public class DetectionMain {
 
 	}
 	
-	/* vrai seuil feuille2 et feuille3 : 720 000 
-	 * 
-	 */
 	
-	public static int differenceHistogramme(BufferedImage image1, BufferedImage image2) {
+	
+	public static String differenceHistogramme(BufferedImage image1, BufferedImage image2) {
+		int seuilDifference = 4600000;
+		
+		int[] histogramme1R = histogrammeRouge(image1);
+		int [] histogramme2R = histogrammeRouge(image2);
+		int differenceR = 0;
+		
+		for (int i=0; i<256;i++)
+			differenceR += Math.abs(histogramme1R[i]-histogramme2R[i]);
+		
+		int[] histogramme1V = histogrammeVert(image1);
+		int [] histogramme2V = histogrammeVert(image2);
+		int differenceV = 0;
+		
+		for (int i=0; i<256;i++)
+			differenceV += Math.abs(histogramme1V[i]-histogramme2V[i]);
+		
+		int[] histogramme1B = histogrammeBleu(image1);
+		int [] histogramme2B = histogrammeBleu(image2);
+		int differenceB = 0;
+		
+		for (int i=0; i<256;i++)
+			differenceB += Math.abs(histogramme1B[i]-histogramme2B[i]);
+		
+		int differenceTotale = (differenceR + differenceV + differenceB)/3;
+		
+		if (differenceTotale>seuilDifference)
+			return "La main n'est plus presente";
+		else 
+			return "La main est la";
+	}
+	
+    public static int[] histogrammeRouge(BufferedImage image) {
+ 
+        int[] histogrammeRouge = new int[256];
+ 
+        for(int i=0; i<histogrammeRouge.length; i++) histogrammeRouge[i] = 0;
+ 
+        for(int i=0; i<image.getWidth(); i++) {
+            for(int j=0; j<image.getHeight(); j++) {
+                int red = new Color(image.getRGB (i, j)).getRed();
+                histogrammeRouge[red]++;
+            }
+        }
+ 
+        return histogrammeRouge;
+ 
+    }
+    
+    public static int[] histogrammeVert(BufferedImage image) {
+    	 
+        int[] histogrammeVert = new int[256];
+ 
+        for(int i=0; i<histogrammeVert.length; i++) histogrammeVert[i] = 0;
+ 
+        for(int i=0; i<image.getWidth(); i++) {
+            for(int j=0; j<image.getHeight(); j++) {
+                int red = new Color(image.getRGB (i, j)).getRed();
+                histogrammeVert[red]++;
+            }
+        }
+ 
+        return histogrammeVert;
+ 
+    }
+    
+    public static int[] histogrammeBleu(BufferedImage image) {
+   	 
+        int[] histogrammeBleu = new int[256];
+ 
+        for(int i=0; i<histogrammeBleu.length; i++) histogrammeBleu[i] = 0;
+ 
+        for(int i=0; i<image.getWidth(); i++) {
+            for(int j=0; j<image.getHeight(); j++) {
+                int red = new Color(image.getRGB (i, j)).getRed();
+                histogrammeBleu[red]++;
+            }
+        }
+ 
+        return histogrammeBleu;
+ 
+    }
+    
+	/*public static String differenceHistogrammeRouge(BufferedImage image1, BufferedImage image2) {
 		int seuilDifference = 850000;
 		int[] histogramme1 = histogrammeRouge(image1);
 		int [] histogramme2 = histogrammeRouge(image2);
@@ -33,60 +114,11 @@ public class DetectionMain {
 			difference += Math.abs(histogramme1[i]-histogramme2[i]);
 		
 		if (difference>seuilDifference)
-			return 1;
+			return "La main n'est plus presente";
 		else 
-			return 0;
+			return "La main est la";
 	}
 	
-    public static int[] histogrammeRouge(BufferedImage imageOriginale) {
- 
-        int[] histogrammeRouge = new int[256];
- 
-        for(int i=0; i<histogrammeRouge.length; i++) histogrammeRouge[i] = 0;
- 
-        for(int i=0; i<imageOriginale.getWidth(); i++) {
-            for(int j=0; j<imageOriginale.getHeight(); j++) {
-                int red = new Color(imageOriginale.getRGB (i, j)).getRed();
-                histogrammeRouge[red]++;
-            }
-        }
- 
-        return histogrammeRouge;
- 
-    }
-    
-    public static int[] histogrammeVert(BufferedImage imageOriginale) {
-    	 
-        int[] histogrammeVert = new int[256];
- 
-        for(int i=0; i<histogrammeVert.length; i++) histogrammeVert[i] = 0;
- 
-        for(int i=0; i<imageOriginale.getWidth(); i++) {
-            for(int j=0; j<imageOriginale.getHeight(); j++) {
-                int red = new Color(imageOriginale.getRGB (i, j)).getRed();
-                histogrammeVert[red]++;
-            }
-        }
- 
-        return histogrammeVert;
- 
-    }
-    
-    public static int[] histogrammeBleu(BufferedImage imageOriginale) {
-   	 
-        int[] histogrammeBleu = new int[256];
- 
-        for(int i=0; i<histogrammeBleu.length; i++) histogrammeBleu[i] = 0;
- 
-        for(int i=0; i<imageOriginale.getWidth(); i++) {
-            for(int j=0; j<imageOriginale.getHeight(); j++) {
-                int red = new Color(imageOriginale.getRGB (i, j)).getRed();
-                histogrammeBleu[red]++;
-            }
-        }
- 
-        return histogrammeBleu;
- 
-    }
+	*/
 
 }
