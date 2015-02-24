@@ -1,6 +1,7 @@
 package com.example.colas.myapplication;
 
 import android.content.Context;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 
 import android.os.Bundle;
@@ -22,22 +23,32 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Button;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-
+import java.io.InputStream;
+import java.util.Date;
 
 public class CameraAndroid extends ActionBarActivity {
     private Camera cameraObject;
     private ShowCamera showCamera;
     private ImageView pic;
+    private Bitmap bitmap;
 
     public static Camera isCameraAvailiable(){
         Camera object = null;
         try {
             object = Camera.open();
+            object.startPreview();
         }
         catch (Exception e){
         }
         return object;
+    }
+
+    public Bitmap getBitmap()
+    {
+        return this.bitmap;
     }
 
     private PictureCallback capturedIt = new PictureCallback() {
@@ -46,6 +57,7 @@ public class CameraAndroid extends ActionBarActivity {
         public void onPictureTaken(byte[] data, Camera camera) {
 
             Bitmap bitmap = BitmapFactory.decodeByteArray(data , 0, data .length);
+            savePicture(bitmap);
             if(bitmap==null){
                 Toast.makeText(getApplicationContext(), "not taken", Toast.LENGTH_SHORT).show();
             }
@@ -57,7 +69,39 @@ public class CameraAndroid extends ActionBarActivity {
         }
     };
 
+    public void savePicture(Bitmap bitmap){
+        FileOutputStream fos = null;
+        Bitmap bmp;
+        bmp = bitmap;
+        Date date=new Date();
+        try {
+            String path_file  = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+ "SmartPenImage";
+            System.out.println(path_file);
+            File file = new File(path_file, "Smartpen-"+date.getDay()+"-"+date.getMonth()+"-"+date.getYear()+".png");
+            File myDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
+                    File.separator + "SmartPenImage"); //pour créer le repertoire dans lequel on va mettre notre fichier
+     //       Boolean success=true;
+            if (!myDir.exists()) {
+                myDir.mkdir(); //On crée le répertoire (s'il n'existe pas!!)
+            }
+            fos = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void takePicture(View view){
+
         cameraObject.takePicture(null, null, capturedIt);
     }
 
@@ -70,6 +114,7 @@ public class CameraAndroid extends ActionBarActivity {
         showCamera = new ShowCamera(this, cameraObject);
         FrameLayout preview = (FrameLayout) findViewById(R.id.cameraPreview);
         preview.addView(showCamera);
+
 
     }
 

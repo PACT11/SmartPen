@@ -32,15 +32,20 @@ public class ShowCamera extends SurfaceView implements SurfaceHolder.Callback{
           //System.out.println(e.setStackTrace());
         }
 
-    }
+}
+
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+        Camera.Parameters parameters = theCamera.getParameters();
+        parameters.setPreviewSize(width, height);
+        theCamera.setParameters(parameters);
+        theCamera.startPreview();
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+        theCamera.stopPreview();
+        theCamera = null;
     }
 }

@@ -1,0 +1,7 @@
+C:\Users\Colas\workspace\SmartPen\CameraPreview\Camera2Basic\Application\build\intermediates\classes\debug
+C:\Users\Colas\workspace\SmartPen\CameraPreview\Camera2Basic\Application\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-43e3711f79bad58c7e4067367ebef87956233b45.jar
+C:\Users\Colas\workspace\SmartPen\CameraPreview\Camera2Basic\Application\build\intermediates\pre-dexed\debug\support-annotations-21.0.2-546a907931853c2c63cbb81a9c97b06ca8ccb792.jar
+C:\Users\Colas\workspace\SmartPen\CameraPreview\Camera2Basic\Application\build\intermediates\pre-dexed\debug\classes-51caf078d71929715bfdfbc6d6fced4db2a794f6.jar
+C:\Users\Colas\workspace\SmartPen\CameraPreview\Camera2Basic\Application\build\intermediates\pre-dexed\debug\classes-43a471eeaf5a18918d09101f2af13e63d9832e1c.jar
+C:\Users\Colas\workspace\SmartPen\CameraPreview\Camera2Basic\Application\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-9dc30ec1878ad69718891a70738c80644df6b9f2.jar
+C:\Users\Colas\workspace\SmartPen\CameraPreview\Camera2Basic\Application\build\intermediates\pre-dexed\debug\classes-57c6040febe1f65a9f09a5c24bb4971d9691a3d2.jar
