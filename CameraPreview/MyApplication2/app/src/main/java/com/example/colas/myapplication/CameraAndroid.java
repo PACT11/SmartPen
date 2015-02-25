@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CameraAndroid extends ActionBarActivity {
@@ -34,6 +35,7 @@ public class CameraAndroid extends ActionBarActivity {
     private ShowCamera showCamera;
     private ImageView pic;
     private Bitmap bitmap;
+
 
     public static Camera isCameraAvailiable(){
         Camera object = null;
@@ -56,16 +58,18 @@ public class CameraAndroid extends ActionBarActivity {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
 
-            Bitmap bitmap = BitmapFactory.decodeByteArray(data , 0, data .length);
+            Bitmap btm = BitmapFactory.decodeByteArray(data , 0, data .length);
+            bitmap = btm;
             savePicture(bitmap);
             if(bitmap==null){
                 Toast.makeText(getApplicationContext(), "not taken", Toast.LENGTH_SHORT).show();
+
             }
             else
             {
                 Toast.makeText(getApplicationContext(), "taken", Toast.LENGTH_SHORT).show();
             }
-            cameraObject.release();
+            cameraObject.startPreview();
         }
     };
 
@@ -74,13 +78,14 @@ public class CameraAndroid extends ActionBarActivity {
         Bitmap bmp;
         bmp = bitmap;
         Date date=new Date();
+        SimpleDateFormat timeStampFormat = new SimpleDateFormat(
+                "yyyy-MM-dd-HH.mm.ss");
         try {
             String path_file  = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+ "SmartPenImage";
             System.out.println(path_file);
-            File file = new File(path_file, "Smartpen-"+date.getDay()+"-"+date.getMonth()+"-"+date.getYear()+".png");
+            File file = new File(path_file, "Smartpen-"+timeStampFormat.format(date)+".png");
             File myDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
-                    File.separator + "SmartPenImage"); //pour créer le repertoire dans lequel on va mettre notre fichier
-     //       Boolean success=true;
+                    File.separator + "SmartPenImage"); //pour créer le repertoire dans lequel on va mettre notre image
             if (!myDir.exists()) {
                 myDir.mkdir(); //On crée le répertoire (s'il n'existe pas!!)
             }
@@ -101,9 +106,9 @@ public class CameraAndroid extends ActionBarActivity {
     }
 
     public void takePicture(View view){
-
         cameraObject.takePicture(null, null, capturedIt);
-    }
+
+}
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
