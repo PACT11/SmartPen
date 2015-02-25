@@ -1,9 +1,11 @@
 import java.awt.Color;
+import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Line;
 
 
 public class TracerDroite {
@@ -27,6 +29,8 @@ private static BufferedImage imageOriginale, imageAvecDroite;
 	public static BufferedImage mettreDroite(BufferedImage imageOriginale) {
 		int alpha;
         int nouveauPixel;
+        
+        Line2D.Double line = new Line2D.Double(5,2);
  
         BufferedImage imageAvecDroite = new BufferedImage(imageOriginale.getWidth(), imageOriginale.getHeight(), imageOriginale.getType());
  
