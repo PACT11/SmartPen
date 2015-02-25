@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +17,7 @@ private static BufferedImage imageOriginale, imageNiveauDeGris;
         imageOriginale = ImageIO.read(fichierOriginal);
         imageNiveauDeGris = mettreEnNiveauDeGris(imageOriginale);
         creerImage(fichierSortie);      
-
+        
 	}
 	
 	private static void creerImage(String sortie) throws IOException {
