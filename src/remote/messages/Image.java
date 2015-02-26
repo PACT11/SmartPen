@@ -10,6 +10,6 @@ public class Image extends ServerPassiveMessage {
     
     @Override
     public void onClientReceive(RemotePen client) {
-        
+        client.onImageReceive();
     }
 }

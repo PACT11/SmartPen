@@ -1,7 +1,7 @@
 
 package remote.messages;
 
-import remote.server.Client;
+import remote.server.ServerClient;
 import remote.RemotePen;
 
 /*
@@ -15,12 +15,13 @@ public class ConnectionClosure extends Message {
         this.source = source;
     }
     @Override
-    public void onServerReceive(Client client) {
+    public void onServerReceive(ServerClient client) {
         client.getConnection().close(client);
     }
 
     @Override
     public void onClientReceive(RemotePen client) {
-        
+        if(client.getConnectionListener()!=null)
+            client.getConnectionListener().connectionClosed(source);
     }
 }

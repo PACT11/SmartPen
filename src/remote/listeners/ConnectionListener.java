@@ -9,5 +9,5 @@ public abstract class ConnectionListener {
     public void connectionClosed(String distantUID){}
     // appellée à la reception de la reponse du client 
     // accepted : true/false si le client a ete trouve et a répondu, null si le client n'a pas été trouvé
-    public void connectionAnswer(boolean accepted){}
+    public void connectionAnswer(short answer){}
 }

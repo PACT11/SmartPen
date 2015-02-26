@@ -3,11 +3,8 @@ package remote;
 
 import remote.messages.Message;
 import remote.listeners.MessageListener;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -31,10 +28,10 @@ public class IncomingDataCaller extends Thread {
                 if(listener!=null)
                     listener.messageReceived(message);
             } catch (IOException | ClassNotFoundException ex) {
-                System.out.println("Server : closed input stream");
-                running = false;
-                if(closeListener != null)
+                System.out.println("SmartInputStream : closed input stream");
+                if((closeListener != null)&&running)
                     closeListener.run();
+                running = false;
             }
         }
     }

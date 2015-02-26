@@ -1,7 +1,7 @@
 
 package remote.messages;
 
-import remote.server.Client;
+import remote.server.ServerClient;
 import remote.RemotePen;
 
 /*
@@ -18,7 +18,7 @@ public class ConnectionAnswer extends Message {
         this.answer = acceptConnection;
     }
     @Override
-    public void onServerReceive(Client client) {
+    public void onServerReceive(ServerClient client) {
         // on retransmet ce message au client connecté
         if(client.getConnection()!=null)
             client.getConnection().sendMessage(this, client);
@@ -29,7 +29,8 @@ public class ConnectionAnswer extends Message {
 
     @Override
     public void onClientReceive(RemotePen client) {
-
+        if(client.getConnectionListener()!=null)
+            client.getConnectionListener().connectionAnswer(answer);
     }
     
 }

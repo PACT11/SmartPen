@@ -1,8 +1,8 @@
 
 package remote.messages;
 
-import remote.server.Client;
 import remote.RemotePen;
+import remote.server.ServerClient;
 
 /*
  */
@@ -10,13 +10,14 @@ public class UserList extends Message {
     private String[] users;
     
     @Override
-    public void onServerReceive(Client client) {
-        users = Client.getUserList();
+    public void onServerReceive(ServerClient client) {
+        users = ServerClient.getUserList();
         client.sendMessage(this);
     }
 
     @Override
-    public void onClientReceive(RemotePen client) {
-
+    public synchronized void onClientReceive(RemotePen client) {
+        client.setUserList(users);
+        client.notify();
     }
 }

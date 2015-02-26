@@ -26,7 +26,7 @@ public class ConnectionMaker extends Thread {
         while(running) {
             try {
                 Socket newSocket = connectionSocket.accept();
-                Client.add(newSocket);
+                ServerClient.add(newSocket);
                 System.out.println("Server : new client connected !");
             } catch (IOException ex) {
                 if(connectionSocket.isClosed()) {

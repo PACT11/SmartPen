@@ -2,7 +2,7 @@
 package remote.messages;
 
 import remote.server.Connection;
-import remote.server.Client;
+import remote.server.ServerClient;
 import remote.*;
 
 /*
@@ -17,12 +17,13 @@ public class ConnectionRequest extends Message {
         this.sourceUID = sourceUID;
     }
     @Override
-    public void onServerReceive(Client client) {
+    public void onServerReceive(ServerClient client) {
         // essaie de trouver le destinataire
-        if(Client.getClient(targetUID)!=null) {          // si il est bien connecté, on crée une nouvelle connection (que des connections à deux pour l'instant)
+        if(ServerClient.getClient(targetUID)!=null) {          // si il est bien connecté, on crée une nouvelle connection (que des connections à deux pour l'instant)
             Connection connection = new Connection();
             connection.addMember(client);
-            connection.addMember(Client.getClient(targetUID));
+            connection.addMember(ServerClient.getClient(targetUID));
+            ServerClient.getClient(targetUID).sendMessage(this);
         } else {                                         // sinon on répond que le destinataire spécifié n'a pas été trouvé
             client.sendMessage(new ConnectionAnswer(ConnectionAnswer.TARGETNOTFOUND));
         }
@@ -30,7 +31,8 @@ public class ConnectionRequest extends Message {
 
     @Override
     public void onClientReceive(RemotePen client) {
-        
+        if(client.getConnectionListener()!=null)
+            client.getConnectionListener().connectionRequest(sourceUID);
     }
     
 }

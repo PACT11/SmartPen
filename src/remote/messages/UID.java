@@ -1,8 +1,8 @@
 
 package remote.messages;
 
-import remote.server.Client;
 import remote.RemotePen;
+import remote.server.ServerClient;
 
 /*
  */
@@ -13,7 +13,7 @@ public class UID extends Message {
         this.UID = UID;
     }
     @Override
-    public void onServerReceive(Client client) {
+    public void onServerReceive(ServerClient client) {
         client.setUID(UID);
     }
 

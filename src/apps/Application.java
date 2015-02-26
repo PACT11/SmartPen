@@ -77,8 +77,8 @@ public abstract class Application {
                 onConnectionClosure(distantUID);
             }
             @Override
-            public void connectionAnswer(boolean accepted){
-                onConnectionAnswer(accepted);
+            public void connectionAnswer(short answer){
+                onConnectionAnswer(answer);
             }
         });
         pen.addCommandListener(new CommandReceiveListener() {
@@ -96,7 +96,7 @@ public abstract class Application {
     }
     // methods called when a remotePen event occurs
     protected void onConnectionRequest(String distantUID){}
-    protected void onConnectionAnswer(boolean isAccepted){}
+    protected void onConnectionAnswer(short answer){}
     protected void onConnectionClosure(String distantUID){}
     protected void onCommandReceived(String command){}
     protected void onImageReceived(Bitmap image){}

@@ -6,7 +6,7 @@
 package remote.messages;
 
 import java.io.Serializable;
-import remote.server.Client;
+import remote.server.ServerClient;
 import remote.RemotePen;
 
 /**
@@ -15,7 +15,7 @@ import remote.RemotePen;
  */
 public abstract class Message implements Serializable {
     // appelé quand le serveur a recu un message
-    public abstract void onServerReceive(Client client);
+    public abstract void onServerReceive(ServerClient client);
     // appelé quand le client a recu un message
     public abstract void onClientReceive(RemotePen client);
 }

@@ -15,6 +15,6 @@ public class Command extends ServerPassiveMessage {
     
     @Override
     public void onClientReceive(RemotePen client) {
-        
+        client.onCommandReceive(command);
     }
 }

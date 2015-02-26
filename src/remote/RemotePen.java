@@ -1,27 +1,23 @@
 package remote;
 
-import remote.listeners.ConnectionListener;
-import remote.listeners.CommandReceiveListener;
-import remote.listeners.ImageReceiveListener;
-import remote.listeners.MessageListener;
+import remote.listeners.*;
+import remote.messages.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import remote.ipSync.IPsyncClient;
+
 import view.Bitmap;
 
-public class RemotePen {
+public class RemotePen extends Client {
+    public final int DEFAULTPORT = 2323;
     //listeners
     private ConnectionListener connectionListener;
     private ImageReceiveListener imageListener;
     private CommandReceiveListener commandListener;
     
-    private Socket socket;
-    private PrintWriter out;
-    private SmartInputStream in;
-    private String UID;                     // l'identifiant unique du client
-    private String distantUID;              // identifiant unique du client a qui on est connecté (if any)
-    private boolean userListReceived;       // un flag pour débloquer getUserList quand la liste est recu
+    private String[] userList;              // la liste des utilisateurs connectés au serveur
     
     // le constructeur doit avoir la forme public RemotePen(String UID); 
     public RemotePen(String localUID){
@@ -29,7 +25,7 @@ public class RemotePen {
     }
 
     /* connecter la socket TCP au serveur distant.*/
-    public void connectToServer(byte[] serverIp, int port) {
+    public void connect(byte[] serverIp, int port) {
         // open socket connected to server
         try {
             socket = new Socket(InetAddress.getByAddress(serverIp), port);
@@ -41,45 +37,17 @@ public class RemotePen {
             System.err.println("RemotePen : problem with I/O");
             System.err.println(e);
         }
-        // open input stream
-        try {
-            in = new SmartInputStream(socket.getInputStream());
-        } catch (IOException ex) {
-            System.err.println("RemotePen : unable to create client input stream");
-            System.err.println(ex);
-        }
-        //open output stream
-        try {
-            out = new PrintWriter(socket.getOutputStream(), true);
-        } catch (IOException ex) {
-            System.err.println("RemotePen : unable to create client output stream");
-            System.err.println(ex);
-        }
+        connect(socket); // connecter les flux d'entrée/sortie
         
-        in.addDataListener(new MessageListener() { // appelé quand in recoit un caractere
-            @Override
-            public void dataReceived(int data) {
-                onReceive(data);
-            }
-        });
-
-        in.addCloseListener(new Runnable() { // appelé quand in a été fermé
-            @Override
-            public void run() {
-                onClose();
-            }          
-        });
-        // handshake : on envoie notre UID au serveur pour que les autres clients puissent nous identifier 
-        Packet packet = new Packet(Header.UID);
-        packet.setMessage(UID);
-        sendPacket(packet);
+        // handshake : on envoie notre UID au serveur pour que les autres clients puissent nous identifier
+        sendMessage(new UID(UID));
     }
 
     /* connecter la socket TCP a un serveur distant dont l'IP est stockee 
     dans un fichier. */
-    public void connectToServerFromFile(String filename) {
+    public void connect(String filename) {
         byte[] serverIp = {10,0,1,4};
-        int port= 2323;
+        int port= DEFAULTPORT;
         try {
             BufferedReader reader = new BufferedReader(
                     new FileReader(getClass().getResource(filename).getFile())); // open the file
@@ -103,56 +71,21 @@ public class RemotePen {
         } catch (java.io.IOException|java.lang.NumberFormatException e) {
             System.err.println("RemotePen : opening error : invalid file");
         }
-        connectToServer(serverIp, port);
-    }
-
-    /* cette methode doit etre appele quand on recoit des donnees via la socket 
-    TCP. Elle cree le paquet et quand il est termine, elle appelle le listener
-    associe et/ou realise l'action neccessaire*/
-    private void onReceive(int data) {
-        if(currentPacket==null || currentPacket.isComplete()) {
-            currentPacket = new Packet(data);
-        } else {
-            currentPacket.readChar(data);
-            if(currentPacket.isComplete()&&currentPacket.isSane())
-                onPacketReceive();
-        }
+        connect(serverIp, port);
     }
     
-    /* appelee quand on a recu un paquet complet et valide*/
-    private synchronized void onPacketReceive() {
-        switch(currentPacket.getHeader()) {
-            case userList:
-                userListReceived = true;
-                this.notify(); 
-                break;
-            case connectionClosure:
-                if(connectionListener!=null)
-                    connectionListener.connectionClosed(distantUID);
-                distantUID = null;
-                break;
-            case connectionRequest:
-                distantUID = currentPacket.getStringMessage();
-                if(connectionListener!=null)
-                    connectionListener.connectionRequest(distantUID);
-                break;
-            case connectionAnswer:
-                if(!currentPacket.getStringMessage().equals("o"))
-                    distantUID=null;
-                if(connectionListener!=null)
-                    connectionListener.connectionAnswer(currentPacket.getStringMessage().equals("o"));
-                break;
-            case command:
-                if(commandListener!=null)
-                    commandListener.commandReceived(currentPacket.getStringMessage());
-                break;
-            case image:
-                onImageReceive();
-                break;
-        }
+    /*se connecter au serveur dont on récupere l'IP via IPsync et le port DEFAULTPORT*/
+    public void connect() {
+        connect(IPsyncClient.getIP(),DEFAULTPORT);
+    }
+    
+    /* appelee quand on a recu un message*/
+    @Override
+    protected synchronized void onReceive(Message message) {
+        message.onClientReceive(this);
     }
     /* quand une image est recu */
-    private void onImageReceive() {
+    public void onImageReceive() {
         Bitmap image = null;
         
         // TODO : algo
@@ -160,113 +93,57 @@ public class RemotePen {
         if(imageListener!=null)
             imageListener.imageReceived(image);
     }
-    /* envoyer un paquet au serveur*/
-    private void sendPacket(Packet packet) {
-        System.out.println("RemotePen : send packet " + packet.getHeader());
-        out.write(packet.getCharArray());
-        out.flush();
+    /* quand une image est recu */
+    public void onCommandReceive(String command) {
+        if(commandListener!=null)
+            commandListener.commandReceived(command);
     }
-    /* obtenir la liste des utilisateurs connectés. Dans ce cas, et ce cas 
-    seulement, pour des questions de simplicité, on envoie un paquet userList 
-    vide et on bloque le programme jusqu'à obtenir la réponse du serveur.*/
+
+    /* obtenir la liste des utilisateurs connectés (bloque l'execution)*/
     synchronized public String[] getConnectedUsers() {
-        if(!isReady())         // verifier que la socket est bien connectée
-            return null;
-        
-        sendPacket(new Packet(Header.userList));
-        userListReceived = false;
+        sendMessage(new UserList());
+        userList = null;
         try {
             this.wait(1000);
-        } catch (InterruptedException ex) {
+        } catch (InterruptedException ex) {}
+        if(userList==null) {
+            System.err.println("RemotePen : reception timeout ! No packet received");
         }
-        
-        if(userListReceived) {
-            return currentPacket.getStringMessage().split("\n");
-        } else {
-            System.err.println("reception timeout ! No packet received");
-            return null;
-        }
+        return userList;
     }
     /*envoyer une requête de connection à l'utilisateur spécifié*/
-    public void connectToUser(String UID) {
-        if(!isReady())     // verifier que la socket est bien connectée
-            return;
-        
-        Packet packet = new Packet(Header.connectionRequest);
-        packet.setMessage(UID);
-        sendPacket(packet);
-        distantUID = UID;
+    public void connectToUser(String targetUID) {
+        sendMessage(new ConnectionRequest(UID,targetUID));
     }
     /*envoie un paquet connnectionClosure a l'utilisateur distant contenant 
     l'UID local pour se deconnecter*/
     public void disconnectFromUser(){
-        if(!isReady())     // verifier que la socket est bien connectée
-            return;
-        
-        Packet packet = new Packet(Header.connectionClosure);
-        distantUID = null;
-        sendPacket(packet);
+        sendMessage(new ConnectionClosure(UID));
     }
     /* accepter ou non la requete de connection recu*/
     public void acceptConnection(boolean isAccepted) {
-        if(!isReady())      // verifier que la socket est bien connectée
-            return;
-        
-        Packet packet = new Packet(Header.connectionAnswer);
         if(isAccepted) {
-            packet.setMessage("o");
+            sendMessage(new ConnectionAnswer(ConnectionAnswer.ACCEPT));
         }
         else {
-            packet.setMessage("d");
-            distantUID = null;
+            sendMessage(new ConnectionAnswer(ConnectionAnswer.DECLINE));
         }
-        sendPacket(packet);
     }
-    /*envoyer un paquet command à l'utilisateur distant. command devra �tre 
-    converti en un tableau de char pour etre envoye.*/
-    public void sendCommand(String command) {
-        if(!isReady())   // verifier que la socket est bien connectée
-            return;
-            
-        Packet packet = new Packet(Header.command);
-        packet.setMessage(command);
-        sendPacket(packet);
+    /*envoyer une commande à l'utilisateur distant*/
+    public void sendCommand(String command) {           
+        sendMessage(new Command(command));
     }
     /* envoyer un paquet image a l'utilisateur distant contenant 'image. image devra etre 
     convertie en un tableau de char puis envoyee.*/
     public void sendImage(Bitmap image) {
-        if(!isReady())   // verifier que la socket est bien connectée
-            return;
-        if(distantUID==null) {
-            System.err.println("RemotePen : not connected to any user");
-        }
-        
-        Packet packet = new Packet(Header.image);
-        
         //TODO algo
-        
     }
-    // renvoie vrai si la socket est connectee a un serveur
-    private boolean isReady() {
-        return socket!=null && socket.isConnected();
-    }
+    
     // appelée si le flux d'entrée est fermé (symptome que le serveur s'est déconnecté)
-    void onClose() {
-        if(connectionListener!=null&&distantUID!=null)       // si on était connecté a un client
-            connectionListener.connectionClosed(distantUID);
+    @Override
+    protected void onClose() {
+        System.out.println("Remote Pen: connection lost !");
         close();
-    }
-    /* se deconnecte du serveur et ferme la socket*/
-    public void close() {
-        out.flush();
-        out.close();
-        try {
-            in.close();
-            socket.close();
-        } catch (IOException ex) {
-            System.err.println("Server : problem closing the socket");
-            System.err.println(ex);
-        }
     }
     
     // listeners :
@@ -278,5 +155,11 @@ public class RemotePen {
     }
     public void addImageListener(ImageReceiveListener listener) {
         imageListener = listener;
+    }
+    public ConnectionListener getConnectionListener() {
+        return connectionListener;
+    }
+    public void setUserList(String[] userList) {
+        this.userList = userList;
     }
 }

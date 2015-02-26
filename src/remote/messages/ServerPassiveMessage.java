@@ -1,6 +1,6 @@
 package remote.messages;
 
-import remote.server.Client;
+import remote.server.ServerClient;
 
 /*
  * un message qui est juste retransmis au client connecté sans traitement de la part du serveur
@@ -8,7 +8,7 @@ import remote.server.Client;
 public abstract class ServerPassiveMessage extends Message {
     // on se contente de renvoyer le message aux clients connectés
     @Override
-    public void onServerReceive(Client client) {
+    public void onServerReceive(ServerClient client) {
         if(client.getConnection()!=null)
             client.getConnection().sendMessage(this, client);
     }

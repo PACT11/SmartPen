@@ -10,27 +10,26 @@ import remote.messages.*;
  *  est prévue pour pouvoir plus facilement étendre à plusieurs
  */
 public class Connection {
-    
-    private ArrayList<Client> members;
+    private ArrayList<ServerClient> members = new ArrayList<>();
     
     // envoyer un message a tous les membres connectés (excepté l'envoyeur)
-    public void sendMessage(Message message, Client sender) {
-        for(Client target : members) {
+    public void sendMessage(Message message, ServerClient sender) {
+        for(ServerClient target : members) {
             if(!target.equals(sender))
                 target.sendMessage(message);
         }
     }
-    public void addMember(Client newMember) {
+    public void addMember(ServerClient newMember) {
         members.add(newMember);
         newMember.setConnection(this);
     }
-    public void close(Client sender) {
+    public void close(ServerClient sender) {
         sendMessage(new ConnectionClosure(sender.getUID()), sender);
-        
+        disconnectAll();
     }
     // enlever toutes les références vers cette connection (qui est alors détruite si le garbage collector fait son boulot)
     public void disconnectAll() {
-        for(Client member : members)
+        for(ServerClient member : members)
             member.setConnection(null);
     }
 }
