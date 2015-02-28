@@ -113,7 +113,9 @@ public class RemotePen extends Client {
     }
 
     public boolean isRegistertered(String UID, String password) {
-        // se connecter au serveur
+
+        this.connect();
+        this.sendMessage(new CheckUserMessage(UID, null));
         // envoyer un message de type CheckUser
 
         return false;

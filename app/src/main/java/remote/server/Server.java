@@ -20,9 +20,9 @@ public class Server {
             System.out.println("Server running at address " + IPtoString(InetAddress.getLocalHost())
                     + " on port " + port);
             
-            IPsync.runDaemon();   // send IP to allow clients to retrieve it
-            
-            System.out.println("enter 'q' to stop the server");      
+            IPsync.runDaemon();   // send IP to allow clients to retrieve it\n" +
+                    "            \n" +
+                    "            System.out.println(\"enter 'q' to stop the server");
             while(System.in.read()!='q');
             
             ServerClient.closeAll();
