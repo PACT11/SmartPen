@@ -18,7 +18,7 @@ public class EstimationHomographie {
 	
 	Matrix H = new Matrix(8,1) ;
 	
-	public Matrix getHomographyCoefficients(Point x0, Point x1, Point x2, Point x3, Point y0, Point y1, Point y2, Point y3) {
+	public Matrix getHomographyCoefficients(Point x0, Point x1, Point x2, Point x3, Point y0, Point y1, Point y2, Point y3) throws ArithmeticException {
 		Matrix M = new Matrix(8,8) ;
 		Matrix X = new Matrix(8,1) ;
 		Matrix M1 = new Matrix (8,8) ;
@@ -79,13 +79,11 @@ public class EstimationHomographie {
 		X.setValueAt(6,0,y2.getY()) ;
 		X.setValueAt(3,0,y3.getX()) ;
 		X.setValueAt(7,0,y3.getY()) ;
-		
-		if (determinant(M) != 0) {
-			M1 = inverse(M) ;
-			H = multiply(M1, X) ;
+			
+		M1 = Matrix.inverse(M) ;
+		H = multiply(M1, X) ;
 			
 			return H ;
-		}
 	}
 	
 	public Point phiInverse(Point p) {
