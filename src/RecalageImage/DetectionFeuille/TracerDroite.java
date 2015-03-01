@@ -1,11 +1,11 @@
-import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.Line;
 
 
 public class TracerDroite {
@@ -27,48 +27,20 @@ private static BufferedImage imageOriginale, imageAvecDroite;
     }
 	
 	public static BufferedImage mettreDroite(BufferedImage imageOriginale) {
-		int alpha;
-        int nouveauPixel;
+        Point point1 = new Point(0,0);
+        Point point2 = new Point(500,800);
         
-        Line2D.Double line = new Line2D.Double(5,2);
+        
+        Line2D.Double line = new Line2D.Double(point1,point2);
  
         BufferedImage imageAvecDroite = new BufferedImage(imageOriginale.getWidth(), imageOriginale.getHeight(), imageOriginale.getType());
  
-        for(int i=0; i<imageOriginale.getWidth(); i++) {
-            	
-            	int x = i;
-            	int y = 3*x+4;
-            	
-            	if (y<imageOriginale.getHeight()) {
+        Graphics2D g2d = (Graphics2D)imageAvecDroite.getGraphics();
+
+        g2d.draw(line);
  
-            		// obtention des pixels par le rouge, le vert, le bleu et l'alpha
-            		alpha = new Color(imageOriginale.getRGB(x, y)).getAlpha();
- 
-            		nouveauPixel = colorerPixel(alpha, 255, 255, 255);
- 
-            		// mets les pixels dans l'image
-            		imageAvecDroite.setRGB(x, y, nouveauPixel);
-            	}
- 
-        }
  
         return imageAvecDroite;
 	}
-	
-	 // colore un pixel avec Rouge, Vert, Bleu, Alpha avec les 8 bits
-    private static int colorerPixel(int alpha,int rouge, int vert, int bleu) {
- 
-        int nouveauPixel = 0;
-        nouveauPixel += alpha;
-        nouveauPixel = nouveauPixel << 8;
-        nouveauPixel += rouge ;
-        nouveauPixel = nouveauPixel << 8;
-        nouveauPixel += vert;
-        nouveauPixel = nouveauPixel << 8;
-        nouveauPixel += bleu;
- 
-        return nouveauPixel;
- 
-    }
 
 }
