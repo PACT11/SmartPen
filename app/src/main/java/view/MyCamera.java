@@ -3,49 +3,55 @@ package view;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import android.content.Context;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.io.*;
+
 import android.os.Environment;
-import android.support.v7.app.ActionBarActivity;
-
-import android.os.Bundle;
-
-import android.view.*;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
+import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 
-import android.widget.*;
-
-import java.io.*;
-
-
-
 public class MyCamera{
-    private InputScreen.ImageListener imageListener;
-    private Camera cameraObject;
-    private ShowCamera showCamera;
-    private Bitmap bitmap;
+    public static final int updatePeriod = 500;      // the picture update period in ms
+
+    private InputScreen.ImageListener imageListener; // a listener called when a picture is taken by the timer
+    private Timer pictureUpdater;                    // a timer taking picture periodically
+    private Camera camera;
+    private Bitmap bitmap;                           // the captured image
+    private Object synchronizer = new Object();      // used to wait for the picture to be captured (with .wait & .notify)
+    private SurfaceTexture texture;                  // the surface needed for the camera to preview (not displayed)
+    private  PictureCallback onCapture = new PictureCallback() {
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            onPictureCaptured(data);
+        }
+    };
 
     public MyCamera() {
-        // TODO : create a timer that take a picture on a regular basis and call imageListener for processing
-        cameraObject = isCameraAvailiable();
-        showCamera = new ShowCamera(this, cameraObject);
-        System.out.println("Camera : new camera created : starting taking pictures");
-        Timer timer = new Timer(false);
-        timer.schedule(new TimerTask() {
+        // load camera
+        try {
+            camera = Camera.open();
+            texture = new SurfaceTexture(10);
+            camera.setPreviewTexture(texture);
+            camera.startPreview();
+        }
+        catch (Exception e){
+            System.err.println("Camera : error while loading camera");
+            e.printStackTrace();
+        }
+        // create the timer
+        pictureUpdater = new Timer(false);
+        pictureUpdater.schedule(new TimerTask() {
             @Override
             public void run() {
                 ontakingPicture();
             }
-        }, 100, 500);
-    }
+        }, 100, updatePeriod);
 
-    public Bitmap getBitmap()
-    {
-        return this.bitmap;
+        System.out.println("Camera : new camera created : starting taking pictures");
     }
 
     // add a listener called each time a picture is taken (EXCEPT when taken with takePicture())
@@ -54,64 +60,53 @@ public class MyCamera{
     }
     // take and return a picture
     public Bitmap takePicture() {
-        cameraObject.takePicture(null, null, capturedIt);
-        System.out.println("Camera : taking a picture");
-        imageListener.newImage(null);
+        camera.takePicture(null, null, onCapture);
+        System.out.print("Camera : taking a picture ... ");
+        bitmap = null;
+        // waiting for the pictured to be captured
+        synchronized (synchronizer) {
+            try {
+                synchronizer.wait(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        if(bitmap!=null) {
+            System.out.println("done");
+        }
+
         return bitmap;
     }
+    // called when the picture has been captured
+    void onPictureCaptured(byte[] data) {
+        bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+        //restart preview
+        camera.startPreview();
+
+        synchronized (synchronizer) {
+            synchronizer.notify();
+        }
+    }
+    // called periodically by a timer to take a picture of the sheet
     private void ontakingPicture() {
-        Bitmap bmp = takePicture();
-        imageListener.newImage(bmp);
+        imageListener.newImage(takePicture());
     }
     // close the camera
     public void close() {
-        cameraObject.
+        pictureUpdater.cancel();
+        camera.stopPreview();
+        camera.release();
     }
-    // debug
-    public void simulateNewImage(Bitmap image) {
-        imageListener.newImage(image);
-    }
-
-    public static Camera isCameraAvailiable(){
-        Camera object = null;
-        try {
-            object = Camera.open();
-            object.startPreview();
-        }
-        catch (Exception e){
-        }
-        return object;
-    }
-
-    private PictureCallback capturedIt = new PictureCallback() {
-
-        @Override
-        public void onPictureTaken(byte[] data, Camera camera) {
-
-            Bitmap btm = BitmapFactory.decodeByteArray(data , 0, data .length);
-            bitmap = btm;
-            savePicture(bitmap);
-            if(bitmap==null){
-                Toast.makeText(getApplicationContext(), "not taken", Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-                Toast.makeText(getApplicationContext(), "taken", Toast.LENGTH_SHORT).show();
-            }
-            cameraObject.startPreview();
-        }
-    };
 
     public void savePicture(Bitmap bitmap){
         FileOutputStream fos = null;
         Bitmap bmp;
         bmp = bitmap;
         Date date=new Date();
-        SimpleDateFormat timeStampFormat = new SimpleDateFormat(
-                "yyyy-MM-dd-HH.mm.ss");
+        SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
         try {
             String path_file  = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+ "SmartPenImage";
-            System.out.println(path_file);
+            //System.out.println(path_file);
             File file = new File(path_file, "Smartpen-"+timeStampFormat.format(date)+".png");
             File myDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
                     File.separator + "SmartPenImage"); //pour créer le repertoire dans lequel on va mettre notre image
@@ -134,4 +129,3 @@ public class MyCamera{
         }
     }
 }
-

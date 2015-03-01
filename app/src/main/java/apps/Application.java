@@ -7,7 +7,7 @@ import remote.listeners.ImageReceiveListener;
 import view.*;
 import java.util.ArrayList;
 import remote.*;
-
+import android.graphics.Bitmap;
 /*
  * A general class for all applications. 
  */

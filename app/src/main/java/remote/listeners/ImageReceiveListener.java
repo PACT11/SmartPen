@@ -1,7 +1,7 @@
 
 package remote.listeners;
 
-import view.Bitmap;
+import android.graphics.Bitmap;
 
 /* Listener de reception d'une image:
 Cet objet permet a l'application de réagir en cas de reception d'une image. 

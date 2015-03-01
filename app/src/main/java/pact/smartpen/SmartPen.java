@@ -1,19 +1,24 @@
 package pact.smartpen;
 
+import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import view.InputScreen;
+import view.MyCamera;
+
 
 public class SmartPen extends ActionBarActivity {
-
+    MyCamera cam;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smart_pen);
         // start SmartPen
-        new MainProject().start();
+        //new MainProject().start();
+
     }
 
 
@@ -37,5 +42,20 @@ public class SmartPen extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cam.close();
+    }
+    protected void onResume() {
+        super.onResume();
+        cam = new MyCamera();
+        cam.addNewImageListener(new InputScreen.ImageListener() {
+            @Override
+            public void newImage(Bitmap image) {
+                cam.savePicture(image);
+            }
+        });
     }
 }

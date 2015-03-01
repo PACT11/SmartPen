@@ -1,6 +1,6 @@
 
 package view;
-
+import android.graphics.Bitmap;
 /*
  */
 public class SheetProcessor {

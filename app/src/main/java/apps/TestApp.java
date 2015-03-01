@@ -3,7 +3,7 @@ package apps;
 
 import remote.*;
 import remote.messages.ConnectionAnswer;
-import view.*;
+import android.graphics.Bitmap;
 /*
  */
 public class TestApp extends Application {
@@ -11,25 +11,25 @@ public class TestApp extends Application {
     RemotePen pen2;
     @Override
     protected void onLaunch() {
-        byte[] ip = {(byte)192,(byte)168,1,26};
-        pen = new RemotePen("john appleseed");
+        byte[] ip = {(byte)10,(byte)0,1,4};
+        pen = new RemotePen("connectionAgent");
         pen.connect(ip,2323);
-        pen2 = new RemotePen("arno");
-        pen2.connect(ip,2323);
-        configureRemoteListeners(pen);
-        configureRemoteListeners(pen2);
+        System.out.println("Test : " + pen.isRegistered("pact","pacct"));
+
+        menu.debugClick("close");
+        //configureRemoteListeners(pen);
         
-        String[] users = pen.getConnectedUsers();
-        for(String user : users)
-            System.out.println(user);
+        //String[] users = pen.getConnectedUsers();
+        //for(String user : users)
+        //    System.out.println(user);
         
-        pen.connectToUser("arno");
+        //pen.connectToUser("arno");
     }
 
     @Override
     protected void onClose() {
         pen.close();
-        pen2.close();
+        //pen2.close();
     }
     @Override
     protected void onNewImage(Bitmap image) {

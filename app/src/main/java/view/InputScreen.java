@@ -2,7 +2,7 @@
 package view;
 
 import shape.ShapeProcessor;
-
+import android.graphics.Bitmap;
 /*
  *
  */
@@ -14,9 +14,9 @@ public class InputScreen {
     private MenuBar menu;
     private ImageListener newImageListener;
     private OutputScreen outputScreen;
-    private Camera camera;
+    private MyCamera camera;
     public InputScreen() {
-        camera = new Camera();
+        camera = new MyCamera();
         camera.addNewImageListener(new ImageListener() {
             @Override
             public void newImage(Bitmap image) {
@@ -28,7 +28,7 @@ public class InputScreen {
         if(!SheetProcessor.hasHand(image)) { // if the user's hand is not over the sheet
             System.out.println("InputScreen : no hand over the sheet");
             outputScreen.blackOut();         // shut down projector shortly
-            Bitmap newImage = camera.takePicture();
+            Bitmap newImage = null;//camera.takePicture();
             outputScreen.updateTransformation(SheetProcessor.getSheetTransformation(newImage)); // compute the new transformation to match th sheet
             outputScreen.restore();          // restart the display
             if(newImageListener!=null) {     // call the new image listener if any
@@ -46,9 +46,7 @@ public class InputScreen {
     public void setOutputScreen(OutputScreen screen) {
         outputScreen = screen;
     }
-    
-    //debug
-    public void simulateNewImage(Bitmap image) {
-        camera.simulateNewImage(image);
+    public void close() {
+        camera.close();
     }
 }

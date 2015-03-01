@@ -1,7 +1,7 @@
 
 package shape;
 
-import view.Bitmap;
+import android.graphics.Bitmap;
 import view.Point;
 
 /*
