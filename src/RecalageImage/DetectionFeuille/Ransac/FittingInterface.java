@@ -1,5 +1,4 @@
-import java.awt.*;
-import java.awt.geom.Line2D;
+import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +11,7 @@ public interface FittingInterface
   /** Gives the number of points fitting enough to indicate the model is good. */
   int getCloseDataNb();
   /** Finds a line fitting to this set of points, according to this fitting algorithm. */
-  Line2D.Double estimateModel(ArrayList<Point> points);
+  Line estimateModel(ArrayList<Point> points);
   /** Estimate the error between the given model and the given point. */
-  double estimateError(Point point, Line2D model);
+  double estimateError(Point point, Line model);
 }

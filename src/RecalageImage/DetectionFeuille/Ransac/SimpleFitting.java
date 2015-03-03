@@ -1,5 +1,4 @@
 import java.awt.Point;
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 /**
@@ -8,19 +7,20 @@ import java.util.ArrayList;
 public class SimpleFitting implements FittingInterface
 {
   public int getNeededPointNb() { return 2; }
-  public int getCloseDataNb() { return 5; }
+  public int getCloseDataNb() { return 400; }
 
-  public Line2D.Double estimateModel(ArrayList<Point> points)
+  public Line estimateModel(ArrayList<Point> points)
   {
     assert points.size() == getNeededPointNb() : "You should provide the number of points required by the fitting algorithm";
     Point p1 = points.get(0);
     Point p2 = points.get(1);
-    return new Line2D.Double(p1, p2);
+    return new Line(p1, p2);
   }
 
-  public double estimateError(Point point, Line2D model)
+  public double estimateError(Point point, Line model)
   {
-    // return Projection of the point to the line following the vertical axis
-    return model.ptLineDist(point);
+    // Projection of the point to the line following the vertical axis
+    float y = (float) (model.a * point.getX() + model.b);
+    return (float) (Math.abs(point.y - y) / Math.sqrt(1 + model.a * model.a));
   }
 }
