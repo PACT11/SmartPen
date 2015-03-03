@@ -7,20 +7,29 @@ import javax.imageio.ImageIO;
 
 public class ApplicationHomographie{
 	
-	private static BufferedImage image1, image2;
+	private static BufferedImage image1, image2, image3;
 	
 	public static void main(String[] args) throws IOException{
 		File fichierOriginal = new File(args[0]+".jpg");
-        String fichierSortie = args[0]+"_homographie2";
+        String fichierSortie1 = args[0]+"_homographie1";
         image1 = ImageIO.read(fichierOriginal);
         image2 = partieEntiere(image1);
-        creerImage(fichierSortie);      
+        creerImage2(fichierSortie1);    
+        
+        String fichierSortie2 = args[0]+"_homographie2";
+        image3 = ponderation(image1);
+        creerImage3(fichierSortie2);
 
 	}
 	
-	private static void creerImage(String sortie) throws IOException {
+	private static void creerImage2(String sortie) throws IOException {
         File file = new File(sortie+".jpg");
         ImageIO.write(image2, "jpg", file);
+    }
+	
+	private static void creerImage3(String sortie) throws IOException {
+        File file = new File(sortie+".jpg");
+        ImageIO.write(image3, "jpg", file);
     }
 	
 	private static BufferedImage partieEntiere(BufferedImage imageBrute){
@@ -70,8 +79,8 @@ public class ApplicationHomographie{
 	            for(int j=0; j<imageRecalee.getHeight(); j++) {  //On parcourt toute l'image
 	            	
 	            	//Definition de tous les points necessaires
-	            	u = (int)(i*Math.cos(0) - j*Math.sin(0));
-	            	v = (int)(i*Math.cos(0) + j*Math.sin(0));
+	            	u = (int)(i*Math.cos(0.1) + j*Math.sin(-0.1));
+	            	v = (int)(-i*Math.sin(-0.1) + j*Math.cos(0.1));
 	            	x1=(int)(u);
 	            	y1= (int)(v);
 	            	x2 = x1+1;
@@ -83,36 +92,46 @@ public class ApplicationHomographie{
 	            	dx = (u-x1);
 	            	dy = (v-y1);
 	            	
-	            	//Et de leur couleur
-	            	rouge1 = new Color(imageBrute.getRGB(x1, y1)).getRed();
-	                vert1 = new Color(imageBrute.getRGB(x1, y1)).getGreen();
-	                bleu1 = new Color(imageBrute.getRGB(x1, y1)).getBlue();
-	                alpha1 = new Color(imageBrute.getRGB(x1, y1)).getAlpha();
-	                
-	                rouge2 = new Color(imageBrute.getRGB(x2, y2)).getRed();
-	                vert2 = new Color(imageBrute.getRGB(x2, y2)).getGreen();
-	                bleu2 = new Color(imageBrute.getRGB(x2, y2)).getBlue();
-	                alpha2 = new Color(imageBrute.getRGB(x2, y2)).getAlpha();
-	                
-	                rouge3 = new Color(imageBrute.getRGB(x3, y3)).getRed();
-	                vert3 = new Color(imageBrute.getRGB(x3, y3)).getGreen();
-	                bleu3 = new Color(imageBrute.getRGB(x3, y3)).getBlue();
-	                alpha3 = new Color(imageBrute.getRGB(x3, y3)).getAlpha();
-	                
-	                rouge4 = new Color(imageBrute.getRGB(x4, y4)).getRed();
-	                vert4 = new Color(imageBrute.getRGB(x4, y4)).getGreen();
-	                bleu4 = new Color(imageBrute.getRGB(x4, y4)).getBlue();
-	                alpha4 = new Color(imageBrute.getRGB(x4, y4)).getAlpha();
-	                
-	                rouge = (int)(dx*dy*rouge1 + (1-dx)*dy*rouge2 + dx*(1-dy)*rouge3 + (1-dx)*(1-dy)*rouge4);
-	                vert = (int)(dx*dy*vert1 + (1-dx)*dy*vert2 + dx*(1-dy)*vert3 + (1-dx)*(1-dy)*vert4);
-	                bleu = (int)(dx*dy*bleu1 + (1-dx)*dy*bleu2 + dx*(1-dy)*bleu3 + (1-dx)*(1-dy)*bleu4);
-	                alpha = (int)(dx*dy*alpha1 + (1-dx)*dy*alpha2 + dx*(1-dy)*alpha3 + (1-dx)*(1-dy)*alpha4);
-	                gris = (int) (0.21 * rouge + 0.71 * vert + 0.07 * bleu);
+	            	
+	            	if ((x1>0) && (x1<imageBrute.getWidth()) && (y1>0) && (y1<imageBrute.getHeight())){
+	            		if ((x2>0) && (x1<imageBrute.getWidth()) && (y2>0) && (y2<imageBrute.getHeight())){
+	            			if ((x3>0) && (x1<imageBrute.getWidth()) && (y3>0) && (y1<imageBrute.getHeight())){
+	            				if ((x4>0) && (x1<imageBrute.getWidth()) && (y4>0) && (y4<imageBrute.getHeight())){
+	            					//Et de leur couleur
+	            	            	rouge1 = new Color(imageBrute.getRGB(x1, y1)).getRed();
+	            	                vert1 = new Color(imageBrute.getRGB(x1, y1)).getGreen();
+	            	                bleu1 = new Color(imageBrute.getRGB(x1, y1)).getBlue();
+	            	                alpha1 = new Color(imageBrute.getRGB(x1, y1)).getAlpha();
+	            	                
+	            	                rouge2 = new Color(imageBrute.getRGB(x2, y2)).getRed();
+	            	                vert2 = new Color(imageBrute.getRGB(x2, y2)).getGreen();
+	            	                bleu2 = new Color(imageBrute.getRGB(x2, y2)).getBlue();
+	            	                alpha2 = new Color(imageBrute.getRGB(x2, y2)).getAlpha();
+	            	                
+	            	                rouge3 = new Color(imageBrute.getRGB(x3, y3)).getRed();
+	            	                vert3 = new Color(imageBrute.getRGB(x3, y3)).getGreen();
+	            	                bleu3 = new Color(imageBrute.getRGB(x3, y3)).getBlue();
+	            	                alpha3 = new Color(imageBrute.getRGB(x3, y3)).getAlpha();
+	            	                
+	            	                rouge4 = new Color(imageBrute.getRGB(x4, y4)).getRed();
+	            	                vert4 = new Color(imageBrute.getRGB(x4, y4)).getGreen();
+	            	                bleu4 = new Color(imageBrute.getRGB(x4, y4)).getBlue();
+	            	                alpha4 = new Color(imageBrute.getRGB(x4, y4)).getAlpha();
+	            	                
+	            	                rouge = (int)(dx*dy*rouge1 + (1-dx)*dy*rouge2 + dx*(1-dy)*rouge3 + (1-dx)*(1-dy)*rouge4);
+	            	                vert = (int)(dx*dy*vert1 + (1-dx)*dy*vert2 + dx*(1-dy)*vert3 + (1-dx)*(1-dy)*vert4);
+	            	                bleu = (int)(dx*dy*bleu1 + (1-dx)*dy*bleu2 + dx*(1-dy)*bleu3 + (1-dx)*(1-dy)*bleu4);
+	            	                alpha = (int)(dx*dy*alpha1 + (1-dx)*dy*alpha2 + dx*(1-dy)*alpha3 + (1-dx)*(1-dy)*alpha4);
+	            	                gris = (int) (0.21 * rouge + 0.71 * vert + 0.07 * bleu);
 
-	                //Coloration de l'image
-	                nouveauPixel = colorerPixel(alpha, gris, gris, gris);
-	                imageRecalee.setRGB(i, j, nouveauPixel);
+	            	                //Coloration de l'image
+	            	                nouveauPixel = colorerPixel(alpha, gris, gris, gris);
+	            	                imageRecalee.setRGB(i, j, nouveauPixel);
+	            				}
+	            			}
+	            		}
+	            	}
+	            	
 	                
 	            }
 		 }       
