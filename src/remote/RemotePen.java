@@ -84,19 +84,19 @@ public class RemotePen extends Client {
     protected synchronized void onReceive(Message message) {
         message.onClientReceive(this);
     }
-    /* quand une image est recu */
-    public void onImageReceive() {
-        Bitmap image = null;
+    /* quand une image est recue */
+    public void onImageReceive(byte[] image) {
+    	Bitmap imgrecue = decodeByteArray (image,0,image.length());
         
-        // TODO : algo
+        
         
         if(imageListener!=null)
-            imageListener.imageReceived(image);
+            imageListener.imageReceived(imgrecue);
     }
-    /* quand une image est recu */
+    /* quand une image est recue */
     public void onCommandReceive(String command) {
         if(commandListener!=null)
-            commandListener.commandReceived(command);
+            commandListener.comm andReceived(command);
     }
 
     /* obtenir la liste des utilisateurs connectés (bloque l'execution)*/
@@ -110,6 +110,13 @@ public class RemotePen extends Client {
             System.err.println("RemotePen : reception timeout ! No packet received");
         }
         return userList;
+    }
+
+    public boolean isRegistertered(String UID, String password) {
+        // se connecter au serveur
+        // envoyer un message de type CheckUser
+
+        return false;
     }
     /*envoyer une requête de connection à l'utilisateur spécifié*/
     public void connectToUser(String targetUID) {
@@ -133,12 +140,20 @@ public class RemotePen extends Client {
     public void sendCommand(String command) {           
         sendMessage(new Command(command));
     }
-    /* envoyer un paquet image a l'utilisateur distant contenant 'image. image devra etre 
+    /* envoyer un paquet image a l'utilisateur distant contenant l'image. image devra etre 
     convertie en un tableau de char puis envoyee.*/
     public void sendImage(Bitmap image) {
-        //TODO algo
+         byte[] imageTableauDeBytes = this.getBytesFromBitmap(image);
+         Image img = new Image(imageTableauDeBytes);
+        
     }
     
+    private byte[] getBytesFromBitmap(Bitmap bitmap) 
+    {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(CompressFormat.JPEG, 70, stream);
+        return stream.toByteArray();
+    }
     // appelée si le flux d'entrée est fermé (symptome que le serveur s'est déconnecté)
     @Override
     protected void onClose() {
