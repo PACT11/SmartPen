@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class SimpleFitting implements FittingInterface
 {
   public int getNeededPointNb() { return 2; }
-  public int getCloseDataNb() { return 400; }
+  public int getCloseDataNb() { return 60; }
 
   public Line estimateModel(ArrayList<Point> points)
   {

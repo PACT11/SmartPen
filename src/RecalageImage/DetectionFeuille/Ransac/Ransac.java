@@ -36,7 +36,7 @@ public class Ransac {
       m_points = points;
       m_threshold = threshold;
       m_minNbOfCloseData = m_fitting.getCloseDataNb();
-      m_iterationNb = getIterationNb(0.99, 0.5, m_fitting.getNeededPointNb());
+      m_iterationNb =  getIterationNb(0.99, 0.5, m_fitting.getNeededPointNb());
     }
 
     public Line getCurrentModel() { return m_currentModel; }
@@ -122,7 +122,7 @@ public class Ransac {
       // For each point in the data
       for (Point point : m_points)
       {
-        // point in the sample
+        // ignore points which are in the sample
         if (m_currentSample.contains(point))
           continue;
 
