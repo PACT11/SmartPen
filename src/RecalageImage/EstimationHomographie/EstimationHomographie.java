@@ -3,18 +3,6 @@ package RecalageImage.EstimationHomographie;
 import java.awt.Point;
 
 public class EstimationHomographie {
-
-	public Matrix multiply(Matrix A, Matrix B) {
-    	Matrix C = new Matrix(8,1) ;
-    	for (int i=0 ; i<=7 ; i++) {
-            double s = 0 ;
-            for (int k=0 ; k<=7 ; k++) {
-            	s = s + A.getValueAt(i, k) * B.getValueAt(k, 1) ;
-            }
-            C.setValueAt(i, 1, s) ;
-        } 
-    	return C ;
-	}
 	
 	Matrix H = new Matrix(8,1) ;
 	
@@ -81,7 +69,7 @@ public class EstimationHomographie {
 		X.setValueAt(7,0,y3.getY()) ;
 			
 		M1 = Matrix.inverse(M) ;
-		H = multiply(M1, X) ;
+		H = Matrix.multiply(M1, X) ;
 			
 			return H ;
 	}

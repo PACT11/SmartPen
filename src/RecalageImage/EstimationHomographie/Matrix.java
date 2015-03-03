@@ -65,16 +65,16 @@ public class Matrix {
         return sum;
     } 
     
-    public static Matrix createSubMatrix(Matrix matrix, int excluding_row, int excluding_col) {
+    public static Matrix createSubMatrix(Matrix matrix, int row, int col) {
         Matrix mat = new Matrix(matrix.getNrows()-1, matrix.getNcols()-1);
         int r = -1;
         for (int i=0;i<matrix.getNrows();i++) {
-            if (i==excluding_row)
+            if (i==row)
                 continue;
                 r++;
                 int c = -1;
             for (int j=0;j<matrix.getNcols();j++) {
-                if (j==excluding_col)
+                if (j==col)
                     continue;
                 mat.setValueAt(r, ++c, matrix.getValueAt(i, j));
             }
@@ -82,7 +82,7 @@ public class Matrix {
         return mat;
     }
     
-    public static Matrix cofactor(Matrix matrix) {
+    public static Matrix coMatrix(Matrix matrix) {
         Matrix mat = new Matrix(matrix.getNrows(), matrix.getNcols());
         for (int i=0;i<matrix.getNrows();i++) {
             for (int j=0; j<matrix.getNcols();j++) {
@@ -93,7 +93,7 @@ public class Matrix {
         return mat;
     }
     
-    public Matrix multiplyByConstant(Matrix matrix, double r) {
+    public static Matrix multiplyByConstant(Matrix matrix, double r) {
     	Matrix multipliedMatrix = new Matrix(matrix.getNrows(), matrix.getNcols()) ;
     	for (int i=0 ; i<matrix.getNrows() ; i++) {
             for (int j=0 ; j<matrix.getNcols() ; j++) {
@@ -103,9 +103,26 @@ public class Matrix {
     	return multipliedMatrix ;
     }
     
-    public static Matrix inverse(Matrix matrix) {
+	public static Matrix inverse(Matrix matrix) {
     	double d = determinant(matrix) ;
-        return (transpose(cofactor(matrix)).multiplyByConstant(matrix, 1.0/d));
+    	Matrix M = new Matrix(matrix.getNrows(),matrix.getNcols()) ;
+    	Matrix N = new Matrix(matrix.getNrows(),matrix.getNcols()) ;
+    	
+        M = transpose(coMatrix(matrix)) ;
+        N = Matrix.multiplyByConstant(M, 1.0/d) ;
+        return N ;
     }
+	
+	public static Matrix multiply(Matrix A, Matrix B) {
+    	Matrix C = new Matrix(8,1) ;
+    	for (int i=0 ; i<=7 ; i++) {
+            double s = 0 ;
+            for (int k=0 ; k<=7 ; k++) {
+            	s = s + A.getValueAt(i, k) * B.getValueAt(k, 0) ;
+            }
+            C.setValueAt(i, 0, s) ;
+        } 
+    	return C ;
+	}
     
 }
