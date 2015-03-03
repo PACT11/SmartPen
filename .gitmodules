@@ -1,0 +1,3 @@
+[submodule "ProgAndroid/BBB"]
+	path = ProgAndroid/BBB
+	url = https://github.com/PACT11/SmartPen.git
