@@ -58,7 +58,6 @@ public class ServerClient extends Client{
     // a la reception d'un message complet ( objet Message )
     @Override
     protected void onReceive(Message message) {
-        System.out.println("Server : received message " + message.getClass().getSimpleName());
         message.onServerReceive(this);
     }
     // si le flux d'entrée a été fermé (signifie le client a fermé la socket)

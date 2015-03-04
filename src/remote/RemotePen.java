@@ -87,17 +87,16 @@ public class RemotePen extends Client {
     }
     /* quand une image est recue */
     public void onImageReceive(byte[] image) {
-    	Bitmap imgrecue = decodeByteArray (image,0,image.length());
+    	//Bitmap imgrecue = BitmapFactory.decodeByteArray(image,0,image.length);
         
-        
-        
-        if(imageListener!=null)
-            imageListener.imageReceived(imgrecue);
+        //if(imageListener!=null)
+        //    imageListener.imageReceived(imgrecue);
     }
+    
     /* quand une image est recue */
     public void onCommandReceive(String command) {
         if(commandListener!=null)
-            commandListener.comm andReceived(command);
+            commandListener.commandReceived(command);
     }
 
     /* obtenir la liste des utilisateurs connectés (bloque l'execution)*/
@@ -160,13 +159,11 @@ public class RemotePen extends Client {
     public void sendImage(Bitmap image) {
          byte[] imageTableauDeBytes = this.getBytesFromBitmap(image);
          Image img = new Image(imageTableauDeBytes);
-        
     }
     
-    private byte[] getBytesFromBitmap(Bitmap bitmap) 
-    {
+    private byte[] getBytesFromBitmap(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(CompressFormat.JPEG, 70, stream);
+        //bitmap.compress(CompressFormat.JPEG, 70, stream);
         return stream.toByteArray();
     }
     // appelée si le flux d'entrée est fermé (symptome que le serveur s'est déconnecté)

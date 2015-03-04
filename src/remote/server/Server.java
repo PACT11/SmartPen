@@ -9,14 +9,12 @@ public class Server {
     public final static int port = 2323;
     public static boolean closeRequest = false;
     
-    private static ConnectionMaker maker;
-    private static ServerSocket connectionSocket;
     @SuppressWarnings("empty-statement")
     public static void main(String args[]) {
         try {
-            connectionSocket = new ServerSocket(port);
+            ServerSocket connectionSocket = new ServerSocket(port);
             connectionSocket.setPerformancePreferences(7, 2, 1);
-            maker = new ConnectionMaker(connectionSocket);
+            ConnectionMaker maker = new ConnectionMaker(connectionSocket);
             maker.start();
             
             System.out.println("Server running at address " + IPtoString(InetAddress.getLocalHost())
@@ -24,10 +22,12 @@ public class Server {
             
             IPsync.runDaemon();   // send IP to allow clients to retrieve it
             
-            System.out.println("enter 'q' to stop the server");      
+            System.out.println("enter 'q' to stop the server");
             while(System.in.read()!='q');
             
-            shutdown();
+            ServerClient.closeAll();
+            maker.close();
+            connectionSocket.close();
         } catch (IOException ex) {
             System.err.println("Server : failed in creating connection socket");
             System.err.println(ex);
@@ -37,10 +37,5 @@ public class Server {
     public static String IPtoString(InetAddress inet) {
         byte ip[] = inet.getAddress();
         return (ip[0]&0xFF) + "." + (ip[1]&0xFF) + "." + (ip[2]&0xFF) + "." + (ip[3]&0xFF);
-    }
-    public static void shutdown() throws IOException {
-        ServerClient.closeAll();
-        maker.close();
-        connectionSocket.close();
     }
 }

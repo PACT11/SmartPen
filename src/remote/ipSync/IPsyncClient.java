@@ -18,7 +18,6 @@ public class IPsyncClient {
         String IP=null;
         try {
             for(int i=messages.length;i>0;i--) {
-                System.out.println(messages[i-1].getSubject());
                 if(messages[i-1].getSubject().startsWith("ip: ")) {
                     IP = messages[i-1].getSubject().replaceFirst("ip: ", "");
                     break;
@@ -27,13 +26,10 @@ public class IPsyncClient {
         } catch (MessagingException ex) {
             System.err.println("Remote: error while reading IP");
         }
-        if(IP!=null) {
-            System.out.println("Remote: IP is " + IP);
+        if(IP!=null)
             return stringToIP(IP);
-        } else {
-            System.err.println("Remote: no IP found !");
+        else
             return null;
-        }
     }
     private static byte[] stringToIP(String IP) {
         String[] subs = IP.split("\\.");

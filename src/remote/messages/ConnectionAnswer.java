@@ -11,6 +11,7 @@ public class ConnectionAnswer extends Message {
     public static final short ACCEPT = 1;
     public static final short DECLINE = 2;
     public static final short TARGETNOTFOUND = 3;
+    public static final short USERPRESENT = 4;
     
     private short answer;
     

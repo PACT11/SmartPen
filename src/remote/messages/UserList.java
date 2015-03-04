@@ -5,6 +5,7 @@ import remote.RemotePen;
 import remote.server.ServerClient;
 
 /*
+ *
  */
 public class UserList extends Message {
     private String[] users;
@@ -17,7 +18,10 @@ public class UserList extends Message {
 
     @Override
     public synchronized void onClientReceive(RemotePen client) {
-        client.setUserList(users);
         client.notify();
+    }
+
+    public String[] getUsers() {
+        return users;
     }
 }
