@@ -17,7 +17,7 @@ public class RemotePen extends Client {
     private ImageReceiveListener imageListener;
     private CommandReceiveListener commandListener;
     
-    private String[] userList;              // la liste des utilisateurs connectés au serveur
+    private Message lastMessage; //last received message
     
     // le constructeur doit avoir la forme public RemotePen(String UID); 
     public RemotePen(String localUID){
@@ -82,6 +82,7 @@ public class RemotePen extends Client {
     /* appelee quand on a recu un message*/
     @Override
     protected synchronized void onReceive(Message message) {
+        lastMessage = message;
         message.onClientReceive(this);
     }
     /* quand une image est recu */
@@ -102,14 +103,35 @@ public class RemotePen extends Client {
     /* obtenir la liste des utilisateurs connectés (bloque l'execution)*/
     synchronized public String[] getConnectedUsers() {
         sendMessage(new UserList());
-        userList = null;
+        lastMessage = null;
         try {
             this.wait(1000);
         } catch (InterruptedException ex) {}
-        if(userList==null) {
+
+        if(lastMessage!=null && lastMessage instanceof UserList)
+            return ((UserList) lastMessage).getUsers();
+        else
             System.err.println("RemotePen : reception timeout ! No packet received");
-        }
-        return userList;
+
+        return null;
+    }
+
+    public boolean isRegistered(String UID, String password) {
+        // on se connecte au serveur
+        this.connect();
+        // envoyer un message de type CheckUser
+        this.sendMessage(new CheckUser(UID, password));
+        // on attend la reponse
+        try {
+            this.wait(1000);
+        } catch (InterruptedException ex) {}
+        // si le dernier message recu est bien la reponse au message envoyé
+        if(lastMessage!=null && lastMessage instanceof CheckUser)
+            return ((CheckUser) lastMessage).isValid();
+        else
+            System.err.println("RemotePen : reception timeout ! No packet received");
+
+        return false;
     }
     /*envoyer une requête de connection à l'utilisateur spécifié*/
     public void connectToUser(String targetUID) {
@@ -158,8 +180,5 @@ public class RemotePen extends Client {
     }
     public ConnectionListener getConnectionListener() {
         return connectionListener;
-    }
-    public void setUserList(String[] userList) {
-        this.userList = userList;
     }
 }
