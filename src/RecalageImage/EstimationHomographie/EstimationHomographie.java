@@ -1,10 +1,8 @@
-package RecalageImage.EstimationHomographie;
-
 import java.awt.Point;
 
 public class EstimationHomographie {
 	
-	Matrix H = new Matrix(8,1) ;
+	public static Matrix H = new Matrix(8,1) ;
 	
 	public Matrix getHomographyCoefficients(Point x0, Point x1, Point x2, Point x3, Point y0, Point y1, Point y2, Point y3) throws ArithmeticException {
 		Matrix M = new Matrix(8,8) ;
@@ -74,11 +72,11 @@ public class EstimationHomographie {
 			return H ;
 	}
 	
-	public Point phiInverse(Point p) {
+	public Point phiInverse(Point p,Matrix H) {
 		double c, q1, q2 ;
 		Point q = new Point() ;
 		c = (H.getValueAt(0,0)*H.getValueAt(7,0)*p.getY() - H.getValueAt(3,0)*H.getValueAt(7,0)*p.getX() + H.getValueAt(6,0)*H.getValueAt(4,0)*p.getX() - H.getValueAt(1,0)*H.getValueAt(6,0)*p.getY() - H.getValueAt(0,0)*H.getValueAt(4,0) + H.getValueAt(1,0)*H.getValueAt(3,0)) ;
-		q1 = (H.getValueAt(1,0)*p.getY() - H.getValueAt(2,0)*H.getValueAt(7,0)*p.getY() + H.getValueAt(5,0)*H.getValueAt(7,0)*p.getX() + H.getValueAt(4,0)*p.getX() - H.getValueAt(4,0)*H.getValueAt(2,0) - H.getValueAt(5,0)*H.getValueAt(1,0)) / c ;
+		q1 = (H.getValueAt(1,0)*p.getY() - H.getValueAt(2,0)*H.getValueAt(7,0)*p.getY() + H.getValueAt(5,0)*H.getValueAt(7,0)*p.getX() - H.getValueAt(4,0)*p.getX() + H.getValueAt(4,0)*H.getValueAt(2,0) - H.getValueAt(5,0)*H.getValueAt(1,0)) / c ;
 		q2 = (H.getValueAt(3,0)*p.getX() - H.getValueAt(6,0)*H.getValueAt(5,0)*p.getX() + H.getValueAt(2,0)*H.getValueAt(6,0)*p.getY() - H.getValueAt(0,0)*p.getY() + H.getValueAt(0,0)*H.getValueAt(5,0) - H.getValueAt(3,0)*H.getValueAt(2,0)) / c ;
 		q.setLocation(q1,q2) ;
 		return q ;
