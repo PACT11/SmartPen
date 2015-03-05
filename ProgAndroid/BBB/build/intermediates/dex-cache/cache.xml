@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/Chab/workspace/BBB/app/src/main/java/remote/ipSync/activation.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d1257cbff6faa44c1f325ae0d9413522d4644383">
+        <dex dex="/Users/Chab/workspace/BBB/app/build/intermediates/pre-dexed/debug/activation-5119f848bbba711e3e94f59573f9a620749c5b6a.jar" />
+    </item>
+    <item
+        jar="/Users/Chab/workspace/BBB/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/Chab/workspace/BBB/app/build/intermediates/pre-dexed/debug/classes-f4d4918f9774baf659240ab87403702b8f333249.jar" />
+    </item>
+    <item
+        jar="/Applications/android-sdk-macosx/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/Users/Chab/workspace/BBB/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-fa100554894d48afbb0ad0851f92cc333d0a6051.jar" />
+    </item>
+    <item
+        jar="/Users/Chab/workspace/BBB/app/src/main/java/remote/ipSync/additionnal.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="bd9e8dc422bb8c8405359947fe9f4282b49f57f4">
+        <dex dex="/Users/Chab/workspace/BBB/app/build/intermediates/pre-dexed/debug/additionnal-2a3683bdbc362d46ddd7b56d4a3a9a728023e7c2.jar" />
+    </item>
+    <item
+        jar="/Users/Chab/workspace/BBB/app/src/main/java/remote/ipSync/mail.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="428e267abff0d10802ccde86b915da2c20471160">
+        <dex dex="/Users/Chab/workspace/BBB/app/build/intermediates/pre-dexed/debug/mail-e080ddaa0ddf822c5bb7b0e287fd47c71865e7e2.jar" />
+    </item>
+    <item
+        jar="/Users/Chab/workspace/BBB/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/Chab/workspace/BBB/app/build/intermediates/pre-dexed/debug/classes-3c509afd595f3bb62d5379c16547952699c8d9a2.jar" />
+    </item>
+    <item
+        jar="/Users/Chab/workspace/BBB/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/Chab/workspace/BBB/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-76b732384c67a7d84f2b3121b414379b5319316c.jar" />
+    </item>
+
+</items>
