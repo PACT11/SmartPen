@@ -9,9 +9,11 @@ import java.net.UnknownHostException;
 import remote.ipSync.IPsyncClient;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 public class RemotePen extends Client {
-    public final int DEFAULTPORT = 2323;
+    public static final int DEFAULTPORT = 2323;
+    public static final byte[] DEFAULTIP = {(byte)192,(byte)168,56,1};
     //listeners
     private ConnectionListener connectionListener;
     private ImageReceiveListener imageListener;
@@ -85,16 +87,15 @@ public class RemotePen extends Client {
         lastMessage = message;
         message.onClientReceive(this);
     }
-    /* quand une image est recu */
-    public void onImageReceive() {
-        Bitmap image = null;
-        
-        // TODO : algo
+    /* quand une image est recue */
+    public void onImageReceive(byte[] image) {
+    	Bitmap imgrecue = BitmapFactory.decodeByteArray(image,0,image.length);
         
         if(imageListener!=null)
-            imageListener.imageReceived(image);
+            imageListener.imageReceived(imgrecue);
     }
-    /* quand une image est recu */
+    
+    /* quand une image est recue */
     public void onCommandReceive(String command) {
         if(commandListener!=null)
             commandListener.commandReceived(command);
@@ -116,7 +117,7 @@ public class RemotePen extends Client {
         return null;
     }
 
-    synchronized public boolean isRegistered(String UID, String password) {
+    public synchronized boolean isRegistered(String UID, String password) {
         // envoyer un message de type CheckUser
         this.sendMessage(new CheckUser(UID, password));
         // on attend la reponse
@@ -124,7 +125,7 @@ public class RemotePen extends Client {
             this.wait(1000);
         } catch (InterruptedException ex) {}
         // si le dernier message recu est bien la reponse au message envoyé
-        if(lastMessage!=null)
+        if(lastMessage!=null && lastMessage instanceof CheckUser)
             return ((CheckUser) lastMessage).isValid();
         else
             System.err.println("RemotePen : reception timeout ! No packet received");
@@ -153,12 +154,18 @@ public class RemotePen extends Client {
     public void sendCommand(String command) {           
         sendMessage(new Command(command));
     }
-    /* envoyer un paquet image a l'utilisateur distant contenant 'image. image devra etre 
+    /* envoyer un paquet image a l'utilisateur distant contenant l'image. image devra etre 
     convertie en un tableau de char puis envoyee.*/
     public void sendImage(Bitmap image) {
-        //TODO algo
+         byte[] imageTableauDeBytes = this.getBytesFromBitmap(image);
+         sendMessage(new Image(imageTableauDeBytes));
     }
     
+    private byte[] getBytesFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+        return stream.toByteArray();
+    }
     // appelée si le flux d'entrée est fermé (symptome que le serveur s'est déconnecté)
     @Override
     protected void onClose() {

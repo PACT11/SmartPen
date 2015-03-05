@@ -1,24 +1,63 @@
 package pact.smartpen;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
+import apps.Application;
+import apps.Login;
+import apps.OS;
 import view.InputScreen;
 import view.MyCamera;
 
 
 public class SmartPen extends ActionBarActivity {
-    MyCamera cam;
+    Login login;
+
+    private Button mPasserelle;
+    private EditText mailView;
+    private EditText pwdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smart_pen);
         // start SmartPen
-        //new MainProject().start();
+        new MainProject().start();
+        sleep();
+        // start login mode (connects to the server)
+        Application.os.startApp("Login");
+        login = (Login) Application.os.getApp("Login");
 
+        //GUI
+        mPasserelle = (Button) findViewById(R.id.connection);
+        mailView = (EditText) findViewById(R.id.editText);
+        pwdView = (EditText) findViewById(R.id.editText2);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Erreur de Connexion");
+        builder.setMessage("Erreur d'identifiant ou inscrivez-vous");
+        // when tap on login button
+        mPasserelle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(login.checkUser(mailView.getText().toString(),pwdView.getText().toString())){
+                    Intent secondeActivite = new Intent(SmartPen.this, list.class);
+                    sleep();
+                    startActivity(secondeActivite);
+                }
+                else {
+                    builder.show();
+                }
+
+            }
+        });
     }
 
 
@@ -46,16 +85,20 @@ public class SmartPen extends ActionBarActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        cam.close();
+        //if(Application.inputScreen!=null)
+            //Application.inputScreen.close();
+
     }
     protected void onResume() {
         super.onResume();
-        cam = new MyCamera();
-        cam.addNewImageListener(new InputScreen.ImageListener() {
-            @Override
-            public void newImage(Bitmap image) {
-                cam.savePicture(image);
-            }
-        });
+        //if(Application.inputScreen!=null)
+            //Application.inputScreen.restart();
+    }
+    private void sleep() {
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

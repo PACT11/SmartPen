@@ -12,13 +12,13 @@ import android.graphics.Bitmap;
  * A general class for all applications. 
  */
 public abstract class Application {
-    protected static OS os;
-    protected static InputScreen inputScreen;
-    protected static OutputScreen outputScreen;
+    public static OS os;
+    public static InputScreen inputScreen;
+    public static OutputScreen outputScreen;
     
     protected static final ArrayList<Application> applications = new ArrayList<>();
     protected MenuBar menu;
-    
+
     protected abstract void onLaunch();
     protected abstract void onClose();
     

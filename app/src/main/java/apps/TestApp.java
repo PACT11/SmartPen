@@ -3,47 +3,54 @@ package apps;
 
 import remote.*;
 import remote.messages.ConnectionAnswer;
+import view.MyCamera;
+
 import android.graphics.Bitmap;
 /*
  */
 public class TestApp extends Application {
-    RemotePen pen;
-    RemotePen pen2;
+    RemotePen bob;
+    RemotePen john;
+    boolean readyForImage = false;
     @Override
     protected void onLaunch() {
-        byte[] ip = {(byte)10,(byte)0,1,4};
-        pen = new RemotePen("connectionAgent");
-        pen.connect(ip,2323);
-        System.out.println("Test : " + pen.isRegistered("pact","pacct"));
+        bob = new RemotePen("bob");
+        bob.connect(RemotePen.DEFAULTIP,2323);
+        john = new RemotePen("john");
+        john.connect(RemotePen.DEFAULTIP,2323);
 
-        menu.debugClick("close");
-        //configureRemoteListeners(pen);
+        configureRemoteListeners(bob);
+        configureRemoteListeners(john);
         
-        //String[] users = pen.getConnectedUsers();
-        //for(String user : users)
-        //    System.out.println(user);
+        String[] users = bob.getConnectedUsers();
+        for(String user : users)
+            System.out.println(user);
         
-        //pen.connectToUser("arno");
+        bob.connectToUser("john");
     }
 
     @Override
     protected void onClose() {
-        pen.close();
-        //pen2.close();
+        bob.close();
+        john.close();
     }
     @Override
     protected void onNewImage(Bitmap image) {
-        super.onNewImage(image);
+        if(readyForImage) {
+            System.out.println("Test App : Received a new image");
+            john.sendImage(image);
+            readyForImage = false;
+        }
     }
     @Override
     protected void onConnectionRequest(String distantUID){
-        pen.acceptConnection(true);
+        john.acceptConnection(true);
     }
     @Override
     protected void onConnectionAnswer(short answer){
         if(answer == ConnectionAnswer.ACCEPT) {
             System.out.println("TestApp: client accepted request !");
-            pen.sendCommand("hello you");
+            bob.sendCommand("hello you");
         } else {
             System.out.println("TestApp: client refused connection");
         }
@@ -56,6 +63,13 @@ public class TestApp extends Application {
     @Override
     protected void onCommandReceived(String command){
         System.out.println("received command : "+command);
-        pen.disconnectFromUser();
+        readyForImage=true;
+    }
+
+    @Override
+    protected void onImageReceived(Bitmap image) {
+        System.out.println("Test : received image");
+        MyCamera.savePicture(image);
+        bob.disconnectFromUser();
     }
 }

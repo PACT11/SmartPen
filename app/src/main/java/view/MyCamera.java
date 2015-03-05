@@ -15,7 +15,7 @@ import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 
 public class MyCamera{
-    public static final int updatePeriod = 500;      // the picture update period in ms
+    public static final int updatePeriod = 2000;      // the picture update period in ms
 
     private InputScreen.ImageListener imageListener; // a listener called when a picture is taken by the timer
     private Timer pictureUpdater;                    // a timer taking picture periodically
@@ -31,7 +31,6 @@ public class MyCamera{
     };
 
     public MyCamera() {
-        // load camera
         try {
             camera = Camera.open();
             texture = new SurfaceTexture(10);
@@ -66,7 +65,7 @@ public class MyCamera{
         // waiting for the pictured to be captured
         synchronized (synchronizer) {
             try {
-                synchronizer.wait(500);
+                synchronizer.wait(updatePeriod);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -82,23 +81,26 @@ public class MyCamera{
         bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
         //restart preview
         camera.startPreview();
-
         synchronized (synchronizer) {
             synchronizer.notify();
         }
     }
     // called periodically by a timer to take a picture of the sheet
     private void ontakingPicture() {
-        imageListener.newImage(takePicture());
+        if(imageListener!=null)
+            imageListener.newImage(takePicture());
     }
     // close the camera
     public void close() {
+        synchronized (synchronizer) {
+            synchronizer.notify();
+        }
         pictureUpdater.cancel();
         camera.stopPreview();
         camera.release();
     }
 
-    public void savePicture(Bitmap bitmap){
+    public static void savePicture(Bitmap bitmap){
         FileOutputStream fos = null;
         Bitmap bmp;
         bmp = bitmap;

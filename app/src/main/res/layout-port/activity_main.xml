@@ -2,12 +2,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="pact.TestTuto.ApplicationTest">
+    tools:context="pact.bbb.main">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,11 +14,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="SmartPen"
         android:id="@+id/title"
+        android:textSize="45sp"
+        android:textColor="#cd1d1eff"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
-        android:textSize="45sp"
-        android:textColor="#cd1d1eff" />
+        android:layout_marginTop="44dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -28,12 +27,12 @@
         android:ems="10"
         android:id="@+id/editText"
         android:background="#59a6ffe8"
-        android:hint= "E-mail"
+        android:hint= "@string/mail"
         android:gravity="center"
-        android:layout_marginBottom="73dp"
-        android:layout_alignBottom="@+id/editText2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_above="@+id/editText2"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView"
+        android:layout_marginBottom="24dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -43,11 +42,10 @@
         android:id="@+id/editText2"
         android:hint= "Mot de passe"
         android:gravity="center"
-        android:layout_below="@+id/title"
+        android:background="#59a6ffe8"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="195dp"
-        android:background="#59a6ffe8" />
+        android:layout_alignParentStart="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -55,10 +53,10 @@
         android:layout_height="wrap_content"
         android:text="Se connecter"
         android:id="@+id/connection"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="49dp"
         android:layout_below="@+id/editText2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,29 +64,31 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Inscription"
         android:id="@+id/textView"
-        android:layout_marginTop="39dp"
+        android:layout_marginTop="37dp"
         android:layout_below="@+id/connection"
-        android:layout_alignRight="@+id/connection"
-        android:layout_alignEnd="@+id/connection" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connexion auto"
-        android:id="@+id/checkBox"
-        android:layout_alignBottom="@+id/connection"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:checked="true" />
+    <!--
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connexion auto"
+            android:id="@+id/checkBox"
+            android:layout_alignBottom="@+id/connection"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:checked="true" />
+    -->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Mot de passe oublié"
-        android:id="@+id/textView2"
-        android:layout_alignTop="@+id/textView"
-        android:layout_alignRight="@+id/title"
-        android:layout_alignEnd="@+id/title" />
+    <!--    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Mot de passe oublié"
+            android:id="@+id/textView2"
+            android:layout_alignTop="@+id/textView"
+            android:layout_alignRight="@+id/title"
+            android:layout_alignEnd="@+id/title" />-->
 
 </RelativeLayout>

@@ -16,16 +16,10 @@ public class InputScreen {
     private OutputScreen outputScreen;
     private MyCamera camera;
     public InputScreen() {
-        camera = new MyCamera();
-        camera.addNewImageListener(new ImageListener() {
-            @Override
-            public void newImage(Bitmap image) {
-                onNewImage(image);
-            }
-        });
+
     }
     private void onNewImage(Bitmap image) {
-        if(!SheetProcessor.hasHand(image)) { // if the user's hand is not over the sheet
+        /*if(!SheetProcessor.hasHand(image)) { // if the user's hand is not over the sheet
             System.out.println("InputScreen : no hand over the sheet");
             outputScreen.blackOut();         // shut down projector shortly
             Bitmap newImage = null;//camera.takePicture();
@@ -38,6 +32,9 @@ public class InputScreen {
         } else { // check if user is clicking the menu bar
             Transformation t = SheetProcessor.getStraightTransformation(image);    
             menu.click(ShapeProcessor.findCap(image));
+        }*/
+        if(newImageListener!=null) {     // call the new image listener if any
+            newImageListener.newImage(image);
         }
     }
     public void addNewImageListener(ImageListener listener) {
@@ -48,5 +45,14 @@ public class InputScreen {
     }
     public void close() {
         camera.close();
+    }
+    public void restart() {
+        camera = new MyCamera();
+        camera.addNewImageListener(new ImageListener() {
+            @Override
+            public void newImage(Bitmap image) {
+                onNewImage(image);
+            }
+        });
     }
 }

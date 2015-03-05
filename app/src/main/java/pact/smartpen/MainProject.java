@@ -2,7 +2,11 @@ package pact.smartpen;
 
 import android.graphics.Bitmap;
 
+import apps.*;
+import apps.SmartPen;
 import remote.RemotePen;
+import view.InputScreen;
+import view.MyCamera;
 
 
 /**
@@ -10,12 +14,7 @@ import remote.RemotePen;
  */
 public class MainProject extends Thread {
     public void run() {
-
-        byte[] ip = {(byte)10,(byte)0,1,4};
-        RemotePen server = new RemotePen("connectionAgent");
-        server.connect(ip,2323);
-        System.out.println("Test : " + server.isRegistered("pact","pact"));
-        System.out.println("Test : " + server.isRegistered("pact","lol"));
-        server.close();
+        // launch OS
+        SmartPen.main(null);
     }
 }
