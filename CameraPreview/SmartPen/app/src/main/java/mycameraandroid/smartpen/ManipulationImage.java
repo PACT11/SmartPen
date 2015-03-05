@@ -62,4 +62,59 @@ public class ManipulationImage {
 
         return btm;
     }
+
+    public static Bitmap mettreEnNiveauDeGris(Bitmap bitmap) {
+
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        Bitmap.Config config = bitmap.getConfig();
+        Bitmap btm = Bitmap.createBitmap(width,height,config);
+
+        for (int i = 0 ; i<=width ; i++) {
+            for (int j = 0 ; j <= height ; j++) {
+                int colorOriginal = bitmap.getPixel(i,j) ;
+                int red = Color.red(colorOriginal) ;
+                int blue = Color.blue(colorOriginal) ;
+                int green = Color.green(colorOriginal) ;
+                int alpha = Color.alpha(colorOriginal) ;
+
+                int gris = (int) (0.21 * red + 0.71 * green + 0.07 * blue) ;
+                int colorTransformed = Color.argb(alpha,gris,gris,gris) ;
+
+                btm.setPixel(i, j, colorTransformed) ;
+            }
+        }
+
+        return btm ;
+    }
+
+    static int seuil = 125 ;
+
+    public static Bitmap Binariser(Bitmap bitmap) {
+
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        Bitmap.Config config = bitmap.getConfig();
+        Bitmap btm = Bitmap.createBitmap(width,height,config);
+
+        for (int i = 0 ; i<=width ; i++) {
+            for (int j = 0 ; j <= height ; j++) {
+                int colorOriginal = bitmap.getPixel(i,j) ;
+                int red = Color.red(colorOriginal) ;
+                int blue = Color.blue(colorOriginal) ;
+                int green = Color.green(colorOriginal) ;
+                int alpha = Color.alpha(colorOriginal) ;
+
+                int luminance = (int) (0.21 * red + 0.71 * green + 0.07 * blue) ;
+                int colorTransformed = 0 ;
+
+                if (luminance <= seuil) colorTransformed = Color.BLACK ;
+                else colorTransformed = Color.WHITE ;
+
+                btm.setPixel(i, j, colorTransformed) ;
+            }
+        }
+
+        return btm ;
+    }
 }
