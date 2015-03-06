@@ -20,7 +20,6 @@ public class DetectionMain {
 	}
 	
 	
-	
 	public static String differenceHistogramme(BufferedImage image1, BufferedImage image2) {
 		int seuilDifference = 4600000;
 		
@@ -78,8 +77,8 @@ public class DetectionMain {
  
         for(int i=0; i<image.getWidth(); i++) {
             for(int j=0; j<image.getHeight(); j++) {
-                int red = new Color(image.getRGB (i, j)).getRed();
-                histogrammeVert[red]++;
+                int vert = new Color(image.getRGB (i, j)).getGreen();
+                histogrammeVert[vert]++;
             }
         }
  
@@ -95,30 +94,12 @@ public class DetectionMain {
  
         for(int i=0; i<image.getWidth(); i++) {
             for(int j=0; j<image.getHeight(); j++) {
-                int red = new Color(image.getRGB (i, j)).getRed();
-                histogrammeBleu[red]++;
+                int blue = new Color(image.getRGB (i, j)).getBlue();
+                histogrammeBleu[blue]++;
             }
         }
  
         return histogrammeBleu;
  
     }
-    
-	/*public static String differenceHistogrammeRouge(BufferedImage image1, BufferedImage image2) {
-		int seuilDifference = 850000;
-		int[] histogramme1 = histogrammeRouge(image1);
-		int [] histogramme2 = histogrammeRouge(image2);
-		int difference = 0;
-		
-		for (int i=0; i<256;i++)
-			difference += Math.abs(histogramme1[i]-histogramme2[i]);
-		
-		if (difference>seuilDifference)
-			return "La main n'est plus presente";
-		else 
-			return "La main est la";
-	}
-	
-	*/
-
 }
