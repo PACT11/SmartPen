@@ -1,9 +1,8 @@
 package hu.recalage;
 
 /**
- * Created by hu on 05/03/15.
+ * Created by hu on 07/03/15.
  */
-
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
@@ -11,10 +10,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainRansac {
+public class MainRansacBleu {
 
     //algorithme pour determiner les bords de la feuille
-    private static ArrayList<Point> obtentionCoins(Bitmap imageGrise) {
+    private static ArrayList<Point> obtentionCoinsBleus(Bitmap imageCouleur) {
 
 
         //on initialise les 4 bords
@@ -22,50 +21,43 @@ public class MainRansac {
 
         FittingInterface fitting = new SimpleFitting();
 
-        ArrayList<Point> data1 = obtenirPointsHorizontaux(imageGrise,0,imageGrise.getWidth(),0,500);
+        ArrayList<Point> data1 = obtenirPointsBleusHorizontaux(imageCouleur,0,imageCouleur.getWidth(),0,500);
         Ransac ransac1 = new Ransac(fitting,data1,1);
-        horizontale1 = appliquerRansac(ransac1,imageGrise);
+        horizontale1 = appliquerRansac(ransac1,imageCouleur);
 
-        ArrayList<Point> data2 = obtenirPointsHorizontaux(imageGrise,0,imageGrise.getWidth(),1200,1600);
+        ArrayList<Point> data2 = obtenirPointsBleusHorizontaux(imageCouleur,0,imageCouleur.getWidth(),1200,1600);
         Ransac ransac2 = new Ransac(fitting,data2,1);
-        horizontale2 = appliquerRansac(ransac2,imageGrise);
+        horizontale2 = appliquerRansac(ransac2,imageCouleur);
 
 
-        ArrayList<Point> data3 = obtenirPointsVerticaux(imageGrise,0,600,0,imageGrise.getHeight());
+        ArrayList<Point> data3 = obtenirPointsBleusVerticaux(imageCouleur,0,600,0,imageCouleur.getHeight());
         Ransac ransac3 = new Ransac(fitting,data3,1);
-        verticale1 = appliquerRansac(ransac3,imageGrise);
+        verticale1 = appliquerRansac(ransac3,imageCouleur);
 
-        ArrayList<Point> data4 = obtenirPointsVerticaux(imageGrise,2000,2500,0,imageGrise.getHeight());
+        ArrayList<Point> data4 = obtenirPointsBleusVerticaux(imageCouleur,2000,2500,0,imageCouleur.getHeight());
         Ransac ransac4 = new Ransac(fitting,data4,1);
-        verticale2 = appliquerRansac(ransac4,imageGrise);
+        verticale2 = appliquerRansac(ransac4,imageCouleur);
 
 
         ArrayList<Point> Coins = new ArrayList<Point>(4);
-        Point pointHG = getIntersectionPoint(verticale1,horizontale1,imageGrise);
-        Point pointBG = getIntersectionPoint(verticale1,horizontale2,imageGrise);
-        Point pointHD = getIntersectionPoint(verticale2,horizontale1,imageGrise);
-        Point pointBD = getIntersectionPoint(verticale2,horizontale2,imageGrise);
+        Point pointHG = getIntersectionPoint(verticale1,horizontale1,imageCouleur);
+        Point pointBG = getIntersectionPoint(verticale1,horizontale2,imageCouleur);
+        Point pointHD = getIntersectionPoint(verticale2,horizontale1,imageCouleur);
+        Point pointBD = getIntersectionPoint(verticale2,horizontale2,imageCouleur);
 
         Coins.add(pointHG);
         Coins.add(pointBG);
         Coins.add(pointHD);
         Coins.add(pointBD);
 
-        System.out.println("coord x = " + pointHG.x + "coord y = " + pointHG.y);
-        System.out.println("coord x = " + pointBG.x + "coord y = " + pointBG.y);
-        System.out.println("coord x = " + pointHD.x + "coord y = " + pointHD.y);
-        System.out.println("coord x = " + pointBD.x + "coord y = " + pointBD.y);
-
-
-
         return Coins;
 
     }
 
     //obtention du tableau de points necessaire a l'algorithme de Ransac a l'aide du seuillage gradient
-    private static ArrayList<Point> obtenirPointsHorizontaux(Bitmap imageGrise, int xmin, int xmax, int ymin, int ymax) {
+    private static ArrayList<Point> obtenirPointsBleusHorizontaux(Bitmap imageCouleur, int xmin, int xmax, int ymin, int ymax) {
 
-        int seuilVertical = 15;
+        int seuilVertical = 7;
 
         int grisHaut, grisBas;
 
@@ -74,10 +66,10 @@ public class MainRansac {
         for(int i=xmin; i<xmax-1; i++) {
             for(int j=ymin; j<ymax-1; j++) {
 
-                int colorOriginal1 = imageGrise.getPixel(i,j) ;
-                grisHaut = Color.red(colorOriginal1) ;
-                int colorOriginal2 = imageGrise.getPixel(i,j+1) ;
-                grisBas = Color.red(colorOriginal2) ;
+                int colorOriginal1 = imageCouleur.getPixel(i,j) ;
+                grisHaut = Color.blue(colorOriginal1) ;
+                int colorOriginal2 = imageCouleur.getPixel(i,j+1) ;
+                grisBas = Color.blue(colorOriginal2) ;
 
 
                 if (Math.abs(grisHaut-grisBas) > seuilVertical) {
@@ -93,9 +85,9 @@ public class MainRansac {
     }
 
     //obtention du tableau de points necessaire a l'algorithme de Ransac a l'aide du seuillage gradient
-    private static ArrayList<Point> obtenirPointsVerticaux(Bitmap imageGrise, int xmin, int xmax, int ymin, int ymax) {
+    private static ArrayList<Point> obtenirPointsBleusVerticaux(Bitmap imageCouleur, int xmin, int xmax, int ymin, int ymax) {
 
-        int seuilHorizontal = 10;
+        int seuilHorizontal = 7;
 
         int grisGauche, grisDroite;
 
@@ -104,10 +96,10 @@ public class MainRansac {
         for(int i=xmin; i<xmax-1; i++) {
             for(int j=ymin; j<ymax-1; j++) {
 
-                int colorOriginal1 = imageGrise.getPixel(i+1,j) ;
-                grisGauche = Color.red(colorOriginal1) ;
-                int colorOriginal2 = imageGrise.getPixel(i,j) ;
-                grisDroite = Color.red(colorOriginal2) ;
+                int colorOriginal1 = imageCouleur.getPixel(i+1,j) ;
+                grisGauche = Color.blue(colorOriginal1) ;
+                int colorOriginal2 = imageCouleur.getPixel(i,j) ;
+                grisDroite = Color.blue(colorOriginal2) ;
 
 
                 if (Math.abs(grisGauche-grisDroite) > seuilHorizontal) {
@@ -122,7 +114,7 @@ public class MainRansac {
 
     }
 
-    public static Line appliquerRansac(Ransac ransac,Bitmap imageGrise) {
+    public static Line appliquerRansac(Ransac ransac,Bitmap imageCouleur) {
         //On execute l'algorithme de Ransac
         while (!ransac.isFinished()) {
             ransac.computeNextStep();
@@ -136,7 +128,7 @@ public class MainRansac {
         {
             double y = line.getY(0);
             Point p1 = new Point(0,(int)(y));
-            Point p2 = new Point(imageGrise.getWidth(),(int)(y));
+            Point p2 = new Point(imageCouleur.getWidth(),(int)(y));
 
             lines = new Line(p1,p2);
             System.out.println("Droite horizontale, y =" + y );
@@ -146,14 +138,14 @@ public class MainRansac {
             double x = line.getX(0);
             System.out.println("Droite verticale, x =" + x);
             Point p1 = new Point((int)(x),0);
-            Point p2 = new Point((int)(x),imageGrise.getHeight());
+            Point p2 = new Point((int)(x),imageCouleur.getHeight());
             lines = new Line(p1,p2);
         }
         else
         {
             int x1 = (int)(line.getX(0));
             int y1 = (int)(line.getY(x1));
-            int x2 = (int)(line.getX(imageGrise.getHeight()));
+            int x2 = (int)(line.getX(imageCouleur.getHeight()));
             int y2 = (int)(line.getY(x2));
             Point p1 = new Point(x1,y1);
             Point p2 = new Point(x2,y2);
@@ -168,24 +160,24 @@ public class MainRansac {
     }
 
     //donne le point d'intersection entre deux droites
-    public static Point getIntersectionPoint(Line line1, Line line2,Bitmap imageGrise) {
+    public static Point getIntersectionPoint(Line line1, Line line2,Bitmap imageCouleur) {
         double x1 = line1.getX(0);
         double y1 = line1.getY(x1);
-        double x2 = line1.getX(imageGrise.getHeight());
+        double x2 = line1.getX(imageCouleur.getHeight());
         double y2 = line1.getY(x2);
         double x3 = line2.getX(0);
         double y3 = line2.getY(x1);
-        double x4 = line2.getX(imageGrise.getHeight());
+        double x4 = line2.getX(imageCouleur.getHeight());
         double y4 = line2.getY(x2);
         if (! linesIntersect(x1,y1,x2,y2,x3,y3,x4,y4) ) return null;
         double px = x1,
-               py = y1,
-               rx = x2-px,
-               ry = y2-py;
+                py = y1,
+                rx = x2-px,
+                ry = y2-py;
         double qx = x3,
-               qy = y3,
-               sx = x4-qx,
-               sy = y4-qy;
+                qy = y3,
+                sx = x4-qx,
+                sy = y4-qy;
 
         double det = sx*ry - sy*rx;
         if (det == 0) {
