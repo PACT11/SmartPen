@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class MainRansac {
 
     //algorithme pour determiner les bords de la feuille
-    private static ArrayList<Point> obtentionCoins(Bitmap imageGrise) {
+    public ArrayList<Point> obtentionCoins(Bitmap imageGrise) {
 
 
         //on initialise les 4 bords

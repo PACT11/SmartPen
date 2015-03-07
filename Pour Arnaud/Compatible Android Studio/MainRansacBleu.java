@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class MainRansacBleu {
 
     //algorithme pour determiner les bords de la feuille
-    private static ArrayList<Point> obtentionCoinsBleus(Bitmap imageCouleur) {
+    public ArrayList<Point> obtentionCoinsBleus(Bitmap imageCouleur) {
 
 
         //on initialise les 4 bords

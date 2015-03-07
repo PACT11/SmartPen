@@ -10,6 +10,19 @@ import java.util.ArrayList;
 
 public class ApplicationHomographie{
 
+    /*cree l'image à projeter à partir de la photo a projeter, et de l'image bleue qui contient les coins sur lesquels
+    l'homographie va s'appuyer pour trouver la transformation
+
+     */
+    public Bitmap appliquerTransformation(Bitmap imageDepart,Bitmap imageBleue) {
+        MainRansac mainRansac = new MainRansac();
+        MainRansacBleu mainRansacBleu = new MainRansacBleu();
+
+        ArrayList<Point> coinsDepart = mainRansac.obtentionCoins(imageDepart);
+        ArrayList<Point> coinsArrivee = mainRansacBleu.obtentionCoinsBleus(imageBleue);
+        return partieEntiere(imageDepart,coinsDepart,coinsArrivee);
+    }
+
     private static Bitmap partieEntiere(Bitmap imageDepart,ArrayList<Point> coinsDepart, ArrayList<Point> coinsArrivee){
 
         EstimationHomographie phi = new EstimationHomographie();
@@ -38,9 +51,9 @@ public class ApplicationHomographie{
         for(int i=0; i<imageRecalee.getWidth(); i++) {
             for(int j=0; j<imageRecalee.getHeight(); j++) {  //On parcourt toute l'image
                 Point ij = new Point(i,j);
-                Point p = phi.phiInverse(ij, H);
-                u = (int) p.x;
-                v = (int) p.x;
+                ArrayList p = phi.phiInverse(ij, H);
+                u = (int) p.get(0);
+                v = (int) p.get(1);
 
                 if ((u>0) && (u<imageDepart.getWidth()) && (v>0) && (v<imageDepart.getHeight())) {
 
