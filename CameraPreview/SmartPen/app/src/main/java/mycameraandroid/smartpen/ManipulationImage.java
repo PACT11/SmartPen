@@ -70,8 +70,8 @@ public class ManipulationImage {
         Bitmap.Config config = bitmap.getConfig();
         Bitmap btm = Bitmap.createBitmap(width,height,config);
 
-        for (int i = 0 ; i<=width ; i++) {
-            for (int j = 0 ; j <= height ; j++) {
+        for (int i = 0 ; i<width ; i++) {
+            for (int j = 0 ; j < height ; j++) {
                 int colorOriginal = bitmap.getPixel(i,j) ;
                 int red = Color.red(colorOriginal) ;
                 int blue = Color.blue(colorOriginal) ;
@@ -97,8 +97,8 @@ public class ManipulationImage {
         Bitmap.Config config = bitmap.getConfig();
         Bitmap btm = Bitmap.createBitmap(width,height,config);
 
-        for (int i = 0 ; i<=width ; i++) {
-            for (int j = 0 ; j <= height ; j++) {
+        for (int i = 0 ; i<width ; i++) {
+            for (int j = 0 ; j < height ; j++) {
                 int colorOriginal = bitmap.getPixel(i,j) ;
                 int red = Color.red(colorOriginal) ;
                 int blue = Color.blue(colorOriginal) ;
