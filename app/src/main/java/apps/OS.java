@@ -17,35 +17,21 @@ public class OS extends Application {
         loadMenu();
         for(Application app : applications)
             menu.addItem(app.getClass().getSimpleName());
-        launcher(); // start a method that start
     }
-    // start the apps given in startapp() in OS's Thread
-    private void launcher() {
-        do {
-            synchronized (launcher) {
-                try {
-                    launcher.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
+    public Application startApp(String name) {
+        for(Application app : applications) {
+            if(app.getClass().getSimpleName().equals(name)) {
+                app.run();
+                return app;
             }
-            System.out.println("hey hey");
-            for(Application app : applications) {
-                if(app.getClass().getSimpleName().equals(this.app))
-                    app.run();
-            }
-        } while (!app.equals(""));
-        menu.debugClick("close");
-    }
-    public void startApp(String name) {
-        app = name;
-        synchronized (launcher) {
-            launcher.notify();
         }
+        System.err.println("OS : app " + name + " doesn't exist !");
+        return null;
     }
     public Application getApp(String name) {
         for(Application app : applications) {
-            if(app.getClass().getSimpleName().equals(this.app))
+            if(app.getClass().getSimpleName().equals(name))
                 return app;
         }
         System.err.println("OS : app " + name + " doesn't exist !");

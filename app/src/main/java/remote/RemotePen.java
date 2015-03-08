@@ -6,19 +6,25 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+
 import remote.ipSync.IPsyncClient;
+import shape.Point;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 public class RemotePen extends Client {
     public static final int DEFAULTPORT = 2323;
-    public static final byte[] DEFAULTIP = {(byte)192,(byte)168,56,1};
+    //public static final byte[] DEFAULTIP = {(byte)192,(byte)168,56,1};
+    //public static final byte[] DEFAULTIP = {(byte)10,(byte)0,1,4};
+    public static final byte[] DEFAULTIP = {(byte)192,(byte)168,43,62};
+
     //listeners
     private ConnectionListener connectionListener;
     private ImageReceiveListener imageListener;
     private CommandReceiveListener commandListener;
-    
+    private RansacListener ransacListener;
     private Message lastMessage; //last received message
     
     // le constructeur doit avoir la forme public RemotePen(String UID); 
@@ -94,7 +100,10 @@ public class RemotePen extends Client {
         if(imageListener!=null)
             imageListener.imageReceived(imgrecue);
     }
-    
+    public void onRansacReceive(ArrayList<Point> points) {
+        if(ransacListener!=null)
+            ransacListener.ransacReceived(points);
+    }
     /* quand une image est recue */
     public void onCommandReceive(String command) {
         if(commandListener!=null)
@@ -172,7 +181,10 @@ public class RemotePen extends Client {
         System.out.println("Remote Pen: connection lost !");
         close();
     }
-    
+    public void setUID(String UID) {
+        this.UID = UID;
+        sendMessage(new remote.messages.UID(UID));
+    }
     // listeners :
     public void addConnectionListener(ConnectionListener listener) {
         connectionListener= listener;
@@ -185,5 +197,8 @@ public class RemotePen extends Client {
     }
     public ConnectionListener getConnectionListener() {
         return connectionListener;
+    }
+    public void addRansacListener(RansacListener listener) {
+        ransacListener = listener;
     }
 }

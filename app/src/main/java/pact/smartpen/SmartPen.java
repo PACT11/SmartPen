@@ -3,6 +3,7 @@ package pact.smartpen;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,7 +21,7 @@ import view.MyCamera;
 
 public class SmartPen extends ActionBarActivity {
     Login login;
-
+    // GUI
     private Button mPasserelle;
     private EditText mailView;
     private EditText pwdView;
@@ -28,12 +29,20 @@ public class SmartPen extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smart_pen);
+
         // start SmartPen
         new MainProject().start();
         sleep();
-        // start login mode (connects to the server)
-        Application.os.startApp("Login");
-        login = (Login) Application.os.getApp("Login");
+        //Intent secondeActivite = new Intent(SmartPen.this, projection.class);
+        //startActivity(secondeActivite);
+
+        // start login mode (connects to the server) has to be done in the mainProject Thread because of networking
+        Application.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                login = (Login) Application.os.startApp("Login");
+            }
+        });
 
         //GUI
         mPasserelle = (Button) findViewById(R.id.connection);
@@ -86,13 +95,13 @@ public class SmartPen extends ActionBarActivity {
     protected void onPause() {
         super.onPause();
         //if(Application.inputScreen!=null)
-            //Application.inputScreen.close();
+        //    Application.inputScreen.close();
 
     }
     protected void onResume() {
         super.onResume();
         //if(Application.inputScreen!=null)
-            //Application.inputScreen.restart();
+        //    Application.inputScreen.restart();
     }
     private void sleep() {
         try {

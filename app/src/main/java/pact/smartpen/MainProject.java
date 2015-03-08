@@ -1,12 +1,10 @@
 package pact.smartpen;
 
-import android.graphics.Bitmap;
+import android.os.Looper;
+import android.os.Handler;
 
-import apps.*;
+import apps.Application;
 import apps.SmartPen;
-import remote.RemotePen;
-import view.InputScreen;
-import view.MyCamera;
 
 
 /**
@@ -14,7 +12,10 @@ import view.MyCamera;
  */
 public class MainProject extends Thread {
     public void run() {
+        Looper.prepare();
+        Application.handler = new Handler();
         // launch OS
         SmartPen.main(null);
+        Looper.loop();
     }
 }

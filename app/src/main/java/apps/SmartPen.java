@@ -10,6 +10,9 @@ public class SmartPen {
         // each app has to do so (except the OS) to allow the OS to display all the available apps
         applications.add(new TestApp());
         applications.add(new Login());
+        applications.add(new Share());
+        applications.add(new ShareSource());
+
         new OS().run();
     }
 }

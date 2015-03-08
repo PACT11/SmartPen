@@ -4,10 +4,15 @@ package apps;
 import remote.listeners.ConnectionListener;
 import remote.listeners.CommandReceiveListener;
 import remote.listeners.ImageReceiveListener;
+import remote.listeners.RansacListener;
+import shape.Point;
 import view.*;
 import java.util.ArrayList;
 import remote.*;
+
 import android.graphics.Bitmap;
+import android.os.Handler;
+
 /*
  * A general class for all applications. 
  */
@@ -15,6 +20,7 @@ public abstract class Application {
     public static OS os;
     public static InputScreen inputScreen;
     public static OutputScreen outputScreen;
+    public static Handler handler;              //used to launch action from mainProject Thread
     
     protected static final ArrayList<Application> applications = new ArrayList<>();
     protected MenuBar menu;
@@ -93,6 +99,12 @@ public abstract class Application {
                 onImageReceived(image);
             }
         });
+        pen.addRansacListener(new RansacListener() {
+            @Override
+            public void ransacReceived(ArrayList<shape.Point> points) {
+                onRansacReceived(points);
+            }
+        });
     }
     // methods called when a remotePen event occurs
     protected void onConnectionRequest(String distantUID){}
@@ -100,4 +112,5 @@ public abstract class Application {
     protected void onConnectionClosure(String distantUID){}
     protected void onCommandReceived(String command){}
     protected void onImageReceived(Bitmap image){}
+    protected void onRansacReceived(ArrayList<Point> points){}
 }

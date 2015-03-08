@@ -20,7 +20,7 @@ public class MyCamera{
     private InputScreen.ImageListener imageListener; // a listener called when a picture is taken by the timer
     private Timer pictureUpdater;                    // a timer taking picture periodically
     private Camera camera;
-    private Bitmap bitmap;                           // the captured image
+    public static Bitmap bitmap;                           // the captured image
     private Object synchronizer = new Object();      // used to wait for the picture to be captured (with .wait & .notify)
     private SurfaceTexture texture;                  // the surface needed for the camera to preview (not displayed)
     private  PictureCallback onCapture = new PictureCallback() {
@@ -35,7 +35,7 @@ public class MyCamera{
             camera = Camera.open();
             texture = new SurfaceTexture(10);
             camera.setPreviewTexture(texture);
-            camera.startPreview();
+            //camera.startPreview();
         }
         catch (Exception e){
             System.err.println("Camera : error while loading camera");
@@ -59,6 +59,12 @@ public class MyCamera{
     }
     // take and return a picture
     public Bitmap takePicture() {
+        camera.startPreview();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         camera.takePicture(null, null, onCapture);
         System.out.print("Camera : taking a picture ... ");
         bitmap = null;
@@ -72,6 +78,8 @@ public class MyCamera{
         }
         if(bitmap!=null) {
             System.out.println("done");
+        } else {
+            System.out.println("fail");
         }
 
         return bitmap;
@@ -79,16 +87,16 @@ public class MyCamera{
     // called when the picture has been captured
     void onPictureCaptured(byte[] data) {
         bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-        //restart preview
-        camera.startPreview();
+        camera.stopPreview();
         synchronized (synchronizer) {
             synchronizer.notify();
         }
     }
     // called periodically by a timer to take a picture of the sheet
     private void ontakingPicture() {
-        if(imageListener!=null)
-            imageListener.newImage(takePicture());
+        Bitmap picture;
+        if(imageListener!=null && (picture=takePicture())!=null)
+            imageListener.newImage(picture);
     }
     // close the camera
     public void close() {
