@@ -20,11 +20,14 @@ public class list extends ListActivity {
     private Login login;
     private String targetUser;
     private AlertDialog alert;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
     }
+
 
     @Override
     protected void onResume() {
@@ -38,6 +41,7 @@ public class list extends ListActivity {
         if(alert!=null)
             alert.cancel();
     }
+
 
     public void showConnectionRequestDialog(String UID) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -53,10 +57,21 @@ public class list extends ListActivity {
             public void onClick(DialogInterface dialog, int id) {
                 login.answerConnectionRequest(true);
                 Intent project = new Intent(list.this, projection.class);
-                startActivity(project);
+                startActivityForResult(project,23);
             }
         });
         builder.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == 23) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_CANCELED) {
+                finish();
+            }
+        }
     }
 
     @Override
@@ -78,6 +93,8 @@ public class list extends ListActivity {
 
         builder.show();
     }
+
+
     private void showWaitingForAnswerDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Requete envoyee");
@@ -86,12 +103,14 @@ public class list extends ListActivity {
         alert.setCancelable(true);
         alert.show();
     }
+
+
     public void processConnectionAnswer(boolean answer) {
         alert.cancel();
         alert.dismiss();
         if(answer) {
             Intent project = new Intent(list.this, projection.class);
-            startActivity(project);
+            startActivityForResult(project,23);
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Requete refusee");
