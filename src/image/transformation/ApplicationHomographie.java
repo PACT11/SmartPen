@@ -15,31 +15,31 @@ public class ApplicationHomographie{
 	public static void main(String[] args) throws Exception{
 		
         
-		File fichierOriginal = new File("imageblanche.jpg");
-        String fichierSortie = "imageblanche_projetee";
-        image1 = ImageIO.read(fichierOriginal);
-        MainRansac mainRansac = new MainRansac();
+            File fichierOriginal = new File("imageblanche.jpg");
+            String fichierSortie = "imageblanche_projetee";
+            image1 = ImageIO.read(fichierOriginal);
+            MainRansac mainRansac = new MainRansac();
 
-//      long tempsDebut = System.currentTimeMillis();
-        ArrayList<Point> coinsDepart = mainRansac.donnerCoins();
-/*      long tempsFin = System.currentTimeMillis();
-        float seconds = (tempsFin - tempsDebut) / 1000F;
-        System.out.println("Opération effectuée en: "+ Float.toString(seconds) + " secondes.");
- */     Point p5 = new Point(0,0);
-        Point p6 = new Point(0,1200);
-        Point p7 = new Point(800,0);
-        Point p8 = new Point(800,1200);
-        ArrayList<Point> coinsArrivee = new ArrayList<Point>(4);
-        coinsArrivee.add(p5);
-        coinsArrivee.add(p6);
-        coinsArrivee.add(p7);
-        coinsArrivee.add(p8);
+    //      long tempsDebut = System.currentTimeMillis();
+            ArrayList<Point> coinsDepart = mainRansac.donnerCoins();
+    /*      long tempsFin = System.currentTimeMillis();
+            float seconds = (tempsFin - tempsDebut) / 1000F;
+            System.out.println("Opération effectuée en: "+ Float.toString(seconds) + " secondes.");
+     */     Point p5 = new Point(0,0);
+            Point p6 = new Point(0,1200);
+            Point p7 = new Point(800,0);
+            Point p8 = new Point(800,1200);
+            ArrayList<Point> coinsArrivee = new ArrayList<Point>(4);
+            coinsArrivee.add(p5);
+            coinsArrivee.add(p6);
+            coinsArrivee.add(p7);
+            coinsArrivee.add(p8);
 
-        
-        
-        //ArrayList<Point> coinsArrivee = mainRansacBleu.donnerCoinsBleus();
-        image2 = partieEntiere(image1,coinsDepart,coinsArrivee);
-        creerImage(fichierSortie);   
+
+
+            //ArrayList<Point> coinsArrivee = mainRansacBleu.donnerCoinsBleus();
+            image2 = partieEntiere(image1,coinsDepart,coinsArrivee);
+            creerImage(fichierSortie);   
         
         
 
@@ -111,7 +111,7 @@ public class ApplicationHomographie{
 		return imageRecalee;
 		
 	}
-	
+
 	public static BufferedImage ponderation(BufferedImage imageBrute){
 		
 		int x1, y1, x2, y2, x3, y3, x4, y4, rouge, rouge1, rouge2, rouge3, rouge4, vert, vert1, vert2, vert3, vert4, bleu, bleu1, bleu2, bleu3, bleu4, alpha, alpha1, alpha2, alpha3, alpha4, gris, nouveauPixel;
