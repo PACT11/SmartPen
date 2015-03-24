@@ -50,7 +50,7 @@ public class projection extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            new AlertDialog.Builder(this).setMessage("Arreter le partage ?")
+            new AlertDialog.Builder(this).setMessage("Arrêter le partage ?")
                     .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             share.disconnectFromUser();
@@ -68,8 +68,8 @@ public class projection extends Activity {
     }
     public void userDisconnected(String distantUID) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Deconnexion");
-        builder.setMessage(distantUID + " s'est deconnecte");
+        builder.setTitle("Déconnexion");
+        builder.setMessage(distantUID + " s'est déconnecté");
         builder.setNeutralButton("OK",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

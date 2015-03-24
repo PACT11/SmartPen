@@ -1,86 +1,117 @@
 package apps;
 
-import pact.smartpen.list;
-import remote.RemotePen;
-import remote.messages.ConnectionAnswer;
-import view.MyCamera;
+import java.net.UnknownHostException;
+
+import netzwerk.Connector;
+import netzwerk.messages.*;
+import pact.smartpen.*;
+import remote.messages.CheckUser;
+import remote.messages.UserListUpdate;
+
 
 public class Login extends Application {
-    private RemotePen server;
-    private Object lock = new Object();
-    private String UID = "";
-    private String password;
-    private boolean isRegistered= false;
-    private String[] users;
-    private list activity;
+    // server's address
+    public static final byte[] serverIP = {(byte)10,(byte)0,(byte)1,(byte)4};
+
+    private Connector server;        // the server we log in
+    private String UID = "";         // the name of the user
+    private String[] users;          // a list of all connected users
+    // references to the cativities for GUI callbacks
+    private list Lactivity;
+    private pact.smartpen.SmartPen Sactivity;
+
     @Override
     protected void onLaunch() {
-        server = new RemotePen("connectionAgent");
-        server.connect(RemotePen.DEFAULTIP,2323);
+        // start an anonymous connection to the server
+        server = new Connector("connectionAgent");
+
+        try {
+            server.connect(serverIP,2323);
+        } catch (UnknownHostException e) {  // if we cannot connect to the server
+            if(Sactivity!=null) {
+                Sactivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Sactivity.serverUnreachable();
+                    }
+                });
+            }
+        }
+        // handle connections list updates
+        UserListUpdate.setListener( new UserListUpdate.UserListListener() {
+            @Override
+            public void onUpdate(String[] users) {
+                onUserListUpdate(users);
+            }
+        });
     }
     public void resume() {
-        System.out.println("pass");
+        // reconfigure listeners for login app
         configureRemoteListeners(server);
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                users = server.getConnectedUsers();
-
-                synchronized (lock) {
-                    lock.notify();
-                }
-            }
-        });
-        synchronized (lock)  { try {
-            lock.wait(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } }
+        // update user list
+        if(Lactivity!=null)
+            Lactivity.updateUsers(users);
     }
-    public boolean checkUser(String user, String pass) {
+    public void checkUser(String user, final String password) {
         this.UID = user;
-        this.password = pass;
         handler.post(new Runnable() {
             @Override
             public void run() {
-                isRegistered = server.isRegistered(UID,password);
+                final boolean isRegistered = CheckUser.check(UID, password,server);
                 if(isRegistered) {
+                    // modified ID to match user's
                     server.setUID(UID);
-                    users = server.getConnectedUsers();
+                    // get the user list (blocking to be sure to have something to display on list activity launch)
+                    users = UserList.get(server);
+                    // send a notification to all connected users to udpate their connection list
+                    server.sendMessage(new UserListUpdate());
+                    // from now on we'll respond to connection requests/answers
                     configureRemoteListeners(server);
                 }
-                synchronized (lock) {lock.notify();}
+                // GUI callback
+                Sactivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Sactivity.checkUserCallback(isRegistered);
+                    }
+                });
             }
         });
-        synchronized (lock)  { try {
-            lock.wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } }
-        return isRegistered;
     }
     @Override
     protected void onConnectionRequest(final String distantUID){
-        if(activity==null) {
+        if(Lactivity==null) {               // if the list activity has not been loaded yet, refuse connection
             server.acceptConnection(false);
         } else {
             //show GUI dialog
-            activity.runOnUiThread(new Runnable() {
+            Lactivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    activity.showConnectionRequestDialog(distantUID);
+                    Lactivity.showConnectionRequestDialog(distantUID);
                 }
             });
         }
     }
     @Override
     protected void onConnectionAnswer(final short answer){
-        if(activity!=null) {
+        if(Lactivity!=null) {
             //show GUI dialog
-            activity.runOnUiThread(new Runnable() {
+            Lactivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    activity.processConnectionAnswer(answer == ConnectionAnswer.ACCEPT);
+                    Lactivity.processConnectionAnswer(answer == ConnectionAnswer.ACCEPT);
+                }
+            });
+        }
+    }
+    private void onUserListUpdate(final String[] users) {
+        this.users = users;
+        if(Lactivity!=null) {
+            Lactivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (Lactivity != null)
+                        Lactivity.updateUsers(getUsers());
                 }
             });
         }
@@ -121,17 +152,17 @@ public class Login extends Application {
         return filteredUsers;
     }
     public void setListActivity(list activity) {
-        this.activity = activity;
+        this.Lactivity = activity;
     }
-    public RemotePen getServer() {
+    public void setSmartPenActivity(pact.smartpen.SmartPen activity) {
+        this.Sactivity = activity;
+    }
+    public Connector getServer() {
         return server;
     }
 
     @Override
     protected void onClose() {
         //server.close();
-    }
-    public void close() {
-        menu.debugClick("close");
     }
 }

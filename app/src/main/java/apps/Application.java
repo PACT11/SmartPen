@@ -1,14 +1,12 @@
 
 package apps;
 
-import remote.listeners.ConnectionListener;
-import remote.listeners.CommandReceiveListener;
-import remote.listeners.ImageReceiveListener;
-import remote.listeners.RansacListener;
-import shape.Point;
-import view.*;
+import netzwerk.Connector;
+import netzwerk.listeners.ConnectionListener;
 import java.util.ArrayList;
-import remote.*;
+import remote.messages.*;
+import remote.listeners.*;
+import view.*;
 
 import android.graphics.Bitmap;
 import android.os.Handler;
@@ -72,8 +70,8 @@ public abstract class Application {
             }
         });
     }
-    protected final void configureRemoteListeners(RemotePen pen) {
-        pen.addConnectionListener(new ConnectionListener() {
+    protected final void configureRemoteListeners(Connector pen) {
+        pen.setConnectionListener(new ConnectionListener() {
             @Override
             public void connectionRequest(String distantUID){
                 onConnectionRequest(distantUID);
@@ -87,22 +85,16 @@ public abstract class Application {
                 onConnectionAnswer(answer);
             }
         });
-        pen.addCommandListener(new CommandReceiveListener() {
+        Command.setListener(new CommandReceiveListener() {
             @Override
             public void commandReceived(String command) {
                 onCommandReceived(command);
             }  
         });
-        pen.addImageListener(new ImageReceiveListener() {
+        Image.setListener(new ImageReceiveListener() {
             @Override
             public void imageReceived(Bitmap image) {
                 onImageReceived(image);
-            }
-        });
-        pen.addRansacListener(new RansacListener() {
-            @Override
-            public void ransacReceived(ArrayList<shape.Point> points) {
-                onRansacReceived(points);
             }
         });
     }
@@ -112,5 +104,4 @@ public abstract class Application {
     protected void onConnectionClosure(String distantUID){}
     protected void onCommandReceived(String command){}
     protected void onImageReceived(Bitmap image){}
-    protected void onRansacReceived(ArrayList<Point> points){}
 }

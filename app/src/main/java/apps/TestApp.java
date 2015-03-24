@@ -1,28 +1,29 @@
 
 package apps;
 
-import remote.*;
-import remote.messages.ConnectionAnswer;
+import netzwerk.*;
+import netzwerk.messages.*;
+import remote.messages.*;
 import view.MyCamera;
 
 import android.graphics.Bitmap;
 /*
  */
 public class TestApp extends Application {
-    RemotePen bob;
-    RemotePen john;
+    Connector bob;
+    Connector john;
     boolean readyForImage = false;
     @Override
     protected void onLaunch() {
-        bob = new RemotePen("bob");
-        bob.connect(RemotePen.DEFAULTIP,2323);
-        john = new RemotePen("john");
-        john.connect(RemotePen.DEFAULTIP,2323);
+        bob = new Connector("bob");
+        //bob.connect(Login.serverIP,2323);
+        john = new Connector("john");
+        //john.connect(Login.serverIP,2323);
 
         configureRemoteListeners(bob);
         configureRemoteListeners(john);
         
-        String[] users = bob.getConnectedUsers();
+        String[] users = UserList.get(bob);
         for(String user : users)
             System.out.println(user);
         
@@ -38,7 +39,7 @@ public class TestApp extends Application {
     protected void onNewImage(Bitmap image) {
         if(readyForImage) {
             System.out.println("Test App : Received a new image");
-            john.sendImage(image);
+            john.sendMessage(new Image(image));
             readyForImage = false;
         }
     }
@@ -50,7 +51,7 @@ public class TestApp extends Application {
     protected void onConnectionAnswer(short answer){
         if(answer == ConnectionAnswer.ACCEPT) {
             System.out.println("TestApp: client accepted request !");
-            bob.sendCommand("hello you");
+            bob.sendMessage(new Command("hello you"));
         } else {
             System.out.println("TestApp: client refused connection");
         }

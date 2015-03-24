@@ -4,20 +4,20 @@ import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 
+import netzwerk.Connector;
 import pact.smartpen.projection;
-import remote.RemotePen;
-import remote.messages.Ransac;
+import remote.messages.Command;
+import remote.messages.Image;
 import shape.ApplicationHomographie;
 import shape.MainRansac;
-import shape.MainRansacBleu;
-import shape.ManipulationImage;
+
 import shape.Point;
 
 /**
  * Created by arnaud on 07/03/15.
  */
 public class Share extends Application {
-    private RemotePen server;
+    private Connector server;
     private projection activity;
     private boolean working;
     private Bitmap img;
@@ -36,13 +36,13 @@ public class Share extends Application {
         if(server.getUID().equals("pact"))
             inputScreen.restart();
         else
-            server.sendCommand("get");
+            server.sendMessage(new Command("get"));
     }
     protected void onNewImage(Bitmap image) {
         img = Bitmap.createScaledBitmap(image,image.getWidth()/4,image.getHeight()/4,false);
         outputScreen.display(img);
         //if(!working) {
-            server.sendImage(img);
+            server.sendMessage(new Image(img));
         //    working= true;
         //}
         /*if(!ransac) {
@@ -73,10 +73,6 @@ public class Share extends Application {
         working = false;
     }
     @Override
-    protected void onRansacReceived(ArrayList<Point> points) {
-        coinsDepart=points;
-    }
-    @Override
     protected void onImageReceived(final Bitmap image){
         if(!working) {
             handler.post(new Runnable() {
@@ -95,7 +91,7 @@ public class Share extends Application {
                     Bitmap myBmp = ApplicationHomographie.partieEntiere(image, coinsDepart, coinsArrive);
                     System.out.println("done");
                     outputScreen.display(myBmp);
-                    server.sendCommand("get");
+                    server.sendMessage(new Command("get"));
                     working = false;
                 }
             });

@@ -17,6 +17,7 @@ public class list extends ListActivity {
 
 
     private String[] users;
+    private ArrayAdapter<String> adapter;
     private Login login;
     private String targetUser;
     private AlertDialog alert;
@@ -33,15 +34,16 @@ public class list extends ListActivity {
         users = login.getUsers();
         login.setListActivity(this);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, users);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, users);
         setListAdapter(adapter);
+
         if(alert!=null)
             alert.cancel();
     }
 
     public void showConnectionRequestDialog(String UID) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Requete de connexion");
+        builder.setTitle("Requête de connexion");
 
         builder.setMessage("Accepter la connexion avec " + UID +" ?");
         builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
@@ -80,8 +82,8 @@ public class list extends ListActivity {
     }
     private void showWaitingForAnswerDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Requete envoyee");
-        builder.setMessage("En attente d'une reponse de " + targetUser + " ...");
+        builder.setTitle("Requête envoyée");
+        builder.setMessage("En attente d'une réponse de " + targetUser + " ...");
         alert = builder.create();
         alert.setCancelable(true);
         alert.show();
@@ -94,10 +96,15 @@ public class list extends ListActivity {
             startActivity(project);
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Requete refusee");
-            builder.setMessage(targetUser + " a refuse la connexion.");
+            builder.setTitle("Requête refusée");
+            builder.setMessage(targetUser + " a refusé la connexion.");
             builder.show();
         }
     }
-
+    public void updateUsers(String[] users) {
+        this.users = users;
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, users);
+        setListAdapter(adapter);
+        ((ArrayAdapter<String>) getListAdapter()).notifyDataSetChanged();
+    }
 }

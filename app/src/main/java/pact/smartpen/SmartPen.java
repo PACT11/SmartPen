@@ -1,6 +1,7 @@
 package pact.smartpen;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Handler;
@@ -33,9 +34,14 @@ public class SmartPen extends ActionBarActivity {
         // start SmartPen
         new MainProject().start();
         sleep();
+
+        // #### DEBUG : if you want to bypass the login/connect activities, uncomment the following : ####
         //Intent secondeActivite = new Intent(SmartPen.this, projection.class);
         //startActivity(secondeActivite);
+        // finish();
 
+        // pass this for callbacks
+        ((Login)Application.os.getApp("Login")).setSmartPenActivity(this);
         // start login mode (connects to the server) has to be done in the mainProject Thread because of networking
         Application.handler.post(new Runnable() {
             @Override
@@ -49,22 +55,11 @@ public class SmartPen extends ActionBarActivity {
         mailView = (EditText) findViewById(R.id.editText);
         pwdView = (EditText) findViewById(R.id.editText2);
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Erreur de Connexion");
-        builder.setMessage("Erreur d'identifiant ou inscrivez-vous");
         // when tap on login button
         mPasserelle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(login.checkUser(mailView.getText().toString(),pwdView.getText().toString())){
-                    Intent secondeActivite = new Intent(SmartPen.this, list.class);
-                    sleep();
-                    startActivity(secondeActivite);
-                }
-                else {
-                    builder.show();
-                }
-
+                login.checkUser(mailView.getText().toString(),pwdView.getText().toString());
             }
         });
     }
@@ -91,17 +86,36 @@ public class SmartPen extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //if(Application.inputScreen!=null)
-        //    Application.inputScreen.close();
-
+    public void checkUserCallback(boolean isRegistered) {
+        if(isRegistered){
+            Intent secondeActivite = new Intent(SmartPen.this, list.class);
+            sleep();
+            startActivity(secondeActivite);
+        }
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Erreur de Connexion");
+            builder.setMessage("Erreur d'identifiant ou inscrivez-vous");
+            builder.show();
+        }
     }
-    protected void onResume() {
-        super.onResume();
-        //if(Application.inputScreen!=null)
-        //    Application.inputScreen.restart();
+    // called when a connection cannot be established with the server
+    public void serverUnreachable() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Serveur inaccessible");
+        builder.setMessage("Vérifiez votre connection à internet ou réessayez dans quelques instants");
+        builder.setNeutralButton("Réessayer", new DialogInterface.OnClickListener() {
+            // retry : re-launch the login mode
+            public void onClick(DialogInterface dialog, int id) {
+                Application.handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        login = (Login) Application.os.startApp("Login");
+                    }
+                });
+            }
+        });
+        builder.show();
     }
     private void sleep() {
         try {

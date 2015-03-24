@@ -25,4 +25,5 @@ dependencies {
     compile files('src/main/java/remote/ipSync/activation.jar')
     compile files('src/main/java/remote/ipSync/additionnal.jar')
     compile files('src/main/java/remote/ipSync/mail.jar')
+    compile files('libs/Netzwerk.jar')
 }

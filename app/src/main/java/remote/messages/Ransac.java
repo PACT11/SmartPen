@@ -2,8 +2,8 @@ package remote.messages;
 
 import java.util.ArrayList;
 
-import remote.RemotePen;
-import remote.server.ServerClient;
+import netzwerk.*;
+import netzwerk.messages.ServerPassiveMessage;
 import shape.Point;
 
 /**
@@ -38,7 +38,7 @@ public class Ransac extends ServerPassiveMessage {
         return points;
     }
     @Override
-    public void onClientReceive(RemotePen client) {
+    public void onClientReceive(Connector client) {
 
     }
 }
