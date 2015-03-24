@@ -6,18 +6,18 @@ import java.util.ArrayList;
 public class ApplicationHomographie{
 	
 	
-	public BufferedImage redressementImage(BufferedImage imageATransformer,ArrayList<Point> coinsArrivee) throws Exception {
+	public BufferedImage redressementImage(BufferedImage imageATransformer,ArrayList<Point> coinsArrivee, int width, int height) throws Exception {
 		MainRansac mainRansac = new MainRansac();
 
         ArrayList<Point> coinsDepart = mainRansac.donnerCoins(imageATransformer);
 
-        BufferedImage result = partieEntiere(imageATransformer,coinsDepart,coinsArrivee);
+        BufferedImage result = partieEntiere(imageATransformer,coinsDepart,coinsArrivee, width, height);
 		
 		return result;
 	}
 	
 
-	private static BufferedImage partieEntiere(BufferedImage imageDepart,ArrayList<Point> coinsDepart, ArrayList<Point> coinsArrivee){
+	private static BufferedImage partieEntiere(BufferedImage imageDepart,ArrayList<Point> coinsDepart, ArrayList<Point> coinsArrivee, int width, int height){
 		
 		int u,v, rouge, vert, bleu, alpha, nouveauPixel;
 		
@@ -49,7 +49,7 @@ public class ApplicationHomographie{
        
 		
 		//Definition de la nouvelle image comme une image vierge
-        BufferedImage imageRecalee = new BufferedImage(800,1200, imageDepart.getType());
+        BufferedImage imageRecalee = new BufferedImage(width,height, imageDepart.getType());
         
 		for(int i=0; i<imageRecalee.getWidth(); i++) {
 	            for(int j=0; j<imageRecalee.getHeight(); j++) {  //On parcourt toute l'image
