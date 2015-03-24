@@ -1,12 +1,47 @@
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+
 public class ApplicationHomographie{
+	public static BufferedImage imageOriginale, imageSortie;
 	
 	
-	public BufferedImage redressementImage(BufferedImage imageATransformer,ArrayList<Point> coinsArrivee, int width, int height) throws Exception {
+	public static void main(String[] args) throws Exception{
+		
+		long tempsDebut = System.currentTimeMillis();
+		File fichierOriginal = new File("imageblanche.jpg");
+        String fichierSortie = "imageblanche_redressee";
+        BufferedImage imageOriginale = ImageIO.read(fichierOriginal);
+        Point p5 = new Point(0,0);
+        Point p6 = new Point(0,1200);
+        Point p7 = new Point(800,0);
+        Point p8 = new Point(800,1200);
+        ArrayList<Point> coinsArrivee = new ArrayList<Point>(4);
+        coinsArrivee.add(p5);
+        coinsArrivee.add(p6);
+        coinsArrivee.add(p7);
+        coinsArrivee.add(p8);
+        imageSortie = redressementImage(imageOriginale, coinsArrivee, 800,1200);
+        creerImage(fichierSortie);      
+        
+        long tempsFin = System.currentTimeMillis();
+        float seconds = (tempsFin - tempsDebut) / 1000F;
+        System.out.println("Opération totale effectuée en: "+ Float.toString(seconds) + " secondes.");
+
+	}
+	
+	private static void creerImage(String sortie) throws IOException {
+        File file = new File(sortie+".jpg");
+        ImageIO.write(imageSortie, "jpg", file);
+    }
+	
+	
+	public static BufferedImage redressementImage(BufferedImage imageATransformer,ArrayList<Point> coinsArrivee, int width, int height) throws Exception {
 		MainRansac mainRansac = new MainRansac();
 
         ArrayList<Point> coinsDepart = mainRansac.donnerCoins(imageATransformer);
