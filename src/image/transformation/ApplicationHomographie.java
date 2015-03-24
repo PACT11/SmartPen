@@ -1,55 +1,22 @@
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 public class ApplicationHomographie{
 	
-	private static BufferedImage image1, image2;
 	
-	
-	public static void main(String[] args) throws Exception{
+	public BufferedImage redressementImage(BufferedImage imageATransformer,ArrayList<Point> coinsArrivee) throws Exception {
+		MainRansac mainRansac = new MainRansac();
+
+        ArrayList<Point> coinsDepart = mainRansac.donnerCoins(imageATransformer);
+
+        BufferedImage result = partieEntiere(imageATransformer,coinsDepart,coinsArrivee);
 		
-        
-		File fichierOriginal = new File("imageblanche.jpg");
-        String fichierSortie = "imageblanche_projetee";
-        image1 = ImageIO.read(fichierOriginal);
-        MainRansac mainRansac = new MainRansac();
-
-//      long tempsDebut = System.currentTimeMillis();
-        ArrayList<Point> coinsDepart = mainRansac.donnerCoins();
-/*      long tempsFin = System.currentTimeMillis();
-        float seconds = (tempsFin - tempsDebut) / 1000F;
-        System.out.println("Opération effectuée en: "+ Float.toString(seconds) + " secondes.");
- */     Point p5 = new Point(0,0);
-        Point p6 = new Point(0,1200);
-        Point p7 = new Point(800,0);
-        Point p8 = new Point(800,1200);
-        ArrayList<Point> coinsArrivee = new ArrayList<Point>(4);
-        coinsArrivee.add(p5);
-        coinsArrivee.add(p6);
-        coinsArrivee.add(p7);
-        coinsArrivee.add(p8);
-
-        
-        
-        //ArrayList<Point> coinsArrivee = mainRansacBleu.donnerCoinsBleus();
-        image2 = partieEntiere(image1,coinsDepart,coinsArrivee);
-        creerImage(fichierSortie);   
-        
-        
-
+		return result;
 	}
 	
-	private static void creerImage(String sortie) throws IOException {
-        File file = new File(sortie+".jpg");
-        ImageIO.write(image2, "jpg", file);
-    }
-	
+
 	private static BufferedImage partieEntiere(BufferedImage imageDepart,ArrayList<Point> coinsDepart, ArrayList<Point> coinsArrivee){
 		
 		int u,v, rouge, vert, bleu, alpha, nouveauPixel;
