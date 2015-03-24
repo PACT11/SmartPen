@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Netzwerk">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/libs/Netzwerk.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
