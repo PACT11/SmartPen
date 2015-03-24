@@ -3,17 +3,13 @@ package pact.smartpen;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.ImageView;
 
 import apps.Application;
-import apps.Login;
 import apps.Share;
-import apps.ShareSource;
-import view.InputScreen;
-import view.MyCamera;
 
 /**
  * Created by Chab on 24/02/15.
@@ -21,6 +17,7 @@ import view.MyCamera;
 public class projection extends Activity {
     Share share;
     ImageView imageView;
+    Boolean arretVolontaire=false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +40,25 @@ public class projection extends Activity {
         }
         share.setActivity(this);
 
-        //Bundle extras = getIntent().getExtras();
-        //idOther = new String(extras.getString("login"));
+    }
+
+    @Override
+    public void onPause(){
+        if (!arretVolontaire) {
+            share.disconnectFromUser();
+            finishWithResult();
+        }
+    }
+
+
+    private void finishWithResult()
+    {
+        Bundle conData = new Bundle();
+        conData.putString("results", "0");
+        Intent intent = new Intent();
+        intent.putExtras(conData);
+        setResult(RESULT_CANCELED, intent);
+        finish();
     }
 
     @Override
@@ -53,6 +67,7 @@ public class projection extends Activity {
             new AlertDialog.Builder(this).setMessage("Arrêter le partage ?")
                     .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
+                            arretVolontaire=true;
                             share.disconnectFromUser();
                             finish();
                         }
