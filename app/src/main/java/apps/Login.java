@@ -11,7 +11,9 @@ import remote.messages.UserListUpdate;
 
 public class Login extends Application {
     // server's address
-    public static final byte[] serverIP = {(byte)10,(byte)0,(byte)1,(byte)4};
+    //public static final byte[] serverIP = {(byte)10,(byte)0,(byte)1,(byte)4};
+    //public static final byte[] serverIP = {(byte)137,(byte)194,(byte)17,(byte)15};
+    public static final byte[] serverIP = {(byte)192,(byte)168,(byte)42,(byte)192};
 
     private Connector server;        // the server we log in
     private String UID = "";         // the name of the user

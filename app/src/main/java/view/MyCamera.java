@@ -36,6 +36,10 @@ public class MyCamera{
             camera = Camera.open();
             texture = new SurfaceTexture(10);
             camera.setPreviewTexture(texture);
+            Camera.CameraInfo info=  new Camera.CameraInfo();
+            Camera.getCameraInfo(0,info);
+            if(info.canDisableShutterSound)
+                camera.enableShutterSound(false);
             opened = true;
         }
         catch (Exception e){

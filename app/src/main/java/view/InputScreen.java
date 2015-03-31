@@ -22,7 +22,7 @@ public class InputScreen {
 
     }
     private void onNewImage(Bitmap image) {
-        if(DetectionMain.total(Bitmap.createScaledBitmap(image,400,300,false))) { // if the user's hand is not over the sheet
+        //if(DetectionMain.total(Bitmap.createScaledBitmap(image,400,300,false))) { // if the user's hand is not over the sheet
             System.out.println("InputScreen : no hand over the sheet");
             outputScreen.blackOut();         // shut down projector shortly
             //currentImage = camera.takePicture();
@@ -38,9 +38,9 @@ public class InputScreen {
             if(newImageListener!=null){// && currentImage!=null) {     // call the new image listener if any
                 newImageListener.newImage(image);
             }
-        } else { // check if user is clicking the menu bar
+        //} else { // check if user is clicking the menu bar
         //    menu.click(ShapeProcessor.findCap(image));
-        }
+        //}
     }
     public void addNewImageListener(ImageListener listener) {
         newImageListener = listener;

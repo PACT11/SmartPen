@@ -24,7 +24,7 @@ public class Share extends Application {
             inputScreen.restart();
     }
     protected void onNewImage(Bitmap image) {
-        Bitmap img = Bitmap.createScaledBitmap(image,image.getWidth()/2,image.getHeight()/2,false);
+        Bitmap img = Bitmap.createScaledBitmap(image,3264/2,2448/2,false);
         outputScreen.display(img);
         cloud.straigthenAndSend(img,1200,800);
     }

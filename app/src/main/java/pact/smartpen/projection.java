@@ -70,7 +70,7 @@ public class projection extends Activity {
                         public void onClick(DialogInterface dialog, int which) {
                             arretVolontaire=true;
                             share.disconnectFromUser();
-                            finish();
+                            finishWithResult();
                         }
                     }).setNegativeButton("Non", null).show();
             return super.onKeyDown(keyCode, event);
