@@ -44,33 +44,37 @@ public class projection extends Activity {
 
     @Override
     public void onPause(){
-        super.onPause();
         if (!arretVolontaire) {
             share.disconnectFromUser();
-            finishWithResult();
+            finishWithResult(arretVolontaire);
         }
     }
 
 
-    private void finishWithResult()
+    private void finishWithResult(Boolean arretVolontaire)
     {
         Bundle conData = new Bundle();
         conData.putString("results", "0");
         Intent intent = new Intent();
         intent.putExtras(conData);
-        setResult(RESULT_CANCELED, intent);
+        if (arretVolontaire) {
+            setResult(RESULT_OK, intent);
+        }
+        else {
+            setResult(RESULT_CANCELED, intent);
+        }
         finish();
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            new AlertDialog.Builder(this).setMessage("Arrêter le partage ?")
+            new AlertDialog.Builder(this).setMessage("Arreter le partage ?")
                     .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             arretVolontaire=true;
                             share.disconnectFromUser();
-                            finishWithResult();
+                            finishWithResult(arretVolontaire);
                         }
                     }).setNegativeButton("Non", null).show();
             return super.onKeyDown(keyCode, event);
@@ -84,8 +88,8 @@ public class projection extends Activity {
     }
     public void userDisconnected(String distantUID) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Déconnexion");
-        builder.setMessage(distantUID + " s'est déconnecté");
+        builder.setTitle("Deconnexion");
+        builder.setMessage(distantUID + " s'est deconnecte");
         builder.setNeutralButton("OK",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
