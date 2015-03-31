@@ -1,6 +1,7 @@
 
 package remote;
 
+import image.transformation.RansacCache;
 import netzwerk.Server;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -21,6 +22,8 @@ public class ServerMain {
                     + " on port " + server.getPort());
         
         //IPsync.runDaemon();   // send IP to allow clients to retrieve it
+        
+        RansacCache.init(); 
         
         System.out.println("enter 'q' to stop the server");
         while(System.in.read()!='q');

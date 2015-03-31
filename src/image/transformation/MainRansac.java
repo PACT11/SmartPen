@@ -1,3 +1,5 @@
+package image.transformation;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -9,30 +11,35 @@ import java.util.ArrayList;
 
 public class MainRansac {
   public static BufferedImage imageOriginale, imageGrise,imageRansac;
-	
-	
-  public ArrayList<Point> donnerCoins(BufferedImage imageATransformer) throws Exception {
+  public static RansacCache cache;
+  
+  public ArrayList<Point> donnerCoins(BufferedImage imageATransformer, String UID) throws Exception {
     EnGris engris = new EnGris();
    
     long tempsDebut1 = System.currentTimeMillis();
     //mise en niveau de gris de l'image couleur
     imageGrise = engris.mettreEnNiveauDeGris(imageATransformer);
+    long tempsFin0 = System.currentTimeMillis();
     
-    ArrayList<Point> result = ObtentionCoins(imageGrise,500,1200,1600,600,2000,2500,0.25);
-    
+    ArrayList<Point> result;
+    if(cache.needUpdate(imageGrise, UID)) {
+        result = ObtentionCoins(imageGrise,250,600,800,300,1000,1250,0.25);
+        cache.update(UID, imageGrise, result);
+    } else {
+        result = cache.getCorners(UID);
+    }
     long tempsFin1 = System.currentTimeMillis();
     float seconds1 = (tempsFin1 - tempsDebut1) / 1000F;
     System.out.println("obtention coins effectuee en: "+ Float.toString(seconds1) + " secondes.");
-    
+    System.out.println("    dont passage en gris : "+ Float.toString(tempsFin0-tempsDebut1) + " ms");
     return result;
-
   }
   
   //methode pour redimensionner une image
   public static BufferedImage resizeImage(BufferedImage original, double factor) {
       int newWidth = (int) (factor * original.getWidth());
       int newHeight = (int) (factor * original.getHeight());
-     
+      
       BufferedImage newImage = new BufferedImage(newWidth, newHeight, original.getType());
      
       Graphics2D g = newImage.createGraphics();
@@ -46,7 +53,7 @@ public class MainRansac {
      
       g.drawImage(original, 0, 0, newWidth, newHeight, null);
       g.dispose();
-     
+      
       return newImage;
    }
   

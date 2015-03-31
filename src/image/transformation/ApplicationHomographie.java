@@ -1,3 +1,5 @@
+package image.transformation;
+
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -26,7 +28,7 @@ public class ApplicationHomographie{
         coinsArrivee.add(p6);
         coinsArrivee.add(p7);
         coinsArrivee.add(p8);
-        imageSortie = redressementImage(imageOriginale, coinsArrivee, 800,1200);
+        imageSortie = redressementImage(imageOriginale, coinsArrivee, 800,1200, "arno");
         creerImage(fichierSortie);      
         
         long tempsFin = System.currentTimeMillis();
@@ -41,12 +43,12 @@ public class ApplicationHomographie{
     }
 	
 	
-	public static BufferedImage redressementImage(BufferedImage imageATransformer,ArrayList<Point> coinsArrivee, int width, int height) throws Exception {
+	public static BufferedImage redressementImage(BufferedImage imageATransformer,ArrayList<Point> coinsArrivee, int width, int height, String UID) throws Exception {
 		MainRansac mainRansac = new MainRansac();
 
-        ArrayList<Point> coinsDepart = mainRansac.donnerCoins(imageATransformer);
+                ArrayList<Point> coinsDepart = mainRansac.donnerCoins(imageATransformer, UID);
 
-        BufferedImage result = partieEntiere(imageATransformer,coinsDepart,coinsArrivee, width, height);
+                BufferedImage result = partieEntiere(imageATransformer,coinsDepart,coinsArrivee, width, height);
 		
 		return result;
 	}
@@ -113,7 +115,7 @@ public class ApplicationHomographie{
 		return imageRecalee;
 		
 	}
-	
+
 	public static BufferedImage ponderation(BufferedImage imageBrute){
 		
 		int x1, y1, x2, y2, x3, y3, x4, y4, rouge, rouge1, rouge2, rouge3, rouge4, vert, vert1, vert2, vert3, vert4, bleu, bleu1, bleu2, bleu3, bleu4, alpha, alpha1, alpha2, alpha3, alpha4, gris, nouveauPixel;

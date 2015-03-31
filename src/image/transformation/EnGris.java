@@ -1,3 +1,6 @@
+package image.transformation;
+
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
@@ -7,27 +10,21 @@ public class EnGris {
 
 	// methode pour mettre l'image originale en niveau de gris avec la luminance
     public BufferedImage mettreEnNiveauDeGris(BufferedImage imageOriginale) {
- 
-        int rouge, vert, bleu, alpha;
+        Color color;
         int nouveauPixel;
  
         BufferedImage imageGrise = new BufferedImage(imageOriginale.getWidth(), imageOriginale.getHeight(), imageOriginale.getType());
  
         for(int i=0; i<imageOriginale.getWidth(); i++) {
             for(int j=0; j<imageOriginale.getHeight(); j++) {
- 
                 // obtention des pixels par le rouge, le vert, le bleu et l'alpha
-                rouge = new Color(imageOriginale.getRGB(i, j)).getRed();
-                vert = new Color(imageOriginale.getRGB(i, j)).getGreen();
-                bleu = new Color(imageOriginale.getRGB(i, j)).getBlue();
-                alpha = new Color(imageOriginale.getRGB(i, j)).getAlpha();
- 
-                int gris = (int) (0.21 * rouge + 0.71 * vert + 0.07 * bleu);
-                nouveauPixel = colorerPixel(alpha, gris, gris, gris);
+                color = new Color(imageOriginale.getRGB(i, j));        
+
+                int gris = (int) (0.21*color.getRed() + 0.71*color.getGreen() + 0.07*color.getBlue());
+                nouveauPixel = colorerPixel(color.getAlpha(), gris, gris, gris);
  
                 // mets les pixels dans l'image
                 imageGrise.setRGB(i, j, nouveauPixel);
- 
             }
         }
  
