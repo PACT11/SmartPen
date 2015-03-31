@@ -48,9 +48,6 @@ public class Login extends Application {
     public void resume() {
         // reconfigure listeners for login app
         configureRemoteListeners(server);
-        // update user list
-        if(Lactivity!=null)
-            Lactivity.updateUsers(users);
     }
     public void checkUser(String user, final String password) {
         this.UID = user;

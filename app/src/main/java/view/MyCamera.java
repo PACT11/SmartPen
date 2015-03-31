@@ -29,13 +29,14 @@ public class MyCamera{
             onPictureCaptured(data);
         }
     };
+    private boolean opened;
 
     public MyCamera() {
         try {
             camera = Camera.open();
             texture = new SurfaceTexture(10);
             camera.setPreviewTexture(texture);
-            //camera.startPreview();
+            opened = true;
         }
         catch (Exception e){
             System.err.println("Camera : error while loading camera");
@@ -59,6 +60,8 @@ public class MyCamera{
     }
     // take and return a picture
     public Bitmap takePicture() {
+        if(!opened)
+            return null;
         camera.startPreview();
         try {
             Thread.sleep(100);
@@ -100,12 +103,15 @@ public class MyCamera{
     }
     // close the camera
     public void close() {
-        synchronized (synchronizer) {
-            synchronizer.notify();
+        if(opened) {
+            synchronized (synchronizer) {
+                synchronizer.notify();
+            }
+            opened = false;
+            pictureUpdater.cancel();
+            camera.stopPreview();
+            camera.release();
         }
-        pictureUpdater.cancel();
-        camera.stopPreview();
-        camera.release();
     }
 
     public static void savePicture(Bitmap bitmap){

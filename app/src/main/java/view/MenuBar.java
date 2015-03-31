@@ -28,12 +28,7 @@ public class MenuBar {
     public void addMenuListener(MenuListener listener) {
         menuListener = listener;
     }
-    public void addUpdateRequestListener(Runnable listener) {
-        updateCaller = listener;
-    }
-    private void updateScreen() {
-        updateCaller.run();
-    }
+
     public void addItem(String itemName) {
         items.add(itemName);
         System.out.println("MenuBar : added item " + itemName);
