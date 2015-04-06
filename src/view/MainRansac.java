@@ -1,4 +1,4 @@
-package image.transformation;
+package view;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class MainRansac {
   public static BufferedImage imageOriginale, imageGrise,imageRansac;
-  public static RansacCache cache;
+  //public static RansacCache cache;
   
   public ArrayList<Point> donnerCoins(BufferedImage imageATransformer, String UID) throws Exception {
     EnGris engris = new EnGris();
@@ -22,12 +22,12 @@ public class MainRansac {
     long tempsFin0 = System.currentTimeMillis();
     
     ArrayList<Point> result;
-    if(cache.needUpdate(imageGrise, UID)) {
-        result = ObtentionCoins(imageGrise,250,600,800,300,1000,1250,0.25);
-        cache.update(UID, imageGrise, result);
-    } else {
-        result = cache.getCorners(UID);
-    }
+    //if(cache.needUpdate(imageGrise, UID)) {
+        result = ObtentionCoins(imageGrise,30,70,100,300,1000,1250,0.25);
+        //cache.update(UID, imageGrise, result);
+    //} else {
+    //    result = cache.getCorners(UID);
+    //}
     long tempsFin1 = System.currentTimeMillis();
     float seconds1 = (tempsFin1 - tempsDebut1) / 1000F;
     System.out.println("obtention coins effectuee en: "+ Float.toString(seconds1) + " secondes.");
@@ -122,12 +122,15 @@ public class MainRansac {
 	//obtention du tableau de points necessaire a l'algorithme de Ransac a l'aide du seuillage gradient
     private static ArrayList<Point> obtenirPointsHorizontaux(BufferedImage imageGrise, int xmin, int xmax, int ymin, int ymax) {
 		
-		int seuilVertical = 35;
-		
-		int grisHaut, grisBas;
- 
+	int seuilVertical = 35;
+	int grisHaut, grisBas;
         ArrayList<Point> data = new ArrayList<Point>();
- 
+        
+        xmin = (xmin*imageGrise.getWidth())/100;
+        xmax = (xmax*imageGrise.getWidth())/100;
+        ymin = (ymin*imageGrise.getHeight())/100;
+        ymax = (ymax*imageGrise.getHeight())/100;
+        
         for(int i=xmin; i<xmax-1; i++) {
             for(int j=ymin; j<ymax-1; j++) {
  
@@ -149,14 +152,16 @@ public class MainRansac {
 		
 	}
     
-    private static ArrayList<Point> obtenirPointsVerticaux(BufferedImage imageGrise, int xmin, int xmax, int ymin, int ymax) {
-		
-		int seuilHorizontal = 30;
-		
-		int grisGauche,grisDroite;
- 
+    private static ArrayList<Point> obtenirPointsVerticaux(BufferedImage imageGrise, int xmin, int xmax, int ymin, int ymax) {	
+	int seuilHorizontal = 30;
+	int grisGauche,grisDroite;
         ArrayList<Point> data = new ArrayList<Point>();
- 
+        
+        xmin = (xmin*imageGrise.getWidth())/100;
+        xmax = (xmax*imageGrise.getWidth())/100;
+        ymin = (ymin*imageGrise.getHeight())/100;
+        ymax = (ymax*imageGrise.getHeight())/100;
+        
         for(int i=xmin; i<xmax-1; i++) {
             for(int j=ymin; j<ymax-1; j++) {
  

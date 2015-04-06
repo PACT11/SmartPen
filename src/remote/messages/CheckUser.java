@@ -10,7 +10,7 @@ import netzwerk.ServerClient;
  * Un message pour verifier qu'un utilisateur est bien enregistré sur le serveur
  */
 public class CheckUser extends BlockingMessage  {
-    public final static String usersFile = "/Library/Application Support/SmartPen/users";
+    public static String usersFile;
     private String UID;
     private String password;
     private boolean validUser;
@@ -46,7 +46,6 @@ public class CheckUser extends BlockingMessage  {
                     String pass = line.split(" ")[1];
                     if(user.equals(UID) && pass.equals(password)) {
                         reader.close();
-                        System.out.println("hey true !");
                         return true;
                     }
                 }
@@ -57,7 +56,6 @@ public class CheckUser extends BlockingMessage  {
         } catch (java.io.IOException|java.lang.NumberFormatException e) {
             System.err.println("RemotePen : opening error : invalid file");
         }
-        System.out.println("hey false !");
         return false;
     }
 

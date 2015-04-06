@@ -1,4 +1,4 @@
-package image.transformation;
+package view;
 
 public class Matrix {
 

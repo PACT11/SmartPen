@@ -1,4 +1,4 @@
-package image.transformation;
+package view;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -54,7 +54,7 @@ public class ApplicationHomographie{
 	}
 	
 
-	private static BufferedImage partieEntiere(BufferedImage imageDepart,ArrayList<Point> coinsDepart, ArrayList<Point> coinsArrivee, int width, int height){
+	public static BufferedImage partieEntiere(BufferedImage imageDepart,ArrayList<Point> coinsDepart, ArrayList<Point> coinsArrivee, int width, int height){
 		
 		int u,v, rouge, vert, bleu, alpha, nouveauPixel;
 		

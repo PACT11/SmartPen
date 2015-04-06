@@ -3,8 +3,6 @@ package remote.messages;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import netzwerk.messages.ServerPassiveMessage;
 import netzwerk.Connector;
