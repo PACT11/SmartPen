@@ -31,13 +31,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f263e5d-6697-44b7-ba4e-939d29114516" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/lib/Netzwerk.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/SmartPen.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/lib/activation.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/lib/javax.mail.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/README.TXT" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/users" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/remote/ServerMain.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/SmartPen.jar" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="9c43a80e-3ca3-4eb5-8f59-e86866b4e02a" name="Failed commit: Default" comment="merge&#10;" />
@@ -1797,7 +1791,11 @@
       <created>1428354147177</created>
       <updated>1428354147177</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="added an up-to-date version of the server and a README&#10;">
+      <created>1428355300144</created>
+      <updated>1428355300144</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1909,7 +1907,8 @@
     <MESSAGE value="added cloud services" />
     <MESSAGE value="added drawables&#10;" />
     <MESSAGE value="sheet transformation is now performed in the cloud&#10;new hand detection algorythme&#10;menu click detection&#10;small fixes in menu items location&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="sheet transformation is now performed in the cloud&#10;new hand detection algorythme&#10;menu click detection&#10;small fixes in menu items location&#10;" />
+    <MESSAGE value="added an up-to-date version of the server and a README&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="added an up-to-date version of the server and a README&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
