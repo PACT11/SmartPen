@@ -31,104 +31,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f263e5d-6697-44b7-ba4e-939d29114516" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/remote/messages/FitToSheet.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/shape/ShapeProcessor.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/androidTest/java/pact/smartpen/ApplicationTest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/apps/ShareSource.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/apps/SmartPen.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/remote/ipSync/IPsync.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/remote/ipSync/IPsyncClient.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/remote/ipSync/Mailer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/remote/ipSync/activation.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/remote/ipSync/additionnal.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/remote/ipSync/mail.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/remote/listeners/RansacListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/shape/ApplicationHomographie.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/shape/DetectionMain.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/shape/EnGris.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/shape/EstimationHomographie.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/shape/FittingInterface.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/shape/Line.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/shape/MainRansac.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/shape/MainRansacBleu.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/shape/ManipulationImage.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/shape/Matrix.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/shape/Ransac.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/shape/SimpleFitting.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/view/Point.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/nbproject/configs/shutdown.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/.classpath" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/.project" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/FormatsImages.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/apps/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/apps/Application.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/apps/OS.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/apps/SmartPen.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/apps/TestApp.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/image/transformation/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/image/transformation/HandDetection.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/image/transformation/Thresholding.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pswd" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/Client.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/IRemotePen.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/IncomingDataCaller.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/RemotePen.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/SmartInputStream.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/controlAgent/KillServer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/controlAgent/shutdownServer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/ipSync/IPsync.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/ipSync/IPsyncClient.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/ipSync/Mailer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/ipSync/activation.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/ipSync/javax.mail.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/listeners/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/listeners/CommandReceiveListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/listeners/ConnectionListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/listeners/ImageReceiveListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/listeners/MessageListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/messages/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/messages/Command.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/messages/ConnectionAnswer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/messages/ConnectionClosure.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/messages/ConnectionRequest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/messages/Image.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/messages/Message.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/messages/ServerPassiveMessage.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/messages/UID.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/messages/UserList.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/server/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/server/Connection.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/server/ConnectionMaker.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/server/Server.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/remote/server/ServerClient.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/serverAddress" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/shape/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/shape/ShapeProcessor.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/view/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/view/Bitmap.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/view/Camera.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/view/InputScreen.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/view/MenuBar.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/view/OutputScreen.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/view/Point.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/view/SheetProcessor.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/view/Transformation.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/libs/Netzwerk.jar" afterPath="$PROJECT_DIR$/app/libs/Netzwerk.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/apps/Application.java" afterPath="$PROJECT_DIR$/app/src/main/java/apps/Application.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/view/CloudServices.java" afterPath="$PROJECT_DIR$/app/src/main/java/view/CloudServices.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/view/InputScreen.java" afterPath="$PROJECT_DIR$/app/src/main/java/view/InputScreen.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/apps/Login.java" afterPath="$PROJECT_DIR$/app/src/main/java/apps/Login.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/pact/smartpen/MainProject.java" afterPath="$PROJECT_DIR$/app/src/main/java/pact/smartpen/MainProject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/view/MenuBar.java" afterPath="$PROJECT_DIR$/app/src/main/java/view/MenuBar.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/view/MyCamera.java" afterPath="$PROJECT_DIR$/app/src/main/java/view/MyCamera.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/view/OutputScreen.java" afterPath="$PROJECT_DIR$/app/src/main/java/view/OutputScreen.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/shape/Point.java" afterPath="$PROJECT_DIR$/app/src/main/java/shape/Point.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/apps/Share.java" afterPath="$PROJECT_DIR$/app/src/main/java/apps/Share.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/remote/messages/StraightenAndSend.java" afterPath="$PROJECT_DIR$/app/src/main/java/remote/messages/StraightenAndSend.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/pact/smartpen/projection.java" afterPath="$PROJECT_DIR$/app/src/main/java/pact/smartpen/projection.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/lib/Netzwerk.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/SmartPen.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/lib/activation.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/lib/javax.mail.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/README.TXT" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/users" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/remote/ServerMain.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="9c43a80e-3ca3-4eb5-8f59-e86866b4e02a" name="Failed commit: Default" comment="merge&#10;" />
@@ -153,11 +62,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Login.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Login.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/apps/Login.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1920">
-              <caret line="50" column="26" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.15486726" vertical-offset="0" max-vertical-offset="1920">
+              <caret line="13" column="77" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="77" />
               <folding />
             </state>
           </provider>
@@ -168,16 +77,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1560">
               <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CloudServices.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/view/CloudServices.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3318584" vertical-offset="0" max-vertical-offset="780">
-              <caret line="25" column="47" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -1462,7 +1361,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="AndroidView" proportions="" version="1">
+    <navigator currentView="Scope" currentSubView="Project Files" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -1492,6 +1391,68 @@
         <subPane subId="Project Files">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="SmartPen">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="SmartPen">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src/main">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src/main">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="java">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -1528,24 +1489,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SmartPen" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="shape" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -1850,7 +1793,11 @@
       <created>1427813717189</created>
       <updated>1427813717189</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="sheet transformation is now performed in the cloud&#10;new hand detection algorythme&#10;menu click detection&#10;small fixes in menu items location&#10;">
+      <created>1428354147177</created>
+      <updated>1428354147177</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1887,6 +1834,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.6211632" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41359773" sideWeight="0.2641357" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30028328" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="false" weight="0.66005665" sideWeight="0.6526656" order="15" side_tool="false" content_ui="tabs" x="111" y="94" width="919" height="523" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1904,7 +1852,6 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30028328" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -1961,7 +1908,8 @@
     <MESSAGE value="merge&#10;" />
     <MESSAGE value="added cloud services" />
     <MESSAGE value="added drawables&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="added drawables&#10;" />
+    <MESSAGE value="sheet transformation is now performed in the cloud&#10;new hand detection algorythme&#10;menu click detection&#10;small fixes in menu items location&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="sheet transformation is now performed in the cloud&#10;new hand detection algorythme&#10;menu click detection&#10;small fixes in menu items location&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2324,10 +2272,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/apps/Login.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/view/CloudServices.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1920">
-          <caret line="50" column="26" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.3318584" vertical-offset="0" max-vertical-offset="780">
+          <caret line="25" column="47" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
           <folding />
         </state>
       </provider>
@@ -2340,10 +2288,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/view/CloudServices.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/apps/Login.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3318584" vertical-offset="0" max-vertical-offset="780">
-          <caret line="25" column="47" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.15486726" vertical-offset="0" max-vertical-offset="1920">
+          <caret line="13" column="77" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="77" />
           <folding />
         </state>
       </provider>
