@@ -3,7 +3,9 @@ package view;
 
 import android.graphics.Bitmap;
 
-import shape.DetectionMain;
+import java.util.ArrayList;
+import pact.smartpen.projection;
+import shape.ShapeProcessor;
 
 /*
  *
@@ -18,29 +20,27 @@ public class InputScreen {
     private OutputScreen outputScreen;
     private MyCamera camera;
     private Bitmap currentImage;
+    private ArrayList<shape.Point> corners;
+    private int imageCounter=0;
+
     public InputScreen() {
 
     }
     private void onNewImage(Bitmap image) {
-        //if(DetectionMain.total(Bitmap.createScaledBitmap(image,400,300,false))) { // if the user's hand is not over the sheet
-            System.out.println("InputScreen : no hand over the sheet");
-            outputScreen.blackOut();         // shut down projector shortly
-            //currentImage = camera.takePicture();
-            outputScreen.restore();          // restart the display
+        if(!ShapeProcessor.hasHand(image)) { // if the user's hand is not over the sheet
+            if(imageCounter%2==0) {
+                System.out.println("InputScreen : no hand over the sheet");
+                outputScreen.getMenu().click(-1);
+                outputScreen.blackOut();         // shut down projector shortly
+                currentImage = camera.takePicture();
 
-            //outputScreen.updateTransformation(SheetProcessor.getSheetTransformation(newImage)); // compute the new transformation to match th sheet
-
-
-            //if(newImageListener!=null) {     // call the new image listener if any
-            //    Transformation t = SheetProcessor.getStraightTransformation(newImage); // and give it a straightened image
-            //    newImageListener.newImage(SheetProcessor.transform(newImage, t));
-            //}
-            if(newImageListener!=null){// && currentImage!=null) {     // call the new image listener if any
-                newImageListener.newImage(image);
+                if (newImageListener != null) {// && currentImage!=null) {     // call the new image listener if any
+                    newImageListener.newImage(image);
+                }
             }
-        //} else { // check if user is clicking the menu bar
-        //    menu.click(ShapeProcessor.findCap(image));
-        //}
+        } else { // check if user is clicking the menu bar
+            ShapeProcessor.findFinger(image,corners);
+        }
     }
     public void addNewImageListener(ImageListener listener) {
         newImageListener = listener;
@@ -53,8 +53,9 @@ public class InputScreen {
             camera.close();
         }
     }
-    public void restart() {
+    public void restart(projection activity) {
         camera = new MyCamera();
+        camera.setActivity(activity);
         camera.addNewImageListener(new ImageListener() {
             @Override
             public void newImage(Bitmap image) {
@@ -65,5 +66,8 @@ public class InputScreen {
 
     public Bitmap getCurrentImage() {
         return currentImage;
+    }
+    public void setCorners(ArrayList<shape.Point> corners) {
+        this.corners = corners;
     }
 }

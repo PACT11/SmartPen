@@ -27,18 +27,13 @@ public class projection extends Activity {
         Application.outputScreen.initScreen(this);
 
         // load share mode
+        ((Share) Application.os.getApp("Share")).setActivity(this);
         Application.handler.post(new Runnable() {
             @Override
             public void run() {
                 share = (Share) Application.os.startApp("Share");
             }
         });
-        try {
-            Thread.sleep(400);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        share.setActivity(this);
 
     }
 

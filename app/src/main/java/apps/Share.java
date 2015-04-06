@@ -3,6 +3,7 @@ package apps;
 import android.graphics.Bitmap;
 import netzwerk.Connector;
 import pact.smartpen.projection;
+import remote.messages.Image;
 import remote.messages.StraightenAndSend;
 import view.CloudServices;
 
@@ -16,17 +17,20 @@ public class Share extends Application {
 
     @Override
     protected void onLaunch() {
-        server = ((Login)os.getApp("Login")).getServer();
+        server = Login.getServer();
         configureRemoteListeners(server);
         cloud = new CloudServices(server);
+        menu.addItem("coucou");
+        menu.addItem("SmartPen");
 
         if(server.getUID().equals("pact"))
-            inputScreen.restart();
+            inputScreen.restart(activity);
     }
     protected void onNewImage(Bitmap image) {
-        Bitmap img = Bitmap.createScaledBitmap(image,3264/2,2448/2,false);
-        outputScreen.display(img);
-        cloud.straigthenAndSend(img,1200,800);
+        // Bitmap img = Bitmap.createScaledBitmap(image,3264/2,2448/2,false);
+        //outputScreen.display(img);
+        cloud.straigthenAndSend(image,1200,800);
+
     }
     @Override
     protected void onConnectionClosure(final String distantUID){
@@ -42,9 +46,21 @@ public class Share extends Application {
     protected void onCommandReceived(String command){
 
     }
+
+    @Override
+    protected void onMenuClick(String menu) {
+
+    }
+
     @Override
     protected void onImageReceived(final Bitmap image){
-        outputScreen.display(Bitmap.createScaledBitmap(image, 1200, 800, false));
+        if(server.getUID().equals("pact")) {
+
+            outputScreen.fitAndDisplay(image);
+        } else {
+            outputScreen.display(Bitmap.createScaledBitmap(image, 1200, 800, false));
+            server.sendMessage(new Image(image));
+        }
     }
     public void disconnectFromUser() {
         inputScreen.close();

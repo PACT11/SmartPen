@@ -7,6 +7,8 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.io.*;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.os.Environment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,13 +16,16 @@ import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 
+import apps.Application;
+import pact.smartpen.projection;
+
 public class MyCamera{
-    public static final int updatePeriod = 2000;      // the picture update period in ms
+    public static final int updatePeriod = 1000;     // the picture update period in ms
 
     private InputScreen.ImageListener imageListener; // a listener called when a picture is taken by the timer
     private Timer pictureUpdater;                    // a timer taking picture periodically
     private Camera camera;
-    public static Bitmap bitmap;                           // the captured image
+    private Bitmap bitmap;                           // the captured image
     private Object synchronizer = new Object();      // used to wait for the picture to be captured (with .wait & .notify)
     private SurfaceTexture texture;                  // the surface needed for the camera to preview (not displayed)
     private  PictureCallback onCapture = new PictureCallback() {
@@ -29,20 +34,25 @@ public class MyCamera{
             onPictureCaptured(data);
         }
     };
+    private Camera.ShutterCallback onShutter = new Camera.ShutterCallback() {
+        @Override
+        public void onShutter() {
+            Application.outputScreen.restore();
+        }
+    };
     private boolean opened;
+    private projection activity;
 
     public MyCamera() {
         try {
             camera = Camera.open();
-            texture = new SurfaceTexture(10);
+            texture = new SurfaceTexture(23);
             camera.setPreviewTexture(texture);
-            Camera.CameraInfo info=  new Camera.CameraInfo();
-            Camera.getCameraInfo(0,info);
-            if(info.canDisableShutterSound)
-                camera.enableShutterSound(false);
+            camera.startPreview();
+
             opened = true;
         }
-        catch (Exception e){
+        catch (Exception e) {
             System.err.println("Camera : error while loading camera");
             e.printStackTrace();
         }
@@ -66,13 +76,10 @@ public class MyCamera{
     public Bitmap takePicture() {
         if(!opened)
             return null;
-        camera.startPreview();
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        camera.takePicture(null, null, onCapture);
+        AudioManager manager = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
+        manager.setStreamMute(AudioManager.STREAM_SYSTEM,true);
+
+        camera.takePicture(onShutter, null, onCapture);
         System.out.print("Camera : taking a picture ... ");
         bitmap = null;
         // waiting for the pictured to be captured
@@ -94,10 +101,12 @@ public class MyCamera{
     // called when the picture has been captured
     void onPictureCaptured(byte[] data) {
         bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-        camera.stopPreview();
+        camera.startPreview();
         synchronized (synchronizer) {
             synchronizer.notify();
         }
+        AudioManager manager = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
+        manager.setStreamMute(AudioManager.STREAM_SYSTEM,false);
     }
     // called periodically by a timer to take a picture of the sheet
     private void ontakingPicture() {
@@ -113,7 +122,6 @@ public class MyCamera{
             }
             opened = false;
             pictureUpdater.cancel();
-            camera.stopPreview();
             camera.release();
         }
     }
@@ -147,5 +155,8 @@ public class MyCamera{
                 e.printStackTrace();
             }
         }
+    }
+    public void setActivity(projection activity) {
+        this.activity = activity;
     }
 }

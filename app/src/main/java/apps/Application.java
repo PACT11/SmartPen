@@ -19,8 +19,8 @@ public abstract class Application {
     public static InputScreen inputScreen;
     public static OutputScreen outputScreen;
     public static Handler handler;              //used to launch action from mainProject Thread
-    
-    protected static final ArrayList<Application> applications = new ArrayList<>();
+    public static final ArrayList<Application> applications = new ArrayList<>();
+
     protected MenuBar menu;
 
     protected abstract void onLaunch();
@@ -57,7 +57,7 @@ public abstract class Application {
         onLaunch();
     }
     protected final void loadMenu() {
-        menu = new MenuBar();
+        menu = new MenuBar(this.getClass().getSimpleName());
         outputScreen.setMenuBar(menu);
         menu.addMenuListener(new MenuBar.MenuListener(){
             @Override

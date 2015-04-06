@@ -17,9 +17,16 @@ public class Point
     }
 
 
-    public void scalarMul(float scalar) {
+    public Point scalarMul(float scalar) {
         x=x*scalar;
         y=y*scalar;
+        return this;
+    }
+    public Point add(Point pt) {
+        return new Point(x+pt.x,y+pt.y);
+    }
+    public Point substract(Point pt) {
+        return new Point(x-pt.x,y-pt.y);
     }
     public boolean isOrigin() {
         return x==0 && y==0;
