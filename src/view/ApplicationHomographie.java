@@ -1,3 +1,5 @@
+package view;
+
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -8,13 +10,11 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class ApplicationHomographie{
-	
-	private static BufferedImage image1, image2;
+	public static BufferedImage imageOriginale, imageSortie;
 	
 	
 	public static void main(String[] args) throws Exception{
-		
-        
+		/*        
             File fichierOriginal = new File("imageblanche.jpg");
             String fichierSortie = "imageblanche_projetee";
             image1 = ImageIO.read(fichierOriginal);
@@ -22,10 +22,10 @@ public class ApplicationHomographie{
 
     //      long tempsDebut = System.currentTimeMillis();
             ArrayList<Point> coinsDepart = mainRansac.donnerCoins();
-    /*      long tempsFin = System.currentTimeMillis();
+            long tempsFin = System.currentTimeMillis();
             float seconds = (tempsFin - tempsDebut) / 1000F;
             System.out.println("Opération effectuée en: "+ Float.toString(seconds) + " secondes.");
-     */     Point p5 = new Point(0,0);
+            Point p5 = new Point(0,0);
             Point p6 = new Point(0,1200);
             Point p7 = new Point(800,0);
             Point p8 = new Point(800,1200);
@@ -41,16 +41,32 @@ public class ApplicationHomographie{
             image2 = partieEntiere(image1,coinsDepart,coinsArrivee);
             creerImage(fichierSortie);   
         
-        
 
+        
+            long tempsFin = System.currentTimeMillis();
+            float seconds = (tempsFin - tempsDebut) / 1000F;
+            System.out.println("Opération totale effectuée en: "+ Float.toString(seconds) + " secondes.");
+            */
 	}
 	
 	private static void creerImage(String sortie) throws IOException {
-        File file = new File(sortie+".jpg");
-        ImageIO.write(image2, "jpg", file);
-    }
+            File file = new File(sortie+".jpg");
+            ImageIO.write(imageSortie, "jpg", file);
+        }
 	
-	private static BufferedImage partieEntiere(BufferedImage imageDepart,ArrayList<Point> coinsDepart, ArrayList<Point> coinsArrivee){
+	
+	public static BufferedImage redressementImage(BufferedImage imageATransformer,ArrayList<Point> coinsArrivee, int width, int height, String UID) throws Exception {
+		MainRansac mainRansac = new MainRansac();
+
+                ArrayList<Point> coinsDepart = mainRansac.donnerCoins(imageATransformer, UID);
+
+                BufferedImage result = partieEntiere(imageATransformer,coinsDepart,coinsArrivee, width, height);
+		
+		return result;
+	}
+	
+
+	public static BufferedImage partieEntiere(BufferedImage imageDepart,ArrayList<Point> coinsDepart, ArrayList<Point> coinsArrivee, int width, int height){
 		
 		int u,v, rouge, vert, bleu, alpha, nouveauPixel;
 		
@@ -82,7 +98,7 @@ public class ApplicationHomographie{
        
 		
 		//Definition de la nouvelle image comme une image vierge
-        BufferedImage imageRecalee = new BufferedImage(800,1200, imageDepart.getType());
+        BufferedImage imageRecalee = new BufferedImage(width,height, imageDepart.getType());
         
 		for(int i=0; i<imageRecalee.getWidth(); i++) {
 	            for(int j=0; j<imageRecalee.getHeight(); j++) {  //On parcourt toute l'image

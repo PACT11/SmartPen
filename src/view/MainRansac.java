@@ -1,33 +1,70 @@
+package view;
+
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
+
 
 public class MainRansac {
   public static BufferedImage imageOriginale, imageGrise,imageRansac;
+  //public static RansacCache cache;
   
-  public ArrayList<Point> donnerCoins() throws Exception {
+  public ArrayList<Point> donnerCoins(BufferedImage imageATransformer, String UID) throws Exception {
     EnGris engris = new EnGris();
    
-    //on ouvre le fichier de l'image en couleur
-    File fichierOriginal = new File("imageblanche.jpg");
-    imageOriginale = ImageIO.read(fichierOriginal);
-    
+    long tempsDebut1 = System.currentTimeMillis();
     //mise en niveau de gris de l'image couleur
-    imageGrise = engris.mettreEnNiveauDeGris(imageOriginale);
+    imageGrise = engris.mettreEnNiveauDeGris(imageATransformer);
+    long tempsFin0 = System.currentTimeMillis();
     
-    return ObtentionCoins(imageGrise);
-  
-
+    ArrayList<Point> result;
+    //if(cache.needUpdate(imageGrise, UID)) {
+        result = ObtentionCoins(imageGrise,30,70,100,300,1000,1250,0.25);
+        //cache.update(UID, imageGrise, result);
+    //} else {
+    //    result = cache.getCorners(UID);
+    //}
+    long tempsFin1 = System.currentTimeMillis();
+    float seconds1 = (tempsFin1 - tempsDebut1) / 1000F;
+    System.out.println("obtention coins effectuee en: "+ Float.toString(seconds1) + " secondes.");
+    System.out.println("    dont passage en gris : "+ Float.toString(tempsFin0-tempsDebut1) + " ms");
+    return result;
   }
-	
+  
+  //methode pour redimensionner une image
+  public static BufferedImage resizeImage(BufferedImage original, double factor) {
+      int newWidth = (int) (factor * original.getWidth());
+      int newHeight = (int) (factor * original.getHeight());
+      
+      BufferedImage newImage = new BufferedImage(newWidth, newHeight, original.getType());
+     
+      Graphics2D g = newImage.createGraphics();
+     
+      g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                      RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+      g.setRenderingHint(RenderingHints.KEY_RENDERING,
+                      RenderingHints.VALUE_RENDER_QUALITY);
+      g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                      RenderingHints.VALUE_ANTIALIAS_ON);
+     
+      g.drawImage(original, 0, 0, newWidth, newHeight, null);
+      g.dispose();
+      
+      return newImage;
+   }
+  
+  public static Point scalairePoint(Point point, int scalaire) {
+	  return new Point(point.x*scalaire,point.y*scalaire);
+  }
+  
 	//algorithme pour determiner les bords de la feuille
-	private static ArrayList<Point> ObtentionCoins(BufferedImage imageGrise) {
+	private static ArrayList<Point> ObtentionCoins(BufferedImage image,int coin1,int coin2haut,int coin2bas,int coin3,int coin4gauche, int coin4droit,double scalaire) {
 		
-		
+		BufferedImage imageGrise = resizeImage(image,scalaire);
         
         //on initialise les 4 bords
         Line verticale1, verticale2, horizontale1, horizontale2;
@@ -35,36 +72,41 @@ public class MainRansac {
         FittingInterface fitting = new SimpleFitting();
         
         //On applique l'algorithme de Ransac pour déterminer l'horizontale du haut
-        ArrayList<Point> data1 = obtenirPointsHorizontaux(imageGrise,0,imageGrise.getWidth(),0,500);
+        //ArrayList<Point> data1 = obtenirPointsHorizontaux(imageGrise,0,imageGrise.getWidth(),0,500);
+        ArrayList<Point> data1 = obtenirPointsHorizontaux(imageGrise,0,imageGrise.getWidth(),0,(int) (coin1*scalaire));
         Ransac ransac1 = new Ransac(fitting,data1,5);
-        horizontale1 = appliquerRansac(ransac1); 
+        horizontale1 = appliquerRansac(ransac1,imageGrise); 
         
       //On applique l'algorithme de Ransac pour déterminer l'horizontale du bas
-        ArrayList<Point> data2 = obtenirPointsHorizontaux(imageGrise,0,imageGrise.getWidth(),1200,1600);
+        //ArrayList<Point> data2 = obtenirPointsHorizontaux(imageGrise,0,imageGrise.getWidth(),1200,1600);
+        ArrayList<Point> data2 = obtenirPointsHorizontaux(imageGrise,0,imageGrise.getWidth(),(int) (coin2haut*scalaire),(int) (coin2bas*scalaire));
         Ransac ransac2 = new Ransac(fitting,data2,5);
-        horizontale2 = appliquerRansac(ransac2); 
+        horizontale2 = appliquerRansac(ransac2,imageGrise); 
         
       //On applique l'algorithme de Ransac pour déterminer la verticale du haut
-        ArrayList<Point> data3 = obtenirPointsVerticaux(imageGrise,0,600,0,imageGrise.getHeight());
+        //ArrayList<Point> data3 = obtenirPointsVerticaux(imageGrise,0,600,0,imageGrise.getHeight());
+        ArrayList<Point> data3 = obtenirPointsVerticaux(imageGrise,0,(int) (coin3*scalaire),0,imageGrise.getHeight());
         Ransac ransac3 = new Ransac(fitting,data3,5);
-        verticale1 = appliquerRansac(ransac3); 
+        verticale1 = appliquerRansac(ransac3,imageGrise); 
         
       //On applique l'algorithme de Ransac pour déterminer la verticale du bas
-        ArrayList<Point> data4 = obtenirPointsVerticaux(imageGrise,2000,2500,0,imageGrise.getHeight());
+        //ArrayList<Point> data4 = obtenirPointsVerticaux(imageGrise,2000,2500,0,imageGrise.getHeight());
+        ArrayList<Point> data4 = obtenirPointsVerticaux(imageGrise,(int)(coin4gauche*scalaire),(int)(coin4droit*scalaire),0,imageGrise.getHeight());
         Ransac ransac4 = new Ransac(fitting,data4,5);
-        verticale2 = appliquerRansac(ransac4); 
+        verticale2 = appliquerRansac(ransac4,imageGrise); 
 
         
         ArrayList<Point> Coins = new ArrayList<Point>(4);
-        Point pointHG = getIntersectionPoint(verticale1,horizontale1);
-        Point pointBG = getIntersectionPoint(verticale1,horizontale2);
-        Point pointHD = getIntersectionPoint(verticale2,horizontale1);
-        Point pointBD = getIntersectionPoint(verticale2,horizontale2);
+        Point pointHG = getIntersectionPoint(verticale1,horizontale1,imageGrise);
+        Point pointBG = getIntersectionPoint(verticale1,horizontale2,imageGrise);
+        Point pointHD = getIntersectionPoint(verticale2,horizontale1,imageGrise);
+        Point pointBD = getIntersectionPoint(verticale2,horizontale2,imageGrise);
+       
         
-        Coins.add(pointHG);
-        Coins.add(pointBG);
-        Coins.add(pointHD);
-        Coins.add(pointBD);
+        Coins.add(scalairePoint(pointHG,4));
+        Coins.add(scalairePoint(pointBG,4));
+        Coins.add(scalairePoint(pointHD,4));
+        Coins.add(scalairePoint(pointBD,4));
         	
         System.out.println("coord x = " + pointHG.getX() + "coord y = " + pointHG.getY());
         System.out.println("coord x = " + pointBG.getX() + "coord y = " + pointBG.getY());
@@ -80,12 +122,15 @@ public class MainRansac {
 	//obtention du tableau de points necessaire a l'algorithme de Ransac a l'aide du seuillage gradient
     private static ArrayList<Point> obtenirPointsHorizontaux(BufferedImage imageGrise, int xmin, int xmax, int ymin, int ymax) {
 		
-		int seuilVertical = 35;
-		
-		int grisHaut, grisBas;
- 
+	int seuilVertical = 35;
+	int grisHaut, grisBas;
         ArrayList<Point> data = new ArrayList<Point>();
- 
+        
+        xmin = (xmin*imageGrise.getWidth())/100;
+        xmax = (xmax*imageGrise.getWidth())/100;
+        ymin = (ymin*imageGrise.getHeight())/100;
+        ymax = (ymax*imageGrise.getHeight())/100;
+        
         for(int i=xmin; i<xmax-1; i++) {
             for(int j=ymin; j<ymax-1; j++) {
  
@@ -107,14 +152,16 @@ public class MainRansac {
 		
 	}
     
-    private static ArrayList<Point> obtenirPointsVerticaux(BufferedImage imageGrise, int xmin, int xmax, int ymin, int ymax) {
-		
-		int seuilHorizontal = 30;
-		
-		int grisGauche,grisDroite;
- 
+    private static ArrayList<Point> obtenirPointsVerticaux(BufferedImage imageGrise, int xmin, int xmax, int ymin, int ymax) {	
+	int seuilHorizontal = 30;
+	int grisGauche,grisDroite;
         ArrayList<Point> data = new ArrayList<Point>();
- 
+        
+        xmin = (xmin*imageGrise.getWidth())/100;
+        xmax = (xmax*imageGrise.getWidth())/100;
+        ymin = (ymin*imageGrise.getHeight())/100;
+        ymax = (ymax*imageGrise.getHeight())/100;
+        
         for(int i=xmin; i<xmax-1; i++) {
             for(int j=ymin; j<ymax-1; j++) {
  
@@ -136,7 +183,7 @@ public class MainRansac {
 		
 	}
 
-    public static Line appliquerRansac(Ransac ransac) {
+    public static Line appliquerRansac(Ransac ransac,BufferedImage imageGrise) {
     	//On execute l'algorithme de Ransac
     	while (!ransac.isFinished()) {
         	ransac.computeNextStep();
@@ -150,7 +197,7 @@ public class MainRansac {
         {
           double y = line.getY(0);
           Point p1 = new Point(0,(int)(y));
-          Point p2 = new Point(imageOriginale.getWidth(),(int)(y));
+          Point p2 = new Point(imageGrise.getWidth(),(int)(y));
           result = new Line(p1,p2);
           System.out.println("Droite horizontale, y =" + y );
         }
@@ -158,7 +205,7 @@ public class MainRansac {
         {
           double x = line.getX(0);
           Point p1 = new Point((int)(x),0);
-          Point p2 = new Point((int)(x),imageOriginale.getHeight());
+          Point p2 = new Point((int)(x),imageGrise.getHeight());
           System.out.println("Droite verticale, x =" + x);
           result = new Line(p1,p2);
         }
@@ -167,7 +214,7 @@ public class MainRansac {
         	int x1 = (int)(line.getX(0));
             int y1 = (int) line.getY(x1);
             Point p1 = new Point(x1,y1);
-            int x2 = (int) line.getX(imageOriginale.getHeight());
+            int x2 = (int) line.getX(imageGrise.getHeight());
             int y2 = (int) line.getY(x2);
             Point p2 = new Point(x2,y2);
             result = new Line(p1,p2);
@@ -180,14 +227,14 @@ public class MainRansac {
     }
     
     
-    public static Point getIntersectionPoint(Line line1, Line line2) {
+    public static Point getIntersectionPoint(Line line1, Line line2,BufferedImage imageGrise) {
     	double x1 = line1.getX(0);
         double y1 = line1.getY(x1);
-        double x2 = line1.getX(imageOriginale.getHeight());
+        double x2 = line1.getX(imageGrise.getHeight());
         double y2 = line1.getY(x2);
         double x3 = line2.getX(0);
         double y3 = line2.getY(x1);
-        double x4 = line2.getX(imageOriginale.getHeight());
+        double x4 = line2.getX(imageGrise.getHeight());
         double y4 = line2.getY(x2);
         if (! linesIntersect(x1,y1,x2,y2,x3,y3,x4,y4) ) return null;
           double px = x1,

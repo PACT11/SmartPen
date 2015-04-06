@@ -1,3 +1,5 @@
+package view;
+
 public class Matrix {
 
     private int nrows;

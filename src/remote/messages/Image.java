@@ -3,8 +3,6 @@ package remote.messages;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import netzwerk.messages.ServerPassiveMessage;
 import netzwerk.Connector;
@@ -14,6 +12,8 @@ import view.Bitmap;
  * Message qui represente une image
  */
 public class Image extends ServerPassiveMessage {
+    static final long serialVersionUID = 8725811605437849635L;
+    
     private static remote.listeners.ImageReceiveListener listener;
     private byte[] image;
 	
@@ -46,5 +46,10 @@ public class Image extends ServerPassiveMessage {
 
     public static void setListener(remote.listeners.ImageReceiveListener listener) {
         Image.listener = listener;
+    }
+    public static byte[] getBytesFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        //bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+        return stream.toByteArray();
     }
 }
