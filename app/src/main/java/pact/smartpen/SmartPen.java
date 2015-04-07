@@ -58,7 +58,7 @@ public class SmartPen extends ActionBarActivity {
         mPasserelle = (Button) findViewById(R.id.connection);
         mailView = (EditText) findViewById(R.id.editText);
         pwdView = (EditText) findViewById(R.id.editText2);
-        checkView = (CheckBox) findViewById(R.id.checkBox3);
+        checkView = (CheckBox) findViewById(R.id.checkBox);
 
         if ( checkView.isChecked() ){
             mailView.setText(loginDefault);
