@@ -37,6 +37,7 @@ public class projection extends Activity {
 
     @Override
     public void onPause(){
+        super.onPause();
         share.disconnectFromUser();
         finish();
     }

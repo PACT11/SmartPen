@@ -10,6 +10,8 @@ import netzwerk.ServerClient;
  * Un message pour verifier qu'un utilisateur est bien enregistré sur le serveur
  */
 public class CheckUser extends BlockingMessage  {
+    static final long serialVersionUID = 6944339021190083293L;
+
     public final static String usersFile = "/Library/Application Support/SmartPen/users";
     private String UID;
     private String password;

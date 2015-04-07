@@ -28,7 +28,7 @@ public class InputScreen {
     }
     private void onNewImage(Bitmap image) {
         if(!ShapeProcessor.hasHand(image)) { // if the user's hand is not over the sheet
-            if(imageCounter%2==0) {
+            if(imageCounter%10==0) {
                 System.out.println("InputScreen : no hand over the sheet");
                 outputScreen.getMenu().click(-1);
                 outputScreen.blackOut();         // shut down projector shortly
@@ -40,6 +40,7 @@ public class InputScreen {
             }
         } else { // check if user is clicking the menu bar
             ShapeProcessor.findFinger(image,corners);
+            imageCounter=0;
         }
     }
     public void addNewImageListener(ImageListener listener) {
@@ -64,9 +65,6 @@ public class InputScreen {
         });
     }
 
-    public Bitmap getCurrentImage() {
-        return currentImage;
-    }
     public void setCorners(ArrayList<shape.Point> corners) {
         this.corners = corners;
     }
