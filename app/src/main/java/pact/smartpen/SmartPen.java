@@ -3,21 +3,18 @@ package pact.smartpen;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import apps.Application;
 import apps.Login;
-import apps.OS;
-import view.InputScreen;
-import view.MyCamera;
 
 
 public class SmartPen extends ActionBarActivity {
@@ -26,10 +23,15 @@ public class SmartPen extends ActionBarActivity {
     private Button mPasserelle;
     private EditText mailView;
     private EditText pwdView;
+    private CheckBox checkView;
+
+    SharedPreferences prefs = getSharedPreferences("codelearn_twitter", MODE_PRIVATE);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smart_pen);
+
 
         // start SmartPen
         new MainProject().start();
@@ -51,15 +53,31 @@ public class SmartPen extends ActionBarActivity {
         });
 
         //GUI
+        String loginDefault = prefs.getString("mail", null);
+        String pwdDefault = prefs.getString("pwd", null);
         mPasserelle = (Button) findViewById(R.id.connection);
         mailView = (EditText) findViewById(R.id.editText);
         pwdView = (EditText) findViewById(R.id.editText2);
+        checkView = (CheckBox) findViewById(R.id.checkBox3);
 
-        // when tap on login button
+        if ( checkView.isChecked() ){
+            mailView.setText(loginDefault);
+            pwdView.setText(pwdDefault);
+        }
+
+          // when tap on login button
         mPasserelle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login.checkUser(mailView.getText().toString(),pwdView.getText().toString());
+                String mail = mailView.getText().toString();
+                String pwd = pwdView.getText().toString();
+                if ( checkView.isChecked() ){
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("mail",mail);
+                    editor.putString("pwd",pwd);
+                    editor.commit();
+                }
+                login.checkUser(mail,pwd);
             }
         });
     }
