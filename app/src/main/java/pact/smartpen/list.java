@@ -59,7 +59,7 @@ public class list extends ListActivity {
             public void onClick(DialogInterface dialog, int id) {
                 login.answerConnectionRequest(true);
                 Intent project = new Intent(list.this, projection.class);
-                startActivityForResult(project,23);
+                startActivity(project);
             }
         });
         builder.show();
@@ -112,7 +112,7 @@ public class list extends ListActivity {
         alert.dismiss();
         if(answer) {
             Intent project = new Intent(list.this, projection.class);
-            startActivityForResult(project,23);
+            startActivity(project);
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Requête refusée");

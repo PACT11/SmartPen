@@ -3,7 +3,6 @@ package pact.smartpen;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.ImageView;
@@ -17,7 +16,6 @@ import apps.Share;
 public class projection extends Activity {
     Share share;
     ImageView imageView;
-    Boolean arretVolontaire=false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,37 +37,19 @@ public class projection extends Activity {
 
     @Override
     public void onPause(){
-        if (!arretVolontaire) {
-            share.disconnectFromUser();
-            finishWithResult(arretVolontaire);
-        }
-    }
-
-
-    private void finishWithResult(Boolean arretVolontaire)
-    {
-        Bundle conData = new Bundle();
-        conData.putString("results", "0");
-        Intent intent = new Intent();
-        intent.putExtras(conData);
-        if (arretVolontaire) {
-            setResult(RESULT_OK, intent);
-        }
-        else {
-            setResult(RESULT_CANCELED, intent);
-        }
+        share.disconnectFromUser();
         finish();
     }
 
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if ( (keyCode == KeyEvent.KEYCODE_BACK) || (keyCode == KeyEvent.KEYCODE_HOME) ) {
             new AlertDialog.Builder(this).setMessage("Arreter le partage ?")
                     .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            arretVolontaire=true;
                             share.disconnectFromUser();
-                            finishWithResult(arretVolontaire);
+                            finish();
                         }
                     }).setNegativeButton("Non", null).show();
             return super.onKeyDown(keyCode, event);
