@@ -2,6 +2,7 @@
 package view;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.widget.ImageView;
 
 import pact.smartpen.projection;
@@ -78,5 +79,14 @@ public class OutputScreen {
 
     public MenuBar getMenu() {
         return menu;
+    }
+
+    public Bitmap getImage() {
+        return straightImage;
+    }
+    public static Bitmap rotateBitmap(Bitmap source, float angle){
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 }

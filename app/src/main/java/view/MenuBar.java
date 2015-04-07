@@ -58,7 +58,7 @@ public class MenuBar {
     }
 
     public Bitmap drawMenu(Bitmap feuilleSansMenu){
-        Bitmap feuille = rotateBitmap(feuilleSansMenu,-90);
+        Bitmap feuille = OutputScreen.rotateBitmap(feuilleSansMenu,-90);
         Paint paint = new Paint(); paint.setColor(Color.BLACK);
         Paint selectedItemPaint = new Paint(); selectedItemPaint.setColor(Color.BLUE);
         Paint paintCurrent = new Paint(); paintCurrent.setColor(Color.RED);
@@ -86,12 +86,7 @@ public class MenuBar {
         canvas.drawText(currentApplication, width/2 - width/10,  menuHeight-menuHeight/15, paintCurrent);
 
 
-        return rotateBitmap(feuille,90);
+        return OutputScreen.rotateBitmap(feuille,90);
 
-    }
-    public static Bitmap rotateBitmap(Bitmap source, float angle){
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 }
