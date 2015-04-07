@@ -84,16 +84,28 @@ public class list extends ListActivity {
         builder.setTitle("Connexion");
 
         targetUser = users[(int) id];
-        builder.setMessage("Se connecter avec : " + targetUser +" ?");
-        builder.setNegativeButton("Non", null);
-        builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                login.connectTo(targetUser);
-                showWaitingForAnswerDialog();
-            }
-        });
+        if (targetUser == "Mode Solitaire"){
+            builder.setMessage("Démarrer le mode solitaire ?");
+            builder.setNegativeButton("Non", null);
+            builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    login.connectTo(targetUser);
+                }
+            });
+        }
+        else {
 
-        builder.show();
+            builder.setMessage("Se connecter avec : " + targetUser + " ?");
+            builder.setNegativeButton("Non", null);
+            builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    login.connectTo(targetUser);
+                    showWaitingForAnswerDialog();
+                }
+            });
+
+            builder.show();
+        }
     }
 
 
