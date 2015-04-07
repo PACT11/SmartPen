@@ -40,6 +40,7 @@ public class projection extends Activity {
         super.onPause();
         share.disconnectFromUser();
         finish();
+        super.onPause();
     }
 
 
