@@ -25,14 +25,13 @@ public class SmartPen extends ActionBarActivity {
     private EditText pwdView;
     private CheckBox checkView;
 
-    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        prefs = getSharedPreferences("codelearn_twitter", MODE_PRIVATE);
+        final SharedPreferences prefs = getSharedPreferences("codelearn_twitter", MODE_PRIVATE);
 
         // start SmartPen
         new MainProject().start();
@@ -54,8 +53,9 @@ public class SmartPen extends ActionBarActivity {
         });
 
         //GUI
-        String loginDefault = prefs.getString("mail", null);
-        String pwdDefault = prefs.getString("pwd", null);
+            String loginDefault = prefs.getString("mail", null);
+            String pwdDefault = prefs.getString("pwd", null);
+
         mPasserelle = (Button) findViewById(R.id.connection);
         mailView = (EditText) findViewById(R.id.editText);
         pwdView = (EditText) findViewById(R.id.editText2);
