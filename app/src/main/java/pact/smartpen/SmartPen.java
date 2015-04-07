@@ -25,13 +25,14 @@ public class SmartPen extends ActionBarActivity {
     private EditText pwdView;
     private CheckBox checkView;
 
-    SharedPreferences prefs = getSharedPreferences("codelearn_twitter", MODE_PRIVATE);
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_smart_pen);
+        setContentView(R.layout.activity_main);
 
+        prefs = getSharedPreferences("codelearn_twitter", MODE_PRIVATE);
 
         // start SmartPen
         new MainProject().start();

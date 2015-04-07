@@ -73,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Connexion auto"
-        android:id="@+id/checkBox2"
+        android:id="@+id/checkBox"
         android:checked="true"
         android:layout_above="@+id/textView"
         android:layout_alignParentStart="true" />

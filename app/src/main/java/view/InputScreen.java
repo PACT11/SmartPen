@@ -14,12 +14,10 @@ public class InputScreen {
     public interface ImageListener {
         public void newImage(Bitmap image);
     }
-    
-    private MenuBar menu;
+
     private ImageListener newImageListener;
     private OutputScreen outputScreen;
     private MyCamera camera;
-    private Bitmap currentImage;
     private ArrayList<shape.Point> corners;
     private int imageCounter=0;
 
@@ -32,12 +30,13 @@ public class InputScreen {
                 System.out.println("InputScreen : no hand over the sheet");
                 outputScreen.getMenu().click(-1);
                 outputScreen.blackOut();         // shut down projector shortly
-                currentImage = camera.takePicture();
+                Bitmap currentImage = camera.takePicture();
 
                 if (newImageListener != null) {// && currentImage!=null) {     // call the new image listener if any
                     newImageListener.newImage(image);
                 }
             }
+            imageCounter++;
         } else { // check if user is clicking the menu bar
             ShapeProcessor.findFinger(image,corners);
             imageCounter=0;
