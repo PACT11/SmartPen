@@ -6,7 +6,7 @@ public class EstimationHomographie {
 	
 	public static Matrix H = new Matrix(8,1) ;
 	
-	public Matrix getHomographyCoefficients(Point x0, Point x1, Point x2, Point x3, Point y0, Point y1, Point y2, Point y3) throws ArithmeticException {
+	public static Matrix getHomographyCoefficients(Point x0, Point x1, Point x2, Point x3, Point y0, Point y1, Point y2, Point y3) throws ArithmeticException {
 		Matrix M = new Matrix(8,8) ;
 		Matrix X = new Matrix(8,1) ;
 		Matrix M1 = new Matrix (8,8) ;
@@ -94,7 +94,7 @@ public class EstimationHomographie {
         return L ;
     }
    */
-	public double[] phiInverse(Point p,Matrix H) {
+	public static double[] phiInverse(Point p,Matrix H) {
 		double c, q1, q2 ;
 		double[] L = new double[2] ;
 		c = (H.getValueAt(0,0)*H.getValueAt(7,0)*p.getY() - H.getValueAt(3,0)*H.getValueAt(7,0)*p.getX() + H.getValueAt(6,0)*H.getValueAt(4,0)*p.getX() - H.getValueAt(1,0)*H.getValueAt(6,0)*p.getY() - H.getValueAt(0,0)*H.getValueAt(4,0) + H.getValueAt(1,0)*H.getValueAt(3,0)) ;

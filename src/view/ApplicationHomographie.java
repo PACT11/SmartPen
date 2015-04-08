@@ -54,7 +54,28 @@ public class ApplicationHomographie{
             ImageIO.write(imageSortie, "jpg", file);
         }
 	
-	
+	public static ArrayList<Point> transformPoints(ArrayList<Point> sourcePoints, ArrayList<Point> sourceCorners, ArrayList<Point> targetCorners) {
+            ArrayList<Point> resultPoints = new ArrayList<>();
+            double[] pt = {0,0}; 
+            
+            Point p1 = sourceCorners.get(0);
+            Point p2 = sourceCorners.get(1);
+            Point p3 = sourceCorners.get(2);
+            Point p4 = sourceCorners.get(3);
+
+            Point p5 = targetCorners.get(0);
+            Point p6 = targetCorners.get(1);
+            Point p7 = targetCorners.get(2);
+            Point p8 = targetCorners.get(3);
+            
+            Matrix H = EstimationHomographie.getHomographyCoefficients(p1,p2,p3,p4,p5,p6,p7,p8);
+            
+            for(Point point : sourcePoints) {
+                pt = EstimationHomographie.phiInverse(point, H);
+                resultPoints.add(new Point((int) pt[0],(int) pt[1]));
+            }
+            return resultPoints;
+        }
 	public static BufferedImage redressementImage(BufferedImage imageATransformer,ArrayList<Point> coinsArrivee, int width, int height, String UID) throws Exception {
 		MainRansac mainRansac = new MainRansac();
 
@@ -127,7 +148,7 @@ public class ApplicationHomographie{
 		return imageRecalee;
 		
 	}
-
+         /*
 	public static BufferedImage ponderation(BufferedImage imageBrute){
 		
 		int x1, y1, x2, y2, x3, y3, x4, y4, rouge, rouge1, rouge2, rouge3, rouge4, vert, vert1, vert2, vert3, vert4, bleu, bleu1, bleu2, bleu3, bleu4, alpha, alpha1, alpha2, alpha3, alpha4, gris, nouveauPixel;
@@ -189,6 +210,8 @@ public class ApplicationHomographie{
 	     
 		return imageRecalee;
 	}
+        
+        */
 
 	
 	 // colore un pixel avec Rouge, Vert, Bleu, Alpha avec les 8 bits

@@ -5,6 +5,7 @@ import view.CornerCache;
 import netzwerk.Server;
 import java.io.*;
 import java.net.URLDecoder;
+import netzwerk.Connector;
 import remote.messages.CheckUser;
 
 /**
@@ -24,7 +25,9 @@ public class ServerMain {
         
         // start corner detection cache service
         CornerCache.init(); 
-
+        // start message echo service
+        Connector echo = new EchoClient("mode solitaire");
+        
         System.out.println("enter 'q' to stop the server");
         while(System.in.read()!='q');
         
