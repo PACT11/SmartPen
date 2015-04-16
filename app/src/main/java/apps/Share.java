@@ -19,7 +19,8 @@ public class Share extends Application {
     protected void onLaunch() {
         server = Login.getServer();
         configureRemoteListeners(server);
-        cloud = new CloudServices(server);
+        if(cloud==null)
+            cloud = new CloudServices(server);
         menu.addItem("coucou");
         menu.addItem("SmartPen");
         if(server.getUID().equals("pact"))
