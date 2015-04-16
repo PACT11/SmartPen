@@ -1,10 +1,10 @@
 package apps;
 
 import android.graphics.Bitmap;
+
 import netzwerk.Connector;
 import pact.smartpen.projection;
 import remote.messages.Image;
-import remote.messages.StraightenAndSend;
 import view.CloudServices;
 
 /**
@@ -48,7 +48,7 @@ public class Share extends Application {
 
     @Override
     protected void onMenuClick(String menu) {
-
+        
     }
 
     @Override

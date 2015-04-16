@@ -59,6 +59,7 @@ public class CloudServices {
 
         server.sendMessage(new StraightenAndSend(image,width,height,false));
     }
+
     public void fitToSheet(Bitmap image) {
         if(width>0 && height>0)
             server.sendMessage(new FitToSheet(image, width,height));
