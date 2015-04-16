@@ -4,12 +4,13 @@ package view;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
 import java.util.ArrayList;
+
 import apps.Application;
+
 import static java.lang.Math.floor;
 
 /*
@@ -62,10 +63,12 @@ public class MenuBar {
         Paint paint = new Paint(); paint.setColor(Color.BLACK);
         Paint selectedItemPaint = new Paint(); selectedItemPaint.setColor(Color.BLUE);
         Paint paintCurrent = new Paint(); paintCurrent.setColor(Color.RED);
-        Paint paintMenuBackground = new Paint(); paintMenuBackground.setColor(Color.WHITE);
+        Paint paintMenuBackground = new Paint();
+        paintMenuBackground.setColor(Color.WHITE);
         paint.setTextSize(30);
         paintCurrent.setTextSize(30);
         selectedItemPaint.setTextSize(30);
+
 
         int width =  feuille.getWidth();
         int height =  feuille.getHeight();
@@ -74,6 +77,7 @@ public class MenuBar {
         Canvas canvas = new Canvas(feuille);
         Rect background = new Rect(0,0,width,menuHeight);
         canvas.drawRect(background, paintMenuBackground);
+
         nbItemMenu = items.size();
         for (int i =0; i<nbItemMenu; i++) {
             if (i<(nbItemMenu -1 )) canvas.drawLine((i+1)*width/nbItemMenu,0,(i+1)*width/nbItemMenu, menuHeight/2, paint);
@@ -82,6 +86,7 @@ public class MenuBar {
             else
                 canvas.drawText(items.get(i), width/20 + i*width/nbItemMenu, menuHeight/3 , selectedItemPaint);
         }
+
         canvas.drawLine(0,menuHeight/2, width,menuHeight /2, paint);
         canvas.drawText(currentApplication, width/2 - width/10,  menuHeight-menuHeight/15, paintCurrent);
 
