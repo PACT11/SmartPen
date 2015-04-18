@@ -34,6 +34,9 @@ public class MenuBar {
     public void addMenuListener(MenuListener listener) {
         menuListener = listener;
     }
+    public void setAppName(String name) {
+        currentApplication=name;
+    }
 
     public void addItem(String itemName) {
         items.add(itemName);
@@ -50,13 +53,7 @@ public class MenuBar {
             Application.outputScreen.refresh();
         }
     }
-    // debug
-    public void debugClick(String menu) {
-        if(menu.equals("close"))
-            menuListener.closeClicked();
-        else
-            menuListener.menuClicked(menu);
-    }
+
 
     public Bitmap drawMenu(Bitmap feuilleSansMenu){
         Bitmap feuille = OutputScreen.rotateBitmap(feuilleSansMenu,-90);
@@ -65,9 +62,9 @@ public class MenuBar {
         Paint paintCurrent = new Paint(); paintCurrent.setColor(Color.RED);
         Paint paintMenuBackground = new Paint();
         paintMenuBackground.setColor(Color.WHITE);
-        paint.setTextSize(30);
-        paintCurrent.setTextSize(30);
-        selectedItemPaint.setTextSize(30);
+        paint.setTextSize(20);
+        paintCurrent.setTextSize(20);
+        selectedItemPaint.setTextSize(20);
 
 
         int width =  feuille.getWidth();
@@ -80,14 +77,14 @@ public class MenuBar {
 
         nbItemMenu = items.size();
         for (int i =0; i<nbItemMenu; i++) {
-            if (i<(nbItemMenu -1 )) canvas.drawLine((i+1)*width/nbItemMenu,0,(i+1)*width/nbItemMenu, menuHeight/2, paint);
+            if (i<(nbItemMenu -1 )) canvas.drawLine((i+1)*width/nbItemMenu,0,(i+1)*width/nbItemMenu, menuHeight/2+5, paint);
             if(i!=clickedIndex)
-                canvas.drawText(items.get(i), width/20 + i*width/nbItemMenu, menuHeight/3 , paint);
+                canvas.drawText(items.get(i), width/20 + i*width/nbItemMenu, menuHeight/2 , paint);
             else
-                canvas.drawText(items.get(i), width/20 + i*width/nbItemMenu, menuHeight/3 , selectedItemPaint);
+                canvas.drawText(items.get(i), width/20 + i*width/nbItemMenu, menuHeight/2 , selectedItemPaint);
         }
 
-        canvas.drawLine(0,menuHeight/2, width,menuHeight /2, paint);
+        canvas.drawLine(0,menuHeight/2+5, width,menuHeight /2 + 5, paint);
         canvas.drawText(currentApplication, width/2 - width/10,  menuHeight-menuHeight/15, paintCurrent);
 
 

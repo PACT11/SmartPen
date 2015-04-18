@@ -23,8 +23,8 @@ public abstract class Application {
 
     protected MenuBar menu;
 
-    protected abstract void onLaunch();
-    protected abstract void onClose();
+    protected void onLaunch() {};
+    protected void onClose() {};
     
     // if the app wishes to use the menu, it should override this method
     protected void onMenuClick(String menu) {
@@ -41,8 +41,7 @@ public abstract class Application {
             os.resume();
     }
     public final void run() {
-        // TODO : prepare the system for app launch
-        System.out.println("App : Preparing the system to launch " + this.getClass().getName());
+        // prepare the system for app launch
         if(outputScreen != null)
             loadMenu();               // load a new menu bar for the app
         if(inputScreen != null) {
@@ -98,6 +97,7 @@ public abstract class Application {
             }
         });
     }
+
     // methods called when a remotePen event occurs
     protected void onConnectionRequest(String distantUID){}
     protected void onConnectionAnswer(short answer){}

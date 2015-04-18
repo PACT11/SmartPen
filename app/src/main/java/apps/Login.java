@@ -1,33 +1,29 @@
 package apps;
 
+import android.graphics.BitmapFactory;
+import android.graphics.SurfaceTexture;
+import android.hardware.Camera;
+
+import java.io.IOException;
 import java.net.UnknownHostException;
 
 import netzwerk.Connector;
 import netzwerk.messages.*;
-import pact.smartpen.*;
-import remote.messages.CheckUser;
-import remote.messages.UserListUpdate;
+import pact.smartpen.projection;
+import remote.messages.*;
+import view.CloudServices;
 
-
-public class Login extends Application {
-    // server's address
-    //public static final byte[] serverIP = {(byte)10,(byte)0,(byte)1,(byte)4};
-    //public static final byte[] serverIP = {(byte)137,(byte)194,(byte)16,(byte)226};
-    public static final byte[] serverIP = {(byte)192,(byte)168,(byte)43,(byte)62};
-    //public static final byte[] serverIP = {(byte)192,(byte)168,(byte)56,(byte)1};
-
-    private static Connector server;        // the server we log in
-    private String UID = "";         // the name of the user
-    private String[] users;          // a list of all connected users
-    // references to the cativities for GUI callbacks
-    private list Lactivity;
-    private pact.smartpen.SmartPen Sactivity;
+/**
+ * Created by arnaud on 18/04/15.
+ */
+public class Login extends NetworkApp {
 
     @Override
     protected void onLaunch() {
+        super.onLaunch();
+
         // start an anonymous connection to the server
         server = new Connector("connectionAgent");
-
         try {
             server.connect(serverIP,2323);
         } catch (UnknownHostException e) {  // if we cannot connect to the server
@@ -40,25 +36,17 @@ public class Login extends Application {
                 });
             }
         }
-        // handle connections list updates
-        UserListUpdate.setListener( new UserListUpdate.UserListListener() {
-            @Override
-            public void onUpdate(String[] users) {
-                onUserListUpdate(users);
-            }
-        });
-    }
-    public void resume() {
-        // reconfigure listeners for login app
-        configureRemoteListeners(server);
 
+        // initialize cloud services
+        cloud = new CloudServices(server);
     }
+
     public void checkUser(String user, final String password) {
         this.UID = user;
         handler.post(new Runnable() {
             @Override
             public void run() {
-                final boolean isRegistered = CheckUser.check(UID, password,server);
+                final boolean isRegistered = CheckUser.check(UID, password, server);
                 if(isRegistered) {
                     // modified ID to match user's
                     server.setUID(UID);
@@ -84,6 +72,7 @@ public class Login extends Application {
         if(Lactivity==null) {               // if the list activity has not been loaded yet, refuse connection
             server.acceptConnection(false);
         } else {
+            this.distantUID = distantUID;
             //show GUI dialog
             Lactivity.runOnUiThread(new Runnable() {
                 @Override
@@ -105,18 +94,6 @@ public class Login extends Application {
             });
         }
     }
-    private void onUserListUpdate(final String[] users) {
-        this.users = users;
-        if(Lactivity!=null) {
-            Lactivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (Lactivity != null)
-                        Lactivity.updateUsers(getUsers());
-                }
-            });
-        }
-    }
 
     public void answerConnectionRequest(final boolean isAccepted) {
         handler.post(new Runnable() {
@@ -127,6 +104,8 @@ public class Login extends Application {
         });
     }
     public void connectTo(final String targetUser) {
+        this.distantUID = targetUser;
+
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -134,36 +113,33 @@ public class Login extends Application {
             }
         });
     }
-
-    // getters and setters
-    public String[] getUsers() {
-        int cnt=0;
-        for(String user : users) {
-            if (!user.equals(UID))
-                cnt++;
-        }
-        String[] filteredUsers= new String[cnt];
-        cnt = 0;
-        for(String user : users) {
-            if (!user.equals(UID)) {
-                filteredUsers[cnt] = user;
-                cnt++;
+    public void calibrate(final projection proj) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    android.hardware.Camera camera = Camera.open();
+                    SurfaceTexture texture = new SurfaceTexture(23);
+                    camera.setPreviewTexture(texture);
+                    camera.startPreview();
+                    outputScreen.greenScreen();
+                    Thread.sleep(700);
+                    camera.takePicture(null,null,new Camera.PictureCallback() {
+                        @Override
+                        public void onPictureTaken(byte[] data, Camera camera) {
+                            server.sendMessage(new CalibrateScreen( BitmapFactory.decodeByteArray(data, 0, data.length)));
+                            proj.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    proj.finish();
+                                }
+                            });
+                        }
+                    });
+                } catch (IOException | InterruptedException e ) {
+                    e.printStackTrace();
+                }
             }
-        }
-        return filteredUsers;
-    }
-    public void setListActivity(list activity) {
-        this.Lactivity = activity;
-    }
-    public void setSmartPenActivity(pact.smartpen.SmartPen activity) {
-        this.Sactivity = activity;
-    }
-    public static Connector getServer() {
-        return server;
-    }
-
-    @Override
-    protected void onClose() {
-        //server.close();
+        });
     }
 }

@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.widget.ImageView;
 
 import apps.Application;
+import apps.Login;
 import apps.Share;
 
 /**
@@ -16,6 +17,7 @@ import apps.Share;
 public class projection extends Activity {
     Share share;
     ImageView imageView;
+    static boolean calibrate = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,8 +26,14 @@ public class projection extends Activity {
         imageView = (ImageView) findViewById(R.id.imageView1);
         Application.outputScreen.initScreen(this);
 
+        if(calibrate) {
+            Login login = (Login) Application.os.getApp("Login");
+            login.calibrate(this);
+            return;
+        }
+
         // load share mode
-        ((Share) Application.os.getApp("Share")).setActivity(this);
+        ((Share) Application.os.getApp("Share")).setProjectionActivity(this);
         Application.handler.post(new Runnable() {
             @Override
             public void run() {
@@ -38,9 +46,10 @@ public class projection extends Activity {
     @Override
     public void onPause(){
         super.onPause();
-        share.disconnectFromUser();
-        finish();
-        super.onPause();
+        if(!calibrate) {
+            share.disconnectFromUser();
+            finish();
+        }
     }
 
 

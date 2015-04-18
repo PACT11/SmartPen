@@ -50,6 +50,20 @@ public class OutputScreen {
             }
         });
     }
+    // temporarly turn the whole screen to green to calibrate
+    public void greenScreen() {
+        final Bitmap green = Bitmap.createBitmap(100,100, Bitmap.Config.ARGB_8888);
+        for(int i=0;i<100; i++) {
+            for(int j=0;j<100;j++)
+                green.setPixel(i,j, Color.GREEN);
+        }
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                screen.setImageBitmap(green);
+            }
+        });
+    }
     // restore to previous screen after a black out
     public void restore() {
         if(isBlackOut) {
@@ -68,14 +82,9 @@ public class OutputScreen {
         black = Bitmap.createBitmap(100,100, Bitmap.Config.ARGB_8888);
         for(int i=0;i<100; i++) {
             for(int j=0;j<100;j++)
-                black.setPixel(i,j, Color.BLACK);
+                black.setPixel(i,j, Color.WHITE);
         }
 
-    }
-    public static Bitmap rotateBitmap(Bitmap source, float angle){
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
     public void setCloud(CloudServices cloud) {
@@ -89,6 +98,7 @@ public class OutputScreen {
     public Bitmap getImage() {
         return straightImage;
     }
+
     public static Bitmap rotateBitmap(Bitmap source, float angle){
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);

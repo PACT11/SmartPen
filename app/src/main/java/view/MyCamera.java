@@ -76,8 +76,8 @@ public class MyCamera{
     public Bitmap takePicture() {
         if(!opened)
             return null;
-        AudioManager manager = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
-        manager.setStreamMute(AudioManager.STREAM_SYSTEM,true);
+        //AudioManager manager = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
+        //manager.setStreamMute(AudioManager.STREAM_SYSTEM,true);
 
         camera.takePicture(onShutter, null, onCapture);
         System.out.print("Camera : taking a picture ... ");

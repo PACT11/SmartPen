@@ -10,56 +10,51 @@ import view.CloudServices;
 /**
  * Created by arnaud on 07/03/15.
  */
-public class Share extends Application {
-    private Connector server;
-    private CloudServices cloud;
-    private projection activity;
-
+public class Share extends NetworkApp {
     @Override
     protected void onLaunch() {
-        server = Login.getServer();
         configureRemoteListeners(server);
-        if(cloud==null)
-            cloud = new CloudServices(server);
-        menu.addItem("coucou");
-        menu.addItem("SmartPen");
-        if(server.getUID().equals("pact"))
-            inputScreen.restart(activity);
+
+        menu.addItem("Morpion");
+        menu.addItem("Déconnection");
+        menu.setAppName("Partage");
+
+        inputScreen.restart(Pactivity);
     }
+
     protected void onNewImage(Bitmap image) {
-        // Bitmap img = Bitmap.createScaledBitmap(image,3264/2,2448/2,false);
-        //outputScreen.display(img);
-        cloud.straigthenAndSend(image,1200,800);
+        cloud.straigthenAndSend(image,image.getWidth()/2,image.getHeight()/2);
     }
     @Override
-    protected void onConnectionClosure(final String distantUID){
-        inputScreen.close();
-        ((Login)os.getApp("Login")).resume();
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                activity.userDisconnected(distantUID);
-            }
-        });
-    }
-    protected void onCommandReceived(String command){
-
+    protected void onImageReceived(Bitmap image){
+        outputScreen.fitAndDisplay(image);
     }
 
     @Override
     protected void onMenuClick(String menu) {
-        
+        if(menu.equals("Quitter")) {
+            disconnectFromUser();
+            Pactivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Pactivity.finish();
+                }
+            });
+        } else if(menu.equals("Morpion")) {
+            os.startApp("Morpion");
+        }
     }
 
     @Override
-    protected void onImageReceived(final Bitmap image){
-        if(server.getUID().equals("pact")) {
-
-            outputScreen.fitAndDisplay(image);
-        } else {
-            outputScreen.display(Bitmap.createScaledBitmap(image, 1200, 800, false));
-            server.sendMessage(new Image(image));
-        }
+    protected void onConnectionClosure(final String distantUID){
+        inputScreen.close();
+        ((Login)os.getApp("Login")).resume();
+        Pactivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Pactivity.userDisconnected(distantUID);
+            }
+        });
     }
     public void disconnectFromUser() {
         inputScreen.close();
@@ -70,12 +65,5 @@ public class Share extends Application {
             }
         });
         ((Login)os.getApp("Login")).resume();
-    }
-    @Override
-    protected void onClose() {
-
-    }
-    public void setActivity(projection acti) {
-        activity = acti;
     }
 }

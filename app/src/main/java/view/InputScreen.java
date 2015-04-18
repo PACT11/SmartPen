@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import pact.smartpen.projection;
 import shape.ShapeProcessor;
 
+import static shape.ShapeProcessor.hasHand;
+
 /*
  *
  */
@@ -21,19 +23,16 @@ public class InputScreen {
     private ArrayList<shape.Point> corners;
     private int imageCounter=0;
 
-    public InputScreen() {
-
-    }
     private void onNewImage(Bitmap image) {
-        if(!ShapeProcessor.hasHand(image)) { // if the user's hand is not over the sheet
+        if(!hasHand(image)) { // if the user's hand is not over the sheet
             if(imageCounter%10==0) {
                 System.out.println("InputScreen : no hand over the sheet");
                 outputScreen.getMenu().click(-1);
                 outputScreen.blackOut();         // shut down projector shortly
                 Bitmap currentImage = camera.takePicture();
 
-                if (newImageListener != null) {// && currentImage!=null) {     // call the new image listener if any
-                    newImageListener.newImage(image);
+                if (newImageListener != null && currentImage!=null) {     // call the new image listener if any
+                    newImageListener.newImage(currentImage);
                 }
             }
             imageCounter++;
@@ -51,10 +50,13 @@ public class InputScreen {
     public void close() {
         if(camera!=null) {
             camera.close();
+            camera=null;
         }
     }
     public void restart(projection activity) {
-        camera = new MyCamera();
+        if(camera==null) {
+            camera = new MyCamera();
+        }
         camera.setActivity(activity);
         camera.addNewImageListener(new ImageListener() {
             @Override
