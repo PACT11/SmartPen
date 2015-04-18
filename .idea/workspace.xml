@@ -30,26 +30,11 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: ?" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3f263e5d-6697-44b7-ba4e-939d29114516" name="Default" comment="Merge branch 'androidMaster' of https://github.com/PACT11/SmartPen into androidMaster&#10;&#10;Conflicts:&#10;&#9;app/src/main/java/pact/smartpen/SmartPen.java&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/remote/messages/CalibrateScreen.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/apps/NetworkApp.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/arnoCorners" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/pactCorners" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/apps/TestApp.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/lib/activation.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server/lib/javax.mail.jar" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/SmartPen.jar" afterPath="$PROJECT_DIR$/server/SmartPen.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/apps/Application.java" afterPath="$PROJECT_DIR$/app/src/main/java/apps/Application.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/view/InputScreen.java" afterPath="$PROJECT_DIR$/app/src/main/java/view/InputScreen.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/apps/Login.java" afterPath="$PROJECT_DIR$/app/src/main/java/apps/Login.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/pact/smartpen/MainProject.java" afterPath="$PROJECT_DIR$/app/src/main/java/pact/smartpen/MainProject.java" />
+    <list default="true" id="3f263e5d-6697-44b7-ba4e-939d29114516" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/view/MenuBar.java" afterPath="$PROJECT_DIR$/app/src/main/java/view/MenuBar.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/apps/Morpion.java" afterPath="$PROJECT_DIR$/app/src/main/java/apps/Morpion.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/view/MyCamera.java" afterPath="$PROJECT_DIR$/app/src/main/java/view/MyCamera.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/view/OutputScreen.java" afterPath="$PROJECT_DIR$/app/src/main/java/view/OutputScreen.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/apps/Share.java" afterPath="$PROJECT_DIR$/app/src/main/java/apps/Share.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/pact/smartpen/list.java" afterPath="$PROJECT_DIR$/app/src/main/java/pact/smartpen/list.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/pact/smartpen/projection.java" afterPath="$PROJECT_DIR$/app/src/main/java/pact/smartpen/projection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/pactCorners" afterPath="$PROJECT_DIR$/server/pactCorners" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="9c43a80e-3ca3-4eb5-8f59-e86866b4e02a" name="Failed commit: Default" comment="merge&#10;" />
@@ -89,11 +74,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Login.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Login.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/apps/Login.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48672566" vertical-offset="1230" max-vertical-offset="2220">
-              <caret line="107" column="0" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
+              <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#811#992#0" expanded="true" />
@@ -132,13 +117,13 @@
       <file leaf-file-name="Share.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/apps/Share.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="900">
-              <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="900">
+              <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
               <folding>
-                <element signature="e#685#686#0" expanded="true" />
-                <element signature="e#734#735#0" expanded="true" />
-                <element signature="e#1340#1490#0" expanded="true" />
-                <element signature="e#1479#1480#0" expanded="true" />
+                <element signature="e#684#685#0" expanded="true" />
+                <element signature="e#733#734#0" expanded="true" />
+                <element signature="e#1343#1493#0" expanded="true" />
+                <element signature="e#1482#1483#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -147,18 +132,18 @@
       <file leaf-file-name="MenuBar.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/view/MenuBar.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="59" max-vertical-offset="1260">
-              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="104" max-vertical-offset="1320">
+              <caret line="52" column="13" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Morpion.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Morpion.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/apps/Morpion.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="1005">
-              <caret line="12" column="2" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="2" />
+            <state vertical-scroll-proportion="0.7443609" vertical-offset="105" max-vertical-offset="1005">
+              <caret line="48" column="21" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -1308,12 +1293,12 @@
         <option value="$PROJECT_DIR$/app/src/main/java/apps/Application.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/pact/smartpen/MainProject.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/pact/smartpen/projection.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/view/MenuBar.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/view/InputScreen.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/apps/Morpion.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/apps/Share.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/apps/NetworkApp.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/apps/Login.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/view/MenuBar.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/apps/Share.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/apps/Morpion.java" />
       </list>
     </option>
   </component>
@@ -1414,10 +1399,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="shape" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -1666,7 +1647,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../SmartPe/CameraPreview" />
     <property name="FullScreen" value="true" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="08dcbddbdcb3f583" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0b806be1561c67f5" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_21_x86" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
@@ -1952,7 +1933,11 @@
       <created>1428447902143</created>
       <updated>1428447902143</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="* added screen calibration feature&#10;* the image to be processed and sent is now taken after having cleared the screen ( normal behaviour)&#10;* created a super class for apps using network (all apps do) to provide easier access and clearer code&#10; * updated the server jar&#10;">
+      <created>1429374363593</created>
+      <updated>1429374363593</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1986,11 +1971,11 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39943343" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.37883684" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.6211632" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31303117" sideWeight="0.6211632" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41359773" sideWeight="0.2641357" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30028328" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="true" weight="0.4348442" sideWeight="0.6526656" order="15" side_tool="false" content_ui="tabs" x="-1203" y="174" width="840" height="544" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="true" weight="0.4348442" sideWeight="0.6526656" order="15" side_tool="false" content_ui="tabs" x="-1203" y="89" width="840" height="544" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2071,7 +2056,8 @@
     <MESSAGE value="&#10;" />
     <MESSAGE value="&#10;/" />
     <MESSAGE value="Merge branch 'androidMaster' of https://github.com/PACT11/SmartPen into androidMaster&#10;&#10;Conflicts:&#10;&#9;app/src/main/java/pact/smartpen/SmartPen.java&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'androidMaster' of https://github.com/PACT11/SmartPen into androidMaster&#10;&#10;Conflicts:&#10;&#9;app/src/main/java/pact/smartpen/SmartPen.java&#10;" />
+    <MESSAGE value="* added screen calibration feature&#10;* the image to be processed and sent is now taken after having cleared the screen ( normal behaviour)&#10;* created a super class for apps using network (all apps do) to provide easier access and clearer code&#10; * updated the server jar&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="* added screen calibration feature&#10;* the image to be processed and sent is now taken after having cleared the screen ( normal behaviour)&#10;* created a super class for apps using network (all apps do) to provide easier access and clearer code&#10; * updated the server jar&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2099,10 +2085,10 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="1320">
           <caret line="30" column="36" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
           <folding>
-            <element signature="e#685#686#0" expanded="true" />
-            <element signature="e#734#735#0" expanded="true" />
-            <element signature="e#1340#1490#0" expanded="true" />
-            <element signature="e#1479#1480#0" expanded="true" />
+            <element signature="e#684#685#0" expanded="true" />
+            <element signature="e#733#734#0" expanded="true" />
+            <element signature="e#1343#1493#0" expanded="true" />
+            <element signature="e#1482#1483#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2371,6 +2357,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.48672566" vertical-offset="0" max-vertical-offset="678">
           <caret line="22" column="4" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#365#366#0" expanded="true" />
+            <element signature="e#423#424#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2422,14 +2413,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/view/MenuBar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="59" max-vertical-offset="1260">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/apps/Application.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6902655" vertical-offset="522" max-vertical-offset="1200">
@@ -2443,27 +2426,6 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="177" max-vertical-offset="900">
           <caret line="66" column="5" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/apps/Morpion.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="1005">
-          <caret line="12" column="2" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/apps/Share.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="900">
-          <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
-          <folding>
-            <element signature="e#685#686#0" expanded="true" />
-            <element signature="e#734#735#0" expanded="true" />
-            <element signature="e#1340#1490#0" expanded="true" />
-            <element signature="e#1479#1480#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2482,8 +2444,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/apps/Login.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48672566" vertical-offset="1230" max-vertical-offset="2220">
-          <caret line="107" column="0" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2220">
+          <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#811#992#0" expanded="true" />
@@ -2505,6 +2467,35 @@
             <element signature="e#4840#4841#0" expanded="true" />
             <element signature="e#5003#5004#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/view/MenuBar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="104" max-vertical-offset="1320">
+          <caret line="52" column="13" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/apps/Share.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="900">
+          <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+          <folding>
+            <element signature="e#684#685#0" expanded="true" />
+            <element signature="e#733#734#0" expanded="true" />
+            <element signature="e#1343#1493#0" expanded="true" />
+            <element signature="e#1482#1483#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/apps/Morpion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7443609" vertical-offset="105" max-vertical-offset="1005">
+          <caret line="48" column="21" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>

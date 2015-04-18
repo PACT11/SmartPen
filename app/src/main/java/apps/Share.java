@@ -16,7 +16,7 @@ public class Share extends NetworkApp {
         configureRemoteListeners(server);
 
         menu.addItem("Morpion");
-        menu.addItem("Déconnection");
+        menu.addItem("Déconnexion");
         menu.setAppName("Partage");
 
         inputScreen.restart(Pactivity);
@@ -32,7 +32,7 @@ public class Share extends NetworkApp {
 
     @Override
     protected void onMenuClick(String menu) {
-        if(menu.equals("Quitter")) {
+        if(menu.equals("Déconnexion")) {
             disconnectFromUser();
             Pactivity.runOnUiThread(new Runnable() {
                 @Override

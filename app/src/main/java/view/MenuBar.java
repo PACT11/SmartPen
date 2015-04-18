@@ -27,6 +27,7 @@ public class MenuBar {
     private int nbItemMenu;
     private int clickedIndex=-1;
     private String currentApplication;
+    private boolean startup = true;
 
     public MenuBar(String appName) {
         currentApplication=appName;
@@ -46,12 +47,15 @@ public class MenuBar {
         int index = (int) floor((float)(x*items.size())/100);
         if(index>=0 && index<items.size() && index!=clickedIndex) {
             clickedIndex= index;
-            menuListener.menuClicked(items.get(index));
-            Application.outputScreen.refresh();
+            if(!startup) {      // ignore the click if the menu was just created (user may be clicking on the previous menu)
+                menuListener.menuClicked(items.get(index));
+                Application.outputScreen.refresh();
+            }
         } else if(x<0 && clickedIndex!=-1) {
             clickedIndex=-1;
             Application.outputScreen.refresh();
         }
+        startup=false;
     }
 
 
