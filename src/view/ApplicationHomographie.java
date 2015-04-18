@@ -58,15 +58,15 @@ public class ApplicationHomographie{
             ArrayList<Point> resultPoints = new ArrayList<>();
             double[] pt = {0,0}; 
             
-            Point p1 = sourceCorners.get(0);
-            Point p2 = sourceCorners.get(1);
-            Point p3 = sourceCorners.get(2);
-            Point p4 = sourceCorners.get(3);
+            Point p5 = sourceCorners.get(0);
+            Point p6 = sourceCorners.get(1);
+            Point p7 = sourceCorners.get(2);
+            Point p8 = sourceCorners.get(3);
 
-            Point p5 = targetCorners.get(0);
-            Point p6 = targetCorners.get(1);
-            Point p7 = targetCorners.get(2);
-            Point p8 = targetCorners.get(3);
+            Point p1 = targetCorners.get(0);
+            Point p2 = targetCorners.get(1);
+            Point p3 = targetCorners.get(2);
+            Point p4 = targetCorners.get(3);
             
             Matrix H = EstimationHomographie.getHomographyCoefficients(p1,p2,p3,p4,p5,p6,p7,p8);
             
@@ -81,72 +81,56 @@ public class ApplicationHomographie{
 
                 ArrayList<Point> coinsDepart = mainRansac.donnerCoins(imageATransformer, UID);
 
-                BufferedImage result = partieEntiere(imageATransformer,coinsDepart,coinsArrivee, width, height);
+                //BufferedImage result = partieEntiere(imageATransformer,coinsDepart,coinsArrivee, width, height);
 		
-		return result;
+		return null;
 	}
 	
 
-	public static BufferedImage partieEntiere(BufferedImage imageDepart,ArrayList<Point> coinsDepart, ArrayList<Point> coinsArrivee, int width, int height){
-		
-		int u,v, rouge, vert, bleu, alpha, nouveauPixel;
-		
-		EstimationHomographie phi = new EstimationHomographie();
+	public static BufferedImage partieEntiere(BufferedImage imageDepart,ArrayList<Point> coinsDepart, ArrayList<Point> coinsArrivee, int width, int height,boolean greyscale){
+            int u,v, nouveauPixel,grey;
+            Color color;
+            int sourceWidth= imageDepart.getWidth(),sourceHeight = imageDepart.getHeight();
+            double[] p;
+            
+            Point p1 = coinsDepart.get(0);
+            Point p2 = coinsDepart.get(1);
+            Point p3 = coinsDepart.get(2);
+            Point p4 = coinsDepart.get(3);
 
-        Point p1 = coinsDepart.get(0);
-        Point p2 = coinsDepart.get(1);
-        Point p3 = coinsDepart.get(2);
-        Point p4 = coinsDepart.get(3);
+            Point p5 = coinsArrivee.get(0);
+            Point p6 = coinsArrivee.get(1);
+            Point p7 = coinsArrivee.get(2);
+            Point p8 = coinsArrivee.get(3);
+            Matrix H = EstimationHomographie.getHomographyCoefficients(p1,p2,p3,p4,p5,p6,p7,p8);
 
-        Point p5 = coinsArrivee.get(0);
-        Point p6 = coinsArrivee.get(1);
-        Point p7 = coinsArrivee.get(2);
-        Point p8 = coinsArrivee.get(3);
-		
-		/*Point p1 = new Point(490,60);
-		Point p2 = new Point(51,500);
-		Point p3 = new Point(860,280);
-		Point p4 = new Point(420,720);
-		
-		Point p5 = new Point(0,0);
-		Point p6 = new Point(0,500);
-		Point p7 = new Point(600,0);
-		Point p8 = new Point(600,500);
-		
-		*/
-        
-		Matrix H = phi.getHomographyCoefficients(p1,p2,p3,p4,p5,p6,p7,p8);
-       
-		
-		//Definition de la nouvelle image comme une image vierge
-        BufferedImage imageRecalee = new BufferedImage(width,height, imageDepart.getType());
-        
-		for(int i=0; i<imageRecalee.getWidth(); i++) {
-	            for(int j=0; j<imageRecalee.getHeight(); j++) {  //On parcourt toute l'image
-	            	Point ij = new Point(i,j);
-	            	double[] p = phi.phiInverse(ij, H);
-	            	 u = (int)(p[0]);
-	            	 v = (int) (p[1]);
-	            	
-	            	if ((u>0) && (u<imageDepart.getWidth()) && (v>0) && (v<imageDepart.getHeight())) {
-	            	
-	            		//Obtention des couleurs
-	            		rouge = new Color(imageDepart.getRGB(u,v)).getRed();
-	            		vert = new Color(imageDepart.getRGB(u,v)).getGreen();
-	            		bleu = new Color(imageDepart.getRGB(u,v)).getBlue();
-	            		alpha = new Color(imageDepart.getRGB(u,v)).getAlpha();
-	            	
-	                
-	            		//Coloration de la nouvelle image
-	            		nouveauPixel = colorerPixel(alpha, rouge, vert, bleu);
-	            		imageRecalee.setRGB(i, j, nouveauPixel);
-	            	}
-	            }
-		 }       
-		 
-	     
-		return imageRecalee;
-		
+            //Definition de la nouvelle image comme une image vierge
+            BufferedImage imageRecalee = new BufferedImage(width,height, imageDepart.getType());
+
+            for(int i=0; i<width; i++) {
+                for(int j=0; j<height; j++) {  //On parcourt toute l'image
+                    p = EstimationHomographie.phiInverse(new Point(i,j), H);
+                    u = (int)(p[0]);
+                    v = (int) (p[1]);
+
+                    if ((u>0) && (u<sourceWidth) && (v>0) && (v<sourceHeight)) {
+                            //Obtention des couleurs
+                            color = new Color(imageDepart.getRGB(u,v));
+                            if(greyscale) {
+                                grey = (int) (0.299*color.getRed() + 0.587*color.getGreen() + 0.114*color.getBlue());
+                            
+                                //Coloration de la nouvelle image
+                                nouveauPixel = colorerPixel(color.getAlpha(), grey, grey, grey);
+                            } else {
+                                //Coloration de la nouvelle image
+                                nouveauPixel = colorerPixel(color.getAlpha(), color.getRed(), color.getGreen(), color.getBlue());
+                            }
+                            imageRecalee.setRGB(i, j, nouveauPixel);
+                    }
+                }
+             }       
+
+            return imageRecalee;
 	}
          /*
 	public static BufferedImage ponderation(BufferedImage imageBrute){

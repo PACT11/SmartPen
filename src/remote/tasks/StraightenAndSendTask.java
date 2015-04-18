@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package remote.tasks;
 
 import view.ApplicationHomographie;
@@ -22,12 +18,12 @@ public class StraightenAndSendTask extends CloudTask {
     private int width;
     private int height;
     private BufferedImage image;
-    private boolean useCache;
+    private boolean sendBack;
     
-    public StraightenAndSendTask(ServerClient serverCallbackRef, BufferedImage image, int width, int height, boolean useCache) {
+    public StraightenAndSendTask(ServerClient serverCallbackRef, BufferedImage image, int width, int height, boolean sendBack) {
         super(serverCallbackRef);
         
-        this.useCache= useCache;
+        this.sendBack=sendBack;
         this.width=width;
         this.height=height;
         this.image = image;
@@ -45,14 +41,11 @@ public class StraightenAndSendTask extends CloudTask {
         try {
             // find corners
             long tempsDebut = System.currentTimeMillis();
-            if(useCache) {
-                sheetCorners=CornerFinder.cache.getCorners(server.getUID());
-            } else {
-                sheetCorners = CornerFinder.findCorners(image);
-                CornerFinder.cache.update(server.getUID(), sheetCorners);
-                // send back to the user where the corners are
-                server.sendMessage(new StraightenAndSend(sheetCorners));
-            }
+            
+            sheetCorners = CornerFinder.findCorners(image,false);
+            CornerFinder.cache.update(server.getUID(), sheetCorners);
+            
+            
             long tempsFin = System.currentTimeMillis();
             //display Result
             System.out.println("coins trouvés en: "+ (tempsFin - tempsDebut) + " ms");
@@ -61,8 +54,16 @@ public class StraightenAndSendTask extends CloudTask {
             }
             
             // transform image
-            resultImage = ApplicationHomographie.partieEntiere(image,sheetCorners,targetCorners, width, height);
+            resultImage = ApplicationHomographie.partieEntiere(image,sheetCorners,targetCorners, width, height,true);
             System.out.println("image transformée en: "+ (System.currentTimeMillis() - tempsFin) + " ms");
+            
+            if(sendBack) {
+                // send back to the user where the corners are and the straightened image
+                server.sendMessage(new StraightenAndSend(sheetCorners,resultImage));
+            } else {
+                // send back to the user where the corners are
+                server.sendMessage(new StraightenAndSend(sheetCorners,null));
+            }
             
             // send it to all connected users
             server.getConnection().sendMessage(new Image(resultImage), server);
@@ -70,7 +71,7 @@ public class StraightenAndSendTask extends CloudTask {
             System.err.println("StraightenAndSendTask : cannot finish task from " + server.getUID());
             System.err.println("        No sheet detected !");
             System.err.println(ex);
-            server.sendMessage(new StraightenAndSend(null));
+            server.sendMessage(new StraightenAndSend(null,null));
         }
         
     }

@@ -32,7 +32,7 @@ public class CornerFinder {
             BufferedImage image = ImageIO.read(fichierOriginal);
         
             long tempsDebut = System.currentTimeMillis();
-            ArrayList<Point> corners = findCorners(image);      
+            ArrayList<Point> corners = findCorners(image,false);      
             long tempsFin = System.currentTimeMillis();
         
             System.out.println("Opération totale effectuée en: "+ (tempsFin - tempsDebut) + " ms");
@@ -48,12 +48,19 @@ public class CornerFinder {
         }
     }
     
-    public static ArrayList<Point> findCorners(BufferedImage image) {
-        int[][] img = grayscale(image, (int) floor(image.getWidth()/STEPDIVIDER),(int) floor(image.getHeight()/STEPDIVIDER));
+    public static ArrayList<Point> findCorners(BufferedImage image, boolean green) {
+        int[][] img;
+        if(green)
+            img = greenscale(image, (int) floor(image.getWidth()/STEPDIVIDER),(int) floor(image.getHeight()/STEPDIVIDER));
+        else
+            img = grayscale(image, (int) floor(image.getWidth()/STEPDIVIDER),(int) floor(image.getHeight()/STEPDIVIDER));
+        
         int i,lastSum, min, max;
         int[] xSums = new int[img.length];
         int[] ySums = new int[img[0].length];
         int[] xs, ys;
+        
+        img = grayscale(image, (int) floor(image.getWidth()/STEPDIVIDER),(int) floor(image.getHeight()/STEPDIVIDER));
         
         min=0; max=0;
         lastSum = colSum(img, 0);
@@ -110,6 +117,7 @@ public class CornerFinder {
 
         return corners;
     }
+    
     private static int[][] grayscale(BufferedImage img, int xStep,int yStep) {
         int imgWidth =img.getWidth();
         int imgHeight=img.getHeight();
@@ -124,6 +132,27 @@ public class CornerFinder {
                 if(i/xStep<width && j/yStep<height) {
                     color = new Color(img.getRGB(i, j));      
                     grayImg[i/xStep][j/yStep] = (int) (0.299*color.getRed() + 0.587*color.getGreen() + 0.114*color.getBlue());
+                }
+            }
+        }
+        return grayImg;
+    }
+    private static int[][] greenscale(BufferedImage img, int xStep,int yStep) {
+        int imgWidth =img.getWidth();
+        int imgHeight=img.getHeight();
+        int width = (int) floor(imgWidth / xStep);
+        int height= (int) floor(imgHeight/ yStep);
+        int[][] grayImg = new int[width][height];
+        Color color;
+        int i,j;
+        
+        for(i=0; i<imgWidth; i+=xStep) {
+            for(j=0; j<imgHeight; j+=yStep) {
+                if(i/xStep<width && j/yStep<height) {  
+                    color = new Color(img.getRGB(i, j));
+                    grayImg[i/xStep][j/yStep] = color.getGreen()-(color.getRed()+color.getBlue())/2;
+                    if(grayImg[i/xStep][j/yStep]<0)
+                        grayImg[i/xStep][j/yStep]=0;
                 }
             }
         }
