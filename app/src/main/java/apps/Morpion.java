@@ -52,7 +52,7 @@ public class Morpion extends Share {
 
     @Override
     protected void onMenuClick(String menu) {
-        if ( menu.equals("Nouvelle Partie")&& tailleMorpion !=0) {
+        if ( menu.equals("Nouvelle Partie") && tailleMorpion !=0) {
             decalageX = (decalageX + tailleMorpion)%(tailleMorpion*5) ;
             decalageY = (decalageY + tailleMorpion)%(tailleMorpion*5) ;
         }

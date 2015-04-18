@@ -4,9 +4,12 @@ package remote.messages;
 import netzwerk.Connector;
 import netzwerk.ServerClient;
 import netzwerk.messages.Message;
+import remote.listeners.ImageReceiveListener;
 import shape.Point;
+import view.BufferedImage;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import java.util.ArrayList;
 
@@ -22,23 +25,24 @@ public class StraightenAndSend  extends Message {
     static final long serialVersionUID= 4298568912354L;
     private static Runnable errorListener;
     private static CornerListener cornerListener;
+    private static ImageReceiveListener imageListener;
 
     private int width;
     private int height;
     private byte[] img;
-    private boolean useCache;
+    private boolean sendBack;
     private int[] cornerX;
     private int[] cornerY;
 
-    public StraightenAndSend(Bitmap image, int width, int height, boolean useCache) {
+    public StraightenAndSend(Bitmap image, int width, int height, boolean sendBack) {
         this.img = Image.getBytesFromBitmap(image);
-        this.useCache = useCache;
+        this.sendBack = sendBack;
         this.height=height;
         this.width=width;
     }
 
     // a constructor for the server, sending back where the corners are
-    public StraightenAndSend(ArrayList<Point> corners) {
+    public StraightenAndSend(ArrayList<Point> corners, BufferedImage straightImage) {
         if(corners!=null) {
             int i=0;
             cornerX= new int[4];
@@ -50,6 +54,7 @@ public class StraightenAndSend  extends Message {
                 i++;
             }
         }
+        //...
     }
 
     @Override
@@ -69,6 +74,9 @@ public class StraightenAndSend  extends Message {
             }
             if(cornerListener!=null)
                 cornerListener.cornerUpdate(corners);
+            if(img!=null && imageListener !=null) {
+                imageListener.imageReceived(BitmapFactory.decodeByteArray(img, 0, img.length));
+            }
         }
     }
     public static void setErrorListener(Runnable listener) {
@@ -76,5 +84,8 @@ public class StraightenAndSend  extends Message {
     }
     public static void setCornerListener(CornerListener listener) {
         cornerListener = listener;
+    }
+    public static void setImageListener(ImageReceiveListener listener) {
+        imageListener = listener;
     }
 }

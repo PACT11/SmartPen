@@ -1,6 +1,7 @@
 package view;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,14 @@ public class CloudServices {
                     Application.inputScreen.setCorners(corners);
             }
         });
+        StraightenAndSend.setImageListener(new ImageReceiveListener() {
+            @Override
+            public void imageReceived(Bitmap image) {
+                if(Application.outputScreen!=null && Application.outputScreen.getImage()!=null) {
+                    MyCamera.savePicture(fusion(Application.outputScreen.getImage(),image));
+                }
+            }
+        });
 
         FitToSheet.setErrorListener(new Runnable() {
             @Override
@@ -59,9 +68,32 @@ public class CloudServices {
 
         server.sendMessage(new StraightenAndSend(image,width,height,false));
     }
+    public void straigthenAndSave(Bitmap image, int width, int height) {
+        this.width=image.getWidth();
+        this.height=image.getHeight();
+
+        server.sendMessage(new StraightenAndSend(image,width,height,true));
+    }
 
     public void fitToSheet(Bitmap image) {
         if(width>0 && height>0)
             server.sendMessage(new FitToSheet(image, width,height));
+    }
+
+    private static Bitmap fusion(Bitmap img1, Bitmap img2) {
+        int width = Math.min(img1.getWidth(),img2.getWidth());
+        int height = Math.min(img1.getHeight(),img2.getHeight());
+        Bitmap result = Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
+        int luminance;
+        for(int i=0;i<width;i++) {
+            for(int j=0;j<height;j++) {
+                luminance = Math.min(luminance(img1.getPixel(i,j)),luminance(img2.getPixel(i,j)));
+                result.setPixel(i,j,Color.argb(255,luminance,luminance,luminance));
+            }
+        }
+        return result;
+    }
+    private static int luminance(int color) {
+        return (int)(0.299*Color.red(color)+0.587*Color.green(color)+0.114*Color.blue(color));
     }
 }
