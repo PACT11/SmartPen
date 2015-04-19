@@ -66,9 +66,9 @@ public class MenuBar {
         Paint paintCurrent = new Paint(); paintCurrent.setColor(Color.RED);
         Paint paintMenuBackground = new Paint();
         paintMenuBackground.setColor(Color.WHITE);
-        paint.setTextSize(20);
-        paintCurrent.setTextSize(20);
-        selectedItemPaint.setTextSize(20);
+        paint.setTextSize(14);
+        paintCurrent.setTextSize(14);
+        selectedItemPaint.setTextSize(14);
 
 
         int width =  feuille.getWidth();
@@ -93,6 +93,9 @@ public class MenuBar {
 
 
         return OutputScreen.rotateBitmap(feuille,90);
+    }
 
+    public ArrayList<String> getItems() {
+        return items;
     }
 }

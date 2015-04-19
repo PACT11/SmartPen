@@ -1,17 +1,6 @@
 package apps;
 
-import android.content.Context;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Typeface;
-
-import java.io.IOException;
-import java.io.InputStream;
-
+import android.graphics.*;
 import view.OutputScreen;
 
 /**
@@ -20,50 +9,39 @@ import view.OutputScreen;
 
 public class ApprentissageEcriture extends Share {
 
-    public ApprentissageEcriture(Context myContext) {
-        AssetManager mngr = myContext.getAssets();
-        try {
-            InputStream is = mngr.open("fonts/textdb.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private boolean fini = true ;
-    private boolean demarre = false;
+    private boolean fini;
+    private boolean demarre;
     private int decalageY;
     private int height ;
     private int width ;
     public Typeface policeApprentissageEcriture;
-    private Bitmap feuilleAvecCaractere;
+    private Bitmap imageCaractere;
+    private Bitmap lastImage;
 
     public Bitmap ajoutScore(Bitmap feuillePaysage, double score){
         Bitmap feuille = OutputScreen.rotateBitmap(feuillePaysage,-90);
-        width =  feuille.getWidth();
-        height =  feuille.getHeight();
 
-        Paint paint = new Paint(); paint.setColor(Color.GREEN);
+        Paint paint = new Paint(); paint.setColor(Color.BLUE);
         Canvas canvas = new Canvas(feuille);
-        paint.setTextSize(40);
-        String textScore = "Entraîne-toi en cliquant sur Nouvel Entrainement";
-        canvas.drawText(textScore, width/2 , height/4 , paint);
+        paint.setTextSize(25);
+        String textScore = "Entraîne-toi en cliquant sur Nouveau";
+        canvas.drawText(textScore, 20 , height/6 , paint);
 
         return OutputScreen.rotateBitmap(feuille,90);
     }
 
-    public Bitmap dessinerCaractère(Bitmap feuillePaysage, Bitmap imageCaractereSimple){
+    public Bitmap dessinerCaractere(Bitmap feuillePaysage, Bitmap imageCaractereSimple){
         Bitmap feuille = OutputScreen.rotateBitmap(feuillePaysage,-90);
 
         Canvas canvas = new Canvas(feuille);
-        canvas.drawBitmap(imageCaractereSimple,100,decalageY,null);
+        canvas.drawBitmap(imageCaractereSimple,0,decalageY,null);
 
-        return OutputScreen.rotateBitmap(feuille,-90);
+        return OutputScreen.rotateBitmap(feuille,90);
     }
 
 
 
-    public Bitmap generateImageCaractère(int widthImageCaractere, int heightImageCaractere) {
+    public Bitmap generateImageCaractere(int widthImageCaractere, int heightImageCaractere) {
         String chars = "abcdefghijklmnopqrstuvwxyz";
         String pass = "";
         int i =(int)Math.floor(Math.random() * chars.length() -1);
@@ -72,16 +50,16 @@ public class ApprentissageEcriture extends Share {
         }
         pass += pass.toUpperCase();
         Paint paint = new Paint(); paint.setColor(Color.BLACK);
+        paint.setTextSize(22);
         paint.setTypeface(policeApprentissageEcriture);
 
-        Bitmap.Config conf = Bitmap.Config.ARGB_8888;
-        Bitmap bmp = Bitmap.createBitmap(widthImageCaractere, heightImageCaractere, conf);
+        Bitmap bmp = Bitmap.createBitmap(widthImageCaractere, heightImageCaractere, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bmp);
         Paint paintMenuBackground = new Paint();
         paintMenuBackground.setColor(Color.WHITE);
         Rect background = new Rect(0,0,widthImageCaractere,heightImageCaractere);
         canvas.drawRect(background, paintMenuBackground);
-        canvas.drawText(pass,0,0,paint);
+        canvas.drawText(pass,20,45,paint);
         return bmp;
     }
 
@@ -90,35 +68,46 @@ public class ApprentissageEcriture extends Share {
         Pactivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                policeApprentissageEcriture = Typeface.createFromAsset(Pactivity.getAssets(),"fonts/Cursifl.ttf");
+                policeApprentissageEcriture = Typeface.createFromAsset(Pactivity.getAssets(),"fonts/Cursifl.TTF");
             }
         });
 
         demarre=  false;
         fini = false;
+        decalageY=150;
+        width = outputScreen.getImage().getHeight();
+        height = outputScreen.getImage().getWidth();
+
         configureRemoteListeners(server);
-        menu.addItem("Ecriture completee");
-        menu.addItem("Nouvel Entrainement");
+        menu.addItem("Ecriture finie");
+        menu.addItem("Nouveau");
         menu.addItem("Quitter");
-    }
 
+        if(distantUID.equals("mode solitaire")) {
+            lastImage = Bitmap.createBitmap(height,width, Bitmap.Config.ARGB_8888);
+            for(int i=0;i<height; i++) {
+                for(int j=0;j<width;j++)
+                    lastImage.setPixel(i,j, Color.WHITE);
+            }
+        }
 
-    protected void onNewImage(Bitmap image) {
-        cloud.straigthenAndSend(image,1200,800);
     }
 
     @Override
     protected void onMenuClick(String menu) {
-        if ( menu.equals("Ecriture completee")) {
+        if ( menu.equals("Ecriture finie")) {
             if (demarre) {
                 fini = true;
                 demarre = false;
+                outputScreen.fitAndDisplay(ajoutScore(lastImage,0));
             }
         }
-        if (menu.equals("Nouvel Entrainement")){
+        if (menu.equals("Nouveau")){
             if (fini) {
-                decalageY= (decalageY + 100)%height;
-                demarre = false;
+                decalageY+=80;
+                imageCaractere = generateImageCaractere(width,100);
+                outputScreen.fitAndDisplay(dessinerCaractere(lastImage, imageCaractere));
+                demarre = true;
                 fini = false;
             }
         }
@@ -128,27 +117,18 @@ public class ApprentissageEcriture extends Share {
     }
 
     @Override
-    protected void onImageReceived(final Bitmap image){
-        if (!fini && !demarre) {
-            Bitmap imageCaractere = generateImageCaractère(600,100);
-            feuilleAvecCaractere = dessinerCaractère(image, imageCaractere);
-            outputScreen.fitAndDisplay(dessinerCaractère(image, imageCaractere));
+    protected void onImageReceived(Bitmap image){
+        if(!this.distantUID.equals("mode solitaire"))
+            lastImage = image;
+
+        if(!demarre && !fini) {
+            imageCaractere = generateImageCaractere(width,100);
             demarre=true;
-        }
-
-        if (fini) {
-            outputScreen.fitAndDisplay(ajoutScore(image,0));
-        }
-
-        else if (demarre) {
-            outputScreen.fitAndDisplay(feuilleAvecCaractere);
+            outputScreen.fitAndDisplay(dessinerCaractere(lastImage, imageCaractere));
+        } else if (fini) {
+            outputScreen.fitAndDisplay(ajoutScore(lastImage,0));
+        } else if (demarre) {
+            outputScreen.fitAndDisplay(dessinerCaractere(lastImage, imageCaractere));
         }
     }
-
-    @Override
-    protected void onClose() {
-    }
-
-
-
 }

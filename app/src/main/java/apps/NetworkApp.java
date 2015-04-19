@@ -18,8 +18,8 @@ public class NetworkApp extends Application {
     protected static Connector server;        // the server we connect to
     protected static CloudServices cloud;
 
-    protected String UID = "";         // the name of the user
-    protected String distantUID;
+    protected static String UID = "";         // the name of the user
+    protected static String distantUID;
     protected String[] users;          // a list of all connected users
 
     // references to the activities for GUI callbacks

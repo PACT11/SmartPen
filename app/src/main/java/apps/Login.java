@@ -134,6 +134,7 @@ public class Login extends NetworkApp {
                                     proj.finish();
                                 }
                             });
+                            camera.release();
                         }
                     });
                 } catch (IOException | InterruptedException e ) {

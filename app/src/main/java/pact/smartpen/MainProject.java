@@ -18,6 +18,7 @@ public class MainProject extends Thread {
         applications.add(new Login());
         applications.add(new Share());
         applications.add(new Morpion());
+        applications.add(new ApprentissageEcriture());
         // launch OS
         new OS().run();
 

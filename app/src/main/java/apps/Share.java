@@ -12,7 +12,7 @@ public class Share extends NetworkApp {
         configureRemoteListeners(server);
 
         menu.addItem("Morpion");
-        menu.addItem("Apprentissage Ecriture");
+        menu.addItem("Ecriture");
         menu.addItem("Enregistrer");
         menu.addItem("Déconnexion");
         menu.setAppName("Partage");
@@ -45,7 +45,7 @@ public class Share extends NetworkApp {
             });
         } else if(menu.equals("Morpion")) {
             os.startApp("Morpion");
-        } else if(menu.equals("Apprentissage Ecriture")){
+        } else if(menu.equals("Ecriture")){
             os.startApp("ApprentissageEcriture");
         }
         else if(menu.equals("Enregistrer")) {
