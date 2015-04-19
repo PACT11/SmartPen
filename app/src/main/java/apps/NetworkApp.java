@@ -23,9 +23,9 @@ public class NetworkApp extends Application {
     protected String[] users;          // a list of all connected users
 
     // references to the activities for GUI callbacks
-    protected list Lactivity;
-    protected SmartPen Sactivity;
-    protected projection Pactivity;
+    protected static list Lactivity;
+    protected static SmartPen Sactivity;
+    protected static projection Pactivity;
 
     @Override
     protected void onLaunch() {
