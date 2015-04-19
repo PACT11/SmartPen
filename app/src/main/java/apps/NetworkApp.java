@@ -1,10 +1,10 @@
 package apps;
 
-import java.net.UnknownHostException;
-
 import netzwerk.Connector;
-import pact.smartpen.*;
-import remote.messages.*;
+import pact.smartpen.SmartPen;
+import pact.smartpen.list;
+import pact.smartpen.projection;
+import remote.messages.UserListUpdate;
 import view.CloudServices;
 
 
@@ -23,9 +23,9 @@ public class NetworkApp extends Application {
     protected String[] users;          // a list of all connected users
 
     // references to the activities for GUI callbacks
-    protected list Lactivity;
-    protected SmartPen Sactivity;
-    protected projection Pactivity;
+    protected static list Lactivity;
+    protected static SmartPen Sactivity;
+    protected static projection Pactivity;
 
     @Override
     protected void onLaunch() {

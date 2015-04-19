@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Clone.iml" filepath="$PROJECT_DIR$/Clone.iml" />
       <module fileurl="file://$PROJECT_DIR$/SmartPen.iml" filepath="$PROJECT_DIR$/SmartPen.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

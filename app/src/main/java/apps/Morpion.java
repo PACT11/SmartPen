@@ -5,9 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import netzwerk.Connector;
-import pact.smartpen.projection;
-import view.CloudServices;
 import view.OutputScreen;
 
 /*
@@ -17,20 +14,25 @@ public class Morpion extends Share {
     private int decalageX  ;
     private int decalageY ;
     private int tailleMorpion;
+    private int height ;
+    private int width;
+    private int xCoinGauche;
+    private int yCoinGauche;
+    private Paint paint = new Paint();
 
     public Bitmap ajoutGrille(Bitmap feuillePaysage) {
         Bitmap feuille = OutputScreen.rotateBitmap(feuillePaysage,-90);
 
-        int width =  feuille.getWidth();
-        int height =  feuille.getHeight();
+        width =  feuille.getWidth();
+        height =  feuille.getHeight();
         tailleMorpion = width*4/21 ;
 
-
-        Paint paint = new Paint(); paint.setColor(Color.BLACK);
+        paint.setColor(Color.BLACK);
         Canvas canvas = new Canvas(feuille);
 
-        int xCoinGauche = width /2 + decalageX;
-        int yCoinGauche = height/2 + decalageY ;
+
+            xCoinGauche =  decalageX;
+            yCoinGauche =  decalageY ;
 
         for (int k=0 ; k<4 ; k++){
             canvas.drawLine(xCoinGauche + k * tailleMorpion/3 ,yCoinGauche,xCoinGauche+ k * 4 * tailleMorpion/3 ,yCoinGauche + tailleMorpion, paint);
@@ -46,15 +48,19 @@ public class Morpion extends Share {
         menu.addItem("Nouvelle Partie");
         menu.addItem("Quitter");
 
-        decalageX=200;
+        decalageX=50;
         decalageY=200;
     }
 
     @Override
     protected void onMenuClick(String menu) {
-        if ( menu.equals("Nouvelle Partie") && tailleMorpion !=0) {
-            decalageX = (decalageX + tailleMorpion)%(tailleMorpion*5) ;
-            decalageY = (decalageY + tailleMorpion)%(tailleMorpion*5) ;
+
+        if ( menu.equals("Nouvelle Partie")) {
+            decalageX = (decalageX + tailleMorpion) ;
+            if (decalageX > (width-tailleMorpion)) {
+                decalageY = (decalageY + tailleMorpion);
+                decalageX = 50 ;
+            }
         }
         else if (menu.equals("Quitter")){
             os.startApp("Share");
