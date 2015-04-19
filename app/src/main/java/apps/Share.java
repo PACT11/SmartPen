@@ -2,11 +2,6 @@ package apps;
 
 import android.graphics.Bitmap;
 
-import netzwerk.Connector;
-import pact.smartpen.projection;
-import remote.messages.Image;
-import view.CloudServices;
-
 /**
  * Created by arnaud on 07/03/15.
  */
@@ -17,6 +12,7 @@ public class Share extends NetworkApp {
         configureRemoteListeners(server);
 
         menu.addItem("Morpion");
+        menu.addItem("Apprentissage Ecriture");
         menu.addItem("Enregistrer");
         menu.addItem("Déconnexion");
         menu.setAppName("Partage");
@@ -49,7 +45,10 @@ public class Share extends NetworkApp {
             });
         } else if(menu.equals("Morpion")) {
             os.startApp("Morpion");
-        } else if(menu.equals("Enregistrer")) {
+        } else if(menu.equals("Apprentissage Ecriture")){
+            os.startApp("ApprentissageEcriture");
+        }
+        else if(menu.equals("Enregistrer")) {
             saving = true;
         }
     }

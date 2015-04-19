@@ -1,10 +1,10 @@
 package apps;
 
-import java.net.UnknownHostException;
-
 import netzwerk.Connector;
-import pact.smartpen.*;
-import remote.messages.*;
+import pact.smartpen.SmartPen;
+import pact.smartpen.list;
+import pact.smartpen.projection;
+import remote.messages.UserListUpdate;
 import view.CloudServices;
 
 
