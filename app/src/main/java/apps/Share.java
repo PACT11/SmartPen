@@ -16,8 +16,9 @@ public class Share extends NetworkApp {
         menu.addItem("Enregistrer");
         menu.addItem("Déconnexion");
         menu.setAppName("Partage");
+        menu.setDistantUID(this.distantUID);
 
-        inputScreen.restart(Pactivity);
+        inputScreen.restart(Pactivity,server);
     }
 
     protected void onNewImage(Bitmap image) {
@@ -32,7 +33,13 @@ public class Share extends NetworkApp {
     protected void onImageReceived(Bitmap image){
         outputScreen.fitAndDisplay(image);
     }
-
+    @Override
+    protected void onCommandReceived(String command) {
+        if(command.equals("writing"))
+            menu.isWriting(true);
+        else if(command.equals("standby"))
+            menu.isWriting(false);
+    }
     @Override
     protected void onMenuClick(String menu) {
         if(menu.equals("Déconnexion")) {

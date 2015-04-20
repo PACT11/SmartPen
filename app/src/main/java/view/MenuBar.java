@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import java.util.ArrayList;
 
 import apps.Application;
+import apps.NetworkApp;
 
 import static java.lang.Math.floor;
 
@@ -28,6 +29,9 @@ public class MenuBar {
     private int clickedIndex=-1;
     private String currentApplication;
     private boolean startup = true;
+    private boolean writing = false;
+    private String distantUID;
+
 
     public MenuBar(String appName) {
         currentApplication=appName;
@@ -37,6 +41,15 @@ public class MenuBar {
     }
     public void setAppName(String name) {
         currentApplication=name;
+    }
+    public void setDistantUID(String distantUID) {
+        this.distantUID = distantUID;
+    }
+    public void isWriting(boolean writing) {
+        if(this.writing!=writing) {
+            this.writing = writing;
+            Application.outputScreen.refresh();
+        }
     }
 
     public void addItem(String itemName) {
@@ -90,7 +103,9 @@ public class MenuBar {
 
         canvas.drawLine(0,menuHeight/2+5, width,menuHeight /2 + 5, paint);
         canvas.drawText(currentApplication, width/2 - width/10,  menuHeight-menuHeight/15, paintCurrent);
-
+        if(writing && distantUID!=null) {
+            canvas.drawText(distantUID + " écrit ...", width / 15, menuHeight - menuHeight / 15, paintCurrent);
+        }
 
         return OutputScreen.rotateBitmap(feuille,90);
     }
