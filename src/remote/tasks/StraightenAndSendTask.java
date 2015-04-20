@@ -52,7 +52,7 @@ public class StraightenAndSendTask extends CloudTask {
             for(Point point : sheetCorners) {
                 System.out.println("x : " + point.x + ", y : " + point.y);
             }
-            
+
             // transform image
             resultImage = ApplicationHomographie.partieEntiere(image,sheetCorners,targetCorners, width, height,true);
             System.out.println("image transformée en: "+ (System.currentTimeMillis() - tempsFin) + " ms");
