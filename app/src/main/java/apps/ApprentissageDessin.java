@@ -1,26 +1,47 @@
 package apps;
 
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 import view.OutputScreen;
 
 /**
  * Created by Chab on 20/04/15.
  */
 
-public class ApprentissageEcriture extends Share {
+public class ApprentissageDessin extends Share {
 
     private boolean fini;
     private boolean demarre;
-    private int decalageY;
+    private int decalageY= 150 ;
     private int height ;
     private int width ;
-    public Typeface policeApprentissageEcriture;
     public Typeface policeIndications;
-    public Typeface policeApprentissageEcritureDifficile;
-    public Typeface policeApprentissageEcritureSansLigne;
     private Bitmap imageCaractere;
     private Bitmap lastImage;
-    private boolean special;
+    private boolean pokemon = false;
+    private boolean animaux = false ;
+    private  String[] pokemonListe = {
+            "carapuce",
+            "coloriage-pokemon-2", //pikachu
+            "mew",
+            "mewto",
+            "salameche"
+    };
+    private  String[] animauxListe = {
+            "bambi",
+            "biche",
+            "ecureuil",
+            "elephant",
+            "sanglier"
+    };
 
     public Bitmap ajoutScore(Bitmap feuillePaysage, double score){
         Bitmap feuille = OutputScreen.rotateBitmap(feuillePaysage,-90);
@@ -29,55 +50,59 @@ public class ApprentissageEcriture extends Share {
         Canvas canvas = new Canvas(feuille);
         paint.setTextSize(25);
         paint.setTypeface(policeIndications);
-        String textScore = "Entraîne-toi en cliquant sur Nouveau";
+        String textScore = "Prends une nouvelle feuille et clique sur la catégorie souhaitée";
         canvas.drawText(textScore, 20 , height/6 , paint);
 
         return OutputScreen.rotateBitmap(feuille,90);
     }
 
-    public Bitmap dessinerCaractere(Bitmap feuillePaysage, Bitmap imageCaractereSimple){
+    public Bitmap dessinerCaractere(Bitmap feuillePaysage, Bitmap imageDessinSimple){
         Bitmap feuille = OutputScreen.rotateBitmap(feuillePaysage,-90);
 
         Canvas canvas = new Canvas(feuille);
-        canvas.drawBitmap(imageCaractereSimple,0,decalageY,null);
+        canvas.drawBitmap(imageDessinSimple,0,decalageY,null);
 
         return OutputScreen.rotateBitmap(feuille,90);
     }
 
 
 
-    public Bitmap generateImageCaractere(int widthImageCaractere, int heightImageCaractere) {
-        String chars = "abcdefghijklmnopqrstuvwxyz";
-        String pass = "";
-        int i =(int)Math.floor(Math.random() * chars.length() -1);
-        for(int x=0;x<7;x++)   {
-            pass += chars.charAt(i) +"  ";
+    public Bitmap generateImageDessin() {
+        if (pokemon){
+            int i =(int)Math.floor(Math.random() * pokemonListe.length -1);
+            return getBitmap("dessins/"+pokemonListe[i]+".jpg");
         }
-        pass += pass.toUpperCase();
-        Paint paint = new Paint(); paint.setColor(Color.BLACK);
-        paint.setTextSize(22);
-        if (special){
-            int j = (int)Math.floor(Math.random()* 3 -1);
-            if (j==0) paint.setTypeface(policeApprentissageEcritureDifficile);
-            if (j==1) paint.setTypeface(policeApprentissageEcritureSansLigne);
-            if (j==2) {
-                String fullChars=chars+chars.toUpperCase();
-                pass = "";
-                for (int k=0;k<14;k++){
-                    i =(int)Math.floor(Math.random() * fullChars.length() -1);
-                    pass +=chars.charAt(i) + " ";
+        else if(animaux){
+            int i =(int)Math.floor(Math.random() * animauxListe.length -1);
+            return getBitmap("dessins/"+animauxListe[i]+".jpg");
+        }
+        else return null;
+    }
+
+    public Bitmap getBitmap(String pathNameRelativeToAssetsFolder) {
+        InputStream bitmapIs = null;
+        Bitmap bmp = null;
+        try {
+            bitmapIs = Pactivity.getAssets().open(pathNameRelativeToAssetsFolder);
+            bmp = BitmapFactory.decodeStream(bitmapIs);
+        } catch (IOException e) {
+            // Error reading the file
+            e.printStackTrace();
+
+            if(bmp != null) {
+                bmp.recycle();
+                bmp = null;
+            }
+        } finally {
+            if(bitmapIs != null) {
+                try {
+                    bitmapIs.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
-        paint.setTypeface(policeApprentissageEcriture);
 
-        Bitmap bmp = Bitmap.createBitmap(widthImageCaractere, heightImageCaractere, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bmp);
-        Paint paintMenuBackground = new Paint();
-        paintMenuBackground.setColor(Color.WHITE);
-        Rect background = new Rect(0,0,widthImageCaractere,heightImageCaractere);
-        canvas.drawRect(background, paintMenuBackground);
-        canvas.drawText(pass,20,45,paint);
         return bmp;
     }
 
@@ -86,24 +111,19 @@ public class ApprentissageEcriture extends Share {
         Pactivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                policeApprentissageEcriture = Typeface.createFromAsset(Pactivity.getAssets(),"fonts/Cursifl.TTF");
                 policeIndications = Typeface.createFromAsset(Pactivity.getAssets(),"fonts/Indications.TTF");
-                policeApprentissageEcritureDifficile = Typeface.createFromAsset(Pactivity.getAssets(),"fonts/ecolier dur.TTF");
-                policeApprentissageEcritureSansLigne = Typeface.createFromAsset(Pactivity.getAssets(),"fonts/Cursif.TTF");
-
             }
         });
 
         demarre=  false;
         fini = false;
-        decalageY=150;
         width = outputScreen.getImage().getHeight();
         height = outputScreen.getImage().getWidth();
 
         configureRemoteListeners(server);
-        menu.addItem("Ecriture finie");
-        menu.addItem("Nouveau");
-        menu.addItem("Entrainement Special");
+        menu.addItem("Dessin fini");
+        menu.addItem("Pokemon");
+        menu.addItem("Animaux");
         menu.addItem("Quitter");
 
         if(distantUID.equals("mode solitaire")) {
@@ -118,32 +138,31 @@ public class ApprentissageEcriture extends Share {
 
     @Override
     protected void onMenuClick(String menu) {
-        if ( menu.equals("Ecriture finie")) {
+        if ( menu.equals("Dessin fini")) {
             if (demarre) {
                 fini = true;
                 demarre = false;
-                special = false ;
                 outputScreen.fitAndDisplay(ajoutScore(lastImage,0));
+                pokemon = false ;
+                animaux = false ;
             }
         }
-        if (menu.equals("Nouveau")){
+        if (menu.equals("Pokemon")){
             if (fini) {
-                special = false;
-                decalageY+=80;
-                imageCaractere = generateImageCaractere(width,100);
+                imageCaractere = generateImageDessin();
                 outputScreen.fitAndDisplay(dessinerCaractere(lastImage, imageCaractere));
                 demarre = true;
                 fini = false;
+                pokemon = true ;
             }
         }
-        if (menu.equals("Entrainement Special")){
+        if (menu.equals("Animaux")){
             if (fini) {
-                decalageY+=80;
-                imageCaractere = generateImageCaractere(width,100);
+                imageCaractere = generateImageDessin();
                 outputScreen.fitAndDisplay(dessinerCaractere(lastImage, imageCaractere));
                 demarre = true;
                 fini = false;
-                special=true;
+                animaux = true;
             }
         }
         if (menu.equals("Quitter")){
@@ -157,7 +176,7 @@ public class ApprentissageEcriture extends Share {
             lastImage = image;
 
         if(!demarre && !fini) {
-            imageCaractere = generateImageCaractere(width,100);
+            imageCaractere = generateImageDessin();
             demarre=true;
             outputScreen.fitAndDisplay(dessinerCaractere(lastImage, imageCaractere));
         } else if (fini) {
