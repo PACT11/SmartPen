@@ -28,19 +28,19 @@ public interface ApplicationDistribuee {
     // send a message and wait for the answer (returned message has to be the same class)
     public BlockingMessage sendBlockingMessage(BlockingMessage message);
     
-     /*envoie un paquet connnectionClosure a l'utilisateur distant contenant 
-    l'UID local pour se deconnecter*/
+    // se déconnecter de l'utilisateur distant
     public void disconnectFromUser();
     
-     /* accepter ou non la requete de connection recu*/
+    /* accepter ou non la requete de connection recu*/
     public void acceptConnection(boolean isAccepted);
     
-     // getters and setters :
+    /* get/set d'un interface contenant des fonctions appelé quand un évènement 
+    reseau arrive : demande de connection, réponse à cette demande, déconnexion 
+    de l'utilisateur distant*/
     public void setConnectionListener(ConnectionListener listener) ;
-    
     public ConnectionListener getConnectionListener();
     
-    // obtenir la liste des utilisateurs
+    // obtenir la liste des utilisateurs connectés au serveur
     public String[] getUserList();
     
     // envoyer une image
@@ -50,7 +50,9 @@ public interface ApplicationDistribuee {
     // verifier qu'un utilisateur est enregistré sur le serveur
     public boolean isRegistered(String UID, String password);
     
-    // envoie d'une requete de mise à jour de la liste des utilisateur à tout les autres
+    /* envoie d'une requete de mise à jour de la liste des utilisateurs
+    de cette facon, dès qu'une modification se produit, les autres utilisateurs 
+    sont prévenus.*/
     public void sendUserlistUpdateRequest();
     
     // #############   CALCULS DISTRIBUES ###############
@@ -59,5 +61,6 @@ public interface ApplicationDistribuee {
     public void straightenAndSend(Bitmap image, int width, int height, boolean sendBack);
     public void fitAndDisplay(Bitmap image, int width, int height);
     
+    // se deconnecter du serveur
     public void close();
 }
