@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 
 import java.io.IOException;
@@ -17,30 +18,25 @@ import view.OutputScreen;
  */
 
 public class ApprentissageDessin extends Share {
-
     private boolean fini;
     private boolean demarre;
-    private int decalageY= 150 ;
     private int height ;
     private int width ;
-    public Typeface policeIndications;
+
     private Bitmap imageCaractere;
     private Bitmap lastImage;
-    private boolean pokemon = false;
+    private boolean pokemon = true;
     private boolean animaux = false ;
     private  String[] pokemonListe = {
             "carapuce",
             "coloriage-pokemon-2", //pikachu
             "mew",
-            "mewto",
+            "mewtwo",
             "salameche"
     };
     private  String[] animauxListe = {
-            "bambi",
-            "biche",
             "ecureuil",
-            "elephant",
-            "sanglier"
+            "elephant"
     };
 
     public Bitmap ajoutScore(Bitmap feuillePaysage, double score){
@@ -48,9 +44,9 @@ public class ApprentissageDessin extends Share {
 
         Paint paint = new Paint(); paint.setColor(Color.BLUE);
         Canvas canvas = new Canvas(feuille);
-        paint.setTextSize(25);
-        paint.setTypeface(policeIndications);
-        String textScore = "Prends une nouvelle feuille et clique sur la catégorie souhaitée";
+        paint.setTextSize(19);
+
+        String textScore = "Prends une nouvelle feuille et choisis une catégorie";
         canvas.drawText(textScore, 20 , height/6 , paint);
 
         return OutputScreen.rotateBitmap(feuille,90);
@@ -60,7 +56,9 @@ public class ApprentissageDessin extends Share {
         Bitmap feuille = OutputScreen.rotateBitmap(feuillePaysage,-90);
 
         Canvas canvas = new Canvas(feuille);
-        canvas.drawBitmap(imageDessinSimple,0,decalageY,null);
+        canvas.drawBitmap(imageDessinSimple,
+                new Rect(0,0,imageDessinSimple.getWidth()-1,imageDessinSimple.getHeight()-1),
+                new Rect(0,height/12,width-1,height-1),null);
 
         return OutputScreen.rotateBitmap(feuille,90);
     }
@@ -69,11 +67,11 @@ public class ApprentissageDessin extends Share {
 
     public Bitmap generateImageDessin() {
         if (pokemon){
-            int i =(int)Math.floor(Math.random() * pokemonListe.length -1);
+            int i =(int)Math.floor(Math.random()*pokemonListe.length);
             return getBitmap("dessins/"+pokemonListe[i]+".jpg");
         }
         else if(animaux){
-            int i =(int)Math.floor(Math.random() * animauxListe.length -1);
+            int i =(int)Math.floor(Math.random()*animauxListe.length);
             return getBitmap("dessins/"+animauxListe[i]+".jpg");
         }
         else return null;
@@ -108,13 +106,6 @@ public class ApprentissageDessin extends Share {
 
     @Override
     protected void onLaunch() {
-        Pactivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                policeIndications = Typeface.createFromAsset(Pactivity.getAssets(),"fonts/Indications.TTF");
-            }
-        });
-
         demarre=  false;
         fini = false;
         width = outputScreen.getImage().getHeight();
@@ -125,6 +116,7 @@ public class ApprentissageDessin extends Share {
         menu.addItem("Pokemon");
         menu.addItem("Animaux");
         menu.addItem("Quitter");
+        menu.setDistantUID(this.distantUID);
 
         if(distantUID.equals("mode solitaire")) {
             lastImage = Bitmap.createBitmap(height,width, Bitmap.Config.ARGB_8888);
@@ -149,20 +141,20 @@ public class ApprentissageDessin extends Share {
         }
         if (menu.equals("Pokemon")){
             if (fini) {
+                pokemon = true;
                 imageCaractere = generateImageDessin();
                 outputScreen.fitAndDisplay(dessinerCaractere(lastImage, imageCaractere));
                 demarre = true;
                 fini = false;
-                pokemon = true ;
             }
         }
         if (menu.equals("Animaux")){
             if (fini) {
+                animaux = true;
                 imageCaractere = generateImageDessin();
                 outputScreen.fitAndDisplay(dessinerCaractere(lastImage, imageCaractere));
                 demarre = true;
                 fini = false;
-                animaux = true;
             }
         }
         if (menu.equals("Quitter")){

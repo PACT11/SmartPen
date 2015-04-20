@@ -13,8 +13,9 @@ public class Share extends NetworkApp {
 
         menu.addItem("Morpion");
         menu.addItem("Ecriture");
+        menu.addItem("Dessin");
         menu.addItem("Enregistrer");
-        menu.addItem("Déconnexion");
+        menu.addItem("Quitter");
         menu.setAppName("Partage");
         menu.setDistantUID(this.distantUID);
 
@@ -42,7 +43,7 @@ public class Share extends NetworkApp {
     }
     @Override
     protected void onMenuClick(String menu) {
-        if(menu.equals("Déconnexion")) {
+        if(menu.equals("Quitter")) {
             disconnectFromUser();
             Pactivity.runOnUiThread(new Runnable() {
                 @Override
@@ -54,8 +55,9 @@ public class Share extends NetworkApp {
             os.startApp("Morpion");
         } else if(menu.equals("Ecriture")){
             os.startApp("ApprentissageEcriture");
-        }
-        else if(menu.equals("Enregistrer")) {
+        } else if(menu.equals("Dessin")){
+            os.startApp("ApprentissageDessin");
+        } else if(menu.equals("Enregistrer")) {
             saving = true;
         }
     }

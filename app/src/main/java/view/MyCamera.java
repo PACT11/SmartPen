@@ -101,7 +101,8 @@ public class MyCamera{
     // called when the picture has been captured
     void onPictureCaptured(byte[] data) {
         bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-        camera.startPreview();
+        if(opened)
+            camera.startPreview();
         synchronized (synchronizer) {
             synchronizer.notify();
         }

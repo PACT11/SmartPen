@@ -61,6 +61,7 @@ public class InputScreen {
         }
     }
     public void restart(projection activity, Connector server) {
+        this.server=server;
         if(camera==null) {
             camera = new MyCamera();
         }

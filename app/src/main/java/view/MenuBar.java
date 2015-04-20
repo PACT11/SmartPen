@@ -102,9 +102,9 @@ public class MenuBar {
         }
 
         canvas.drawLine(0,menuHeight/2+5, width,menuHeight /2 + 5, paint);
-        canvas.drawText(currentApplication, width/2 - width/10,  menuHeight-menuHeight/15, paintCurrent);
+        canvas.drawText(currentApplication, width/2 - width/12,  menuHeight-menuHeight/15, paintCurrent);
         if(writing && distantUID!=null) {
-            canvas.drawText(distantUID + " écrit ...", width / 15, menuHeight - menuHeight / 15, paintCurrent);
+            canvas.drawText(distantUID + " écrit ...", width/32, menuHeight - menuHeight / 15, paintCurrent);
         }
 
         return OutputScreen.rotateBitmap(feuille,90);

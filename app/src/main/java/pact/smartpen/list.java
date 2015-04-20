@@ -84,14 +84,18 @@ public class list extends ListActivity {
         builder.setTitle("Connexion");
 
         targetUser = users[(int) id];
-        if (targetUser.equals("Mode Solitaire")){
+        if (targetUser.equals("mode solitaire")){
             builder.setMessage("Démarrer le mode solitaire ?");
             builder.setNegativeButton("Non", null);
             builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                    projection.calibrate=false;
+                    showWaitingForAnswerDialog();
                     login.connectTo(targetUser);
+
                 }
             });
+            builder.show();
         } else if(targetUser.equals("Calibration de la projection")) {
             builder.setMessage("Placez le tapis du coté clair et appuyez sur OK");
             builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
@@ -109,8 +113,9 @@ public class list extends ListActivity {
             builder.setNegativeButton("Non", null);
             builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    login.connectTo(targetUser);
+                    projection.calibrate=false;
                     showWaitingForAnswerDialog();
+                    login.connectTo(targetUser);
                 }
             });
 

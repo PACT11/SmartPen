@@ -73,7 +73,8 @@ public class OutputScreen {
     }
     // update the screen
     public void refresh() {
-        fitAndDisplay(straightImage);
+        if(straightImage!=null)
+            fitAndDisplay(straightImage);
     }
     public void initScreen(projection act) {
         activity = act;

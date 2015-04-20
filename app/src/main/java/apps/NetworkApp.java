@@ -10,9 +10,9 @@ import view.CloudServices;
 
 public class NetworkApp extends Application {
     // server's address
-    public static final byte[] serverIP = {(byte)10,(byte)0,(byte)1,(byte)4};
+    //public static final byte[] serverIP = {(byte)10,(byte)0,(byte)1,(byte)4};
     //public static final byte[] serverIP = {(byte)137,(byte)194,(byte)16,(byte)226};
-    //public static final byte[] serverIP = {(byte)192,(byte)168,(byte)43,(byte)62};
+    public static final byte[] serverIP = {(byte)192,(byte)168,(byte)43,(byte)62};
     //public static final byte[] serverIP = {(byte)192,(byte)168,(byte)56,(byte)1};
 
     protected static Connector server;        // the server we connect to
