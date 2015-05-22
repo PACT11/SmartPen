@@ -4,5 +4,9 @@
     <string name="app_name">SmartPen</string>
     <string name="mail">E-mail</string>
     <string name="action_settings">\?</string>
+    <string name="help">Aide</string>
+    <string name="about_us">A propos</string>
+    <string name="title_activity_help">Aide</string>
 
+    <string name="hello_world">Hello world!</string>
 </resources>
