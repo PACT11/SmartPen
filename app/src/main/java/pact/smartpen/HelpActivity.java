@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
+
+
 public class HelpActivity extends ActionBarActivity {
 
     @Override
@@ -21,6 +23,10 @@ public class HelpActivity extends ActionBarActivity {
     //    getMenuInflater().inflate(R.menu.menu_help, menu);
     //    return true;
     //}
+
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
