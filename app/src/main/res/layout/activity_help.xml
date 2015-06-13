@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pact.smartpen.HelpActivity"
+    android:background= "#7a9965"
+    android:clickable="false">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:fillViewport="true">
+
+
+        <RelativeLayout
+            android:id="@+id/layoutForScroll"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            >
+
+            <TextView
+                android:text="Comment se servir de"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:layout_centerHorizontal="true"
+                android:typeface="serif"
+                android:textSize="30dp"/>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="250dp"
+                android:layout_height="150dp"
+                android:src="@drawable/sp"
+                android:layout_below="@+id/textView"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="250dp"
+                android:layout_height="150dp"
+                android:src="@drawable/montage"
+                android:layout_below="@+id/imageView"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:text="Placez le dispositif à coté d'une feuille blanche"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:layout_below="@id/imageView2"
+                android:layout_alignLeft="@id/imageView1"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="3dp"
+                android:typeface="serif"
+                android:textSize="20dp"/>
+
+
+        </RelativeLayout>
+
+         <!--
+        <TextView android:text="Comment se servir de l'application Smartpen qui est une fabuleuse application. C'est dingue à quel point elle fonctionne bien, et elle est visuellement recherchée et joliement présentée bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+        blablablablablablabla
+        Comment se servir de l'application Smartpen qui est une fabuleuse application. C'est dingue à quel point elle fonctionne bien, et elle est visuellement recherchée et joliement présentée bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+        blablablablablablabla"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:typeface="serif"
+            android:textSize="30dp"
+            android:layout_below="@+id/imageView"
+            android:layout_alignParentStart="true" />
+
+    </ScrollView>
+
+    <TextView android:text="Comment se servir de"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:typeface="serif"
+        android:textSize="30dp"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:src="@drawable/sp"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+-->
+
+    </ScrollView>
+
+</RelativeLayout>

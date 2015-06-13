@@ -1,0 +1,66 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background= "#7a9965"
+    tools:context="pact.smartpen.AboutActivity">
+
+    <TextView
+        android:text="À propos de"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:typeface="serif"
+        android:textSize="30dp"/>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:src="@drawable/sp"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:id="@+id/scrollView"
+        android:layout_below="@+id/imageView1">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+
+                <TextView
+                    android:text="Cette application a été développée par 9 élèves de l'école Télécom ParisTech dans le cadre du projet PACT \n \n Arnaud Bonetti \n Oumayma Bounou \n Quentin Chabert \n Benoit Colas \n Fatimata Fall \n Guillaume Grelet  \n Anthony Hu \n Louis Marty \n Nicolas Pontois \n \n \n Le code est disponible sur GitHub \n à l'adresse suivante :\n "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView2"
+                    android:gravity="center_horizontal"
+                    android:typeface="serif"
+                    android:textSize="24dp"
+                    android:layout_alignParentEnd="true" />
+
+                <TextView
+                    android:text="https://github.com/PACT11/SmartPen.git \n \n"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:id="@+id/textView3"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:layout_below="@id/textView2"
+                    android:typeface="serif"
+                    android:textSize="18dp"/>
+            </RelativeLayout>
+
+
+
+    </ScrollView>
+
+</RelativeLayout>

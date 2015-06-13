@@ -26,10 +26,12 @@ public class SmartPen extends ActionBarActivity {
     private CheckBox checkView;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         final SharedPreferences prefs = getSharedPreferences("codelearn_twitter", MODE_PRIVATE);
 
@@ -93,18 +95,24 @@ public class SmartPen extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_help:
+                // Comportement du bouton "Aide"
+                Intent intent1 = new Intent(SmartPen.this, HelpActivity.class);
+                startActivity(intent1);
+                return true;
+            case R.id.action_about:
+                // Comportement du bouton "A propos"
+                Intent intent2 = new Intent(SmartPen.this, AboutActivity.class);
+                startActivity(intent2);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
+
+
+
     public void checkUserCallback(boolean isRegistered) {
         if(isRegistered){
             Intent secondeActivite = new Intent(SmartPen.this, list.class);
