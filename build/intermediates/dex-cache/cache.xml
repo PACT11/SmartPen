@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/arnaud/AndroidStudioProjects/SmartPen/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/arnaud/AndroidStudioProjects/SmartPen/app/build/intermediates/pre-dexed/debug/classes-4a3fcb7e8855c45e175e4e4521b1635643a53b39.jar" />
+    </item>
+    <item
+        jar="/Users/arnaud/AndroidStudioProjects/SmartPen/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/arnaud/AndroidStudioProjects/SmartPen/app/build/intermediates/pre-dexed/debug/classes-34e83c0228802d22c612aa70f57881687041ef29.jar" />
+    </item>
+    <item
+        jar="/Users/arnaud/AndroidStudioProjects/SmartPen/app/libs/Netzwerk.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="48ca73efc1cd46bcd71aa92387c51d1e15ea5486">
+        <dex dex="/Users/arnaud/AndroidStudioProjects/SmartPen/app/build/intermediates/pre-dexed/debug/Netzwerk-e84e885a2a3f08d635ac23575551e7d8d48564a7.jar" />
+    </item>
+    <item
+        jar="/Users/arnaud/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/Users/arnaud/AndroidStudioProjects/SmartPen/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-4eeecea85a6c24c9b2002637ec88514dd55f0bf7.jar" />
+    </item>
+    <item
+        jar="/Users/arnaud/AndroidStudioProjects/SmartPen/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/arnaud/AndroidStudioProjects/SmartPen/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-76d47408cbdc1aa88f59cac4cd6a54430ff3d377.jar" />
+    </item>
+
+</items>
